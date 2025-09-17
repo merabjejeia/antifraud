@@ -30,18 +30,6 @@
     <!-- Основной контейнер-карточка -->
     <div class="bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-xl dark:shadow-2xl dark:shadow-black/50 w-full max-w-2xl relative z-10 transition-colors duration-500">
         
-        <!-- Кнопка смены темы -->
-        <button id="theme-toggle" class="absolute top-4 right-4 p-2 rounded-full text-slate-400 dark:text-teal-400 hover:text-slate-600 dark:hover:text-teal-300 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 transition-colors duration-500">
-            <!-- Иконка Луны -->
-            <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 transition-transform duration-500">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 12a9.75 9.75 0 0018.752 3.002z" />
-            </svg>
-            <!-- Иконка Солнца -->
-            <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 transition-transform duration-500 absolute top-2 right-2 scale-0">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.364l-1.556 1.556M21 12h-2.25m-.364 6.364l-1.556-1.556M12 21v-2.25m-6.364-.364l1.556-1.556M3 12H5.25m.364-6.364l1.556 1.556" />
-            </svg>
-        </button>
-
         <!-- Главная страница (по умолчанию видимая) -->
         <div id="home-page" class="space-y-6">
             <h1 class="text-3xl font-bold text-center text-slate-800 dark:text-slate-100 mb-6 transition-colors duration-500">
@@ -222,10 +210,6 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const themeToggleBtn = document.getElementById('theme-toggle');
-            const moonIcon = document.getElementById('moon-icon');
-            const sunIcon = document.getElementById('sun-icon');
-
             const homePage = document.getElementById('home-page');
             const generatorPage = document.getElementById('generator-page');
             const userGeneratorPage = document.getElementById('user-generator-page');
@@ -275,12 +259,11 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
 
             // Класс для частицы
             class Particle {
-                constructor(x, y, radius, color) {
+                constructor(x, y, radius) {
                     this.x = x;
                     this.y = y;
                     this.baseRadius = radius; // Базовый радиус для анимации
                     this.radius = radius;
-                    this.color = color;
                     this.velocity = {
                         x: (Math.random() - 0.5) * 0.5,
                         y: (Math.random() - 0.5) * 0.5
@@ -288,18 +271,18 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
                     this.phase = Math.random() * Math.PI * 2; // Фаза для анимации
                 }
 
-                draw() {
+                draw(color) {
                     ctx.beginPath();
                     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-                    ctx.fillStyle = this.color;
+                    ctx.fillStyle = color;
                     ctx.fill();
                     ctx.closePath();
                 }
 
                 update() {
                     // Анимация "дыхания"
-                    this.phase += 0.02;
-                    this.radius = this.baseRadius + Math.sin(this.phase) * 0.2;
+                    this.phase += 0.05;
+                    this.radius = this.baseRadius + Math.sin(this.phase) * 0.5;
 
                     // Проверка столкновения с границами канваса
                     if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
@@ -316,8 +299,8 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
                         const distance = Math.sqrt(dx * dx + dy * dy);
 
                         if (distance < mouse.radius) {
-                            const attractionFactor = 0.0001; // Коэффициент силы притяжения (уменьшен)
-                            const dampingFactor = 0.35; // Коэффициент затухания
+                            const attractionFactor = 0.001; // Коэффициент силы притяжения (уменьшен)
+                            const dampingFactor = 0.65; // Коэффициент затухания
 
                             // Вычисляем ускорение к курсору
                             this.velocity.x += dx * attractionFactor;
@@ -332,7 +315,6 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
                     // Применение скорости
                     this.x += this.velocity.x;
                     this.y += this.velocity.y;
-                    this.draw();
                 }
             }
 
@@ -343,8 +325,7 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
                     const radius = Math.random() * 2 + 1;
                     const x = Math.random() * (canvas.width - radius * 2) + radius;
                     const y = Math.random() * (canvas.height - radius * 2) + radius;
-                    const color = document.documentElement.classList.contains('dark') ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.2)'; // Уменьшена прозрачность
-                    particles.push(new Particle(x, y, radius, color));
+                    particles.push(new Particle(x, y, radius));
                 }
             }
             
@@ -352,9 +333,13 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
             function animate() {
                 requestAnimationFrame(animate);
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
+                const isDark = document.documentElement.classList.contains('dark');
+                const particleColor = isDark ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.2)';
+                const lineColorBase = isDark ? 'rgba(255, 255, 255, ' : 'rgba(0, 0, 0, ';
 
                 for (let i = 0; i < particles.length; i++) {
                     particles[i].update();
+                    particles[i].draw(particleColor);
                     for (let j = i + 1; j < particles.length; j++) {
                         const dx = particles[i].x - particles[j].x;
                         const dy = particles[i].y - particles[j].y;
@@ -365,8 +350,7 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
                             ctx.beginPath();
                             ctx.moveTo(particles[i].x, particles[i].y);
                             ctx.lineTo(particles[j].x, particles[j].y);
-                            const lineColor = document.documentElement.classList.contains('dark') ? 'rgba(255, 255, 255, ' + opacity + ')' : 'rgba(0, 0, 0, ' + opacity + ')';
-                            ctx.strokeStyle = lineColor;
+                            ctx.strokeStyle = lineColorBase + opacity + ')';
                             ctx.lineWidth = 0.5;
                             ctx.stroke();
                             ctx.closePath();
@@ -387,41 +371,12 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
             window.addEventListener('resize', updateCanvasSize);
             animate();
 
-            // Логика смены темы
-            function updateTheme(isDark) {
-                if (isDark) {
-                    document.documentElement.classList.add('dark');
-                    moonIcon.classList.remove('scale-100');
-                    moonIcon.classList.add('scale-0');
-                    sunIcon.classList.remove('scale-0');
-                    sunIcon.classList.add('scale-100');
-                    localStorage.theme = 'dark';
-                } else {
-                    document.documentElement.classList.remove('dark');
-                    moonIcon.classList.remove('scale-0');
-                    moonIcon.classList.add('scale-100');
-                    sunIcon.classList.remove('scale-100');
-                    sunIcon.classList.add('scale-0');
-                    localStorage.theme = 'light';
-                }
-                initParticles(); // Перезапуск частиц с новым цвером
+            // Автоматическая смена темы
+            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
             }
-
-            // Проверяем localStorage при загрузке. Предпочтение отдается явному выбору пользователя.
-            const storedTheme = localStorage.getItem('theme');
-            if (storedTheme === 'dark') {
-                updateTheme(true);
-            } else if (storedTheme === 'light') {
-                updateTheme(false);
-            } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                // Если нет сохраненной темы, используем системные предпочтения
-                updateTheme(true);
-            }
-
-            themeToggleBtn.addEventListener('click', () => {
-                const isDark = document.documentElement.classList.contains('dark');
-                updateTheme(!isDark);
-            });
 
 
             // Логика переключения страниц
