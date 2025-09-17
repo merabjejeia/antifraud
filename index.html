@@ -298,8 +298,8 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
 
                 update() {
                     // Анимация "дыхания"
-                    this.phase += 0.05;
-                    this.radius = this.baseRadius + Math.sin(this.phase) * 0.5;
+                    this.phase += 0.02;
+                    this.radius = this.baseRadius + Math.sin(this.phase) * 0.2;
 
                     // Проверка столкновения с границами канваса
                     if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
@@ -316,8 +316,8 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
                         const distance = Math.sqrt(dx * dx + dy * dy);
 
                         if (distance < mouse.radius) {
-                            const attractionFactor = 0.002; // Коэффициент силы притяжения (уменьшен)
-                            const dampingFactor = 0.95; // Коэффициент затухания
+                            const attractionFactor = 0.001; // Коэффициент силы притяжения (уменьшен)
+                            const dampingFactor = 0.65; // Коэффициент затухания
 
                             // Вычисляем ускорение к курсору
                             this.velocity.x += dx * attractionFactor;
