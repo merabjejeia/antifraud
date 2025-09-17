@@ -109,40 +109,37 @@
     <div class="theme-toggle">
       <button onclick="toggleTheme()">Сменить тему</button>
     </div>
-    <h1>Генератор ссылок</h1>
-    <input type="text" id="baseUrl" placeholder="Вставьте базовую ссылку">
-    <input type="text" id="replaceKey" placeholder="Что заменить (подстрока)">
-    <textarea id="values" rows="4" placeholder="Список значений (по одному в строке)"></textarea>
-    <button onclick="generateLinks()">Сгенерировать ссылки</button>
-    <button onclick="openAll()">Открыть все</button>
-    <div class="links" id="links"></div>
-  </div>
+    <h2>Генератор ссылок по шаблону</h2>
+  
+  <label>Список инвойсов (по одному в строке):</label>
+  <textarea id="invoices" rows="6" placeholder="Вставьте инвойсы сюда..."></textarea>
+
+  <label>Шаблон ссылки (используйте {invoice} как метку):</label>
+  <textarea id="template" rows="4">https://api.sequoiapay.co/?date_from=17.08.2025&date_to=16.09.2025&length=50&merchant=608&search_column=%255B%2522%255B%255C%2522external_id%255C%2522%252C%255C%2522{invoice}%255C%2522%255D%2522%252C%2522%255B%255C%2522filter_user_comment%255C%2522%252Cnull%255D%2522%255D</textarea>
+
+  <button onclick="generateLinks()">Сгенерировать ссылки</button>
+  <button onclick="copyLinks()">Скопировать всё</button>
+
+  <h3>Результат:</h3>
+  <div class="output" id="output"></div>
 
   <script>
     function generateLinks() {
-      const baseUrl = document.getElementById("baseUrl").value.trim();
-      const replaceKey = document.getElementById("replaceKey").value.trim();
-      const values = document.getElementById("values").value.trim().split("\n");
-      const linksContainer = document.getElementById("links");
-      linksContainer.innerHTML = "";
-
-      values.forEach(val => {
-        if (!val) return;
-        const url = baseUrl.replaceAll(replaceKey, val.trim());
-        const div = document.createElement("div");
-        div.classList.add("link-item");
-        div.innerHTML = `<a href="${url}" target="_blank">${url}</a>`;
-        linksContainer.appendChild(div);
+      const invoicesText = document.getElementById("invoices").value;
+      const template = document.getElementById("template").value;
+      const invoices = invoicesText.split(/\n|\r/).map(x => x.trim()).filter(x => x);
+      let result = "";
+      invoices.forEach(inv => {
+        result += template.replace("{invoice}", inv) + "\n";
       });
+      document.getElementById("output").textContent = result;
     }
 
-    function openAll() {
-      const links = document.querySelectorAll(".link-item a");
-      links.forEach(link => window.open(link.href, "_blank"));
-    }
-
-    function toggleTheme() {
-      document.body.classList.toggle("dark");
+    function copyLinks() {
+      const text = document.getElementById("output").textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        alert("Ссылки скопированы в буфер обмена!");
+      });
     }
   </script>
 </body>
