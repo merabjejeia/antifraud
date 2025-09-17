@@ -33,6 +33,18 @@
 
     <!-- Основной контейнер-карточка -->
     <div class="bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-xl dark:shadow-2xl dark:shadow-black/50 w-full max-w-2xl relative z-10 transition-colors duration-500">
+        <!-- Переключатель темы -->
+        <button
+            id="theme-toggle"
+            class="absolute top-4 right-4 inline-flex items-center gap-2 text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400"
+            type="button"
+            title="Сменить тему"
+        >
+            <span id="theme-toggle-icon" aria-hidden="true">
+                <!-- Иконка обновится скриптом -->
+            </span>
+            <span id="theme-toggle-text" class="text-sm">Тема</span>
+        </button>
         
         <!-- Главная страница (по умолчанию видимая) -->
         <div id="home-page" class="space-y-6">
@@ -381,12 +393,43 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
             window.addEventListener('resize', updateCanvasSize);
             animate();
 
-            // Автоматическая смена темы
-            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
+            // Тема: локальное сохранение + система как запасной вариант
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const themeToggleIcon = document.getElementById('theme-toggle-icon');
+            const themeToggleText = document.getElementById('theme-toggle-text');
+
+            function setTheme(theme) {
+                if (theme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+                // Обновляем иконку/текст
+                const isDark = document.documentElement.classList.contains('dark');
+                themeToggleIcon.innerHTML = isDark
+                    ? '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg>'
+                    : '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm0 13a5 5 0 100-10 5 5 0 000 10zm6-5a1 1 0 100-2h-1a1 1 0 100 2h1zM5 10a1 1 0 100-2H4a1 1 0 100 2h1zm10.657 6.657a1 1 0 01-1.414 0l-.707-.707a1 1 0 111.414-1.414l.707.707a1 1 0 010 1.414zM6.464 5.05A1 1 0 015.05 6.464l-.707-.707A1 1 0 115.757 4.05l.707.707zM4.05 14.243a1 1 0 011.414 0l.707.707a1 1 0 01-1.414 1.414l-.707-.707a1 1 0 010-1.414zm11.314-8.486a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0z"/></svg>';
+                themeToggleText.textContent = isDark ? 'Тёмная' : 'Светлая';
             }
+
+            function initTheme() {
+                const saved = localStorage.getItem('theme');
+                if (saved === 'dark' || saved === 'light') {
+                    setTheme(saved);
+                    return;
+                }
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                setTheme(prefersDark ? 'dark' : 'light');
+            }
+
+            themeToggleBtn.addEventListener('click', () => {
+                const isDark = document.documentElement.classList.contains('dark');
+                const next = isDark ? 'light' : 'dark';
+                localStorage.setItem('theme', next);
+                setTheme(next);
+            });
+
+            initTheme();
 
 
             // Логика переключения страниц
@@ -417,15 +460,7 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
                 }
             }
 
-            // Обработчики для кнопок перехода (открытие в новой вкладке)
-            function openInNewTabWithHash(hash) {
-                const baseUrl = window.location.href.split('#')[0];
-                window.open(`${baseUrl}#${hash}`, '_blank', 'noopener,noreferrer');
-            }
-
-            goToGeneratorBtn.addEventListener('click', () => openInNewTabWithHash('generator'));
-            goToUserGeneratorBtn.addEventListener('click', () => openInNewTabWithHash('user-generator'));
-            goToCryptoGeneratorBtn.addEventListener('click', () => openInNewTabWithHash('crypto-generator'));
+            // Главные ссылки открываются сами (target="_blank"), обработчики не нужны
             
             backFromGeneratorBtn.addEventListener('click', () => { window.location.hash = 'home'; });
             backFromUserGeneratorBtn.addEventListener('click', () => { window.location.hash = 'home'; });
