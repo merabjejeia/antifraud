@@ -561,22 +561,35 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
 
             // Логика генератора криптокошельков
             const cryptoExplorers = {
-                btc: {
-                    name: 'Bitcoin',
-                    url: 'https://blockchain.com/btc/address/'
-                },
-                eth: {
-                    name: 'Ethereum',
-                    url: 'https://etherscan.io/address/'
-                },
-                tron: {
-                    name: 'TRON (TRC20)',
-                    url: 'https://tronscan.org/#/address/'
-                },
-                ton: {
-                    name: 'TON',
-                    url: 'https://tonviewer.com/'
-                }
+                // UTXO
+                btc: { name: 'Bitcoin', url: 'https://www.blockchain.com/btc/address/' },
+                ltc: { name: 'Litecoin', url: 'https://blockchair.com/litecoin/address/' },
+                doge: { name: 'Dogecoin', url: 'https://blockchair.com/dogecoin/address/' },
+                dash: { name: 'Dash', url: 'https://blockchair.com/dash/address/' },
+                bch: { name: 'Bitcoin Cash', url: 'https://blockchair.com/bitcoin-cash/address/' },
+
+                // EVM-сети (одинаковый формат 0x...)
+                eth: { name: 'Ethereum', url: 'https://etherscan.io/address/' },
+                bsc: { name: 'BNB Smart Chain', url: 'https://bscscan.com/address/' },
+                polygon: { name: 'Polygon', url: 'https://polygonscan.com/address/' },
+                arbitrum: { name: 'Arbitrum', url: 'https://arbiscan.io/address/' },
+                optimism: { name: 'Optimism', url: 'https://optimistic.etherscan.io/address/' },
+                avalanche: { name: 'Avalanche C-Chain', url: 'https://snowtrace.io/address/' },
+                fantom: { name: 'Fantom', url: 'https://ftmscan.com/address/' },
+                base: { name: 'Base', url: 'https://basescan.org/address/' },
+                zksync: { name: 'zkSync Era', url: 'https://explorer.zksync.io/address/' },
+
+                // Account-based разные форматы
+                tron: { name: 'TRON (TRC20)', url: 'https://tronscan.org/#/address/' },
+                ton: { name: 'TON', url: 'https://tonviewer.com/' },
+                xrp: { name: 'Ripple (XRP)', url: 'https://xrpscan.com/account/' },
+                xlm: { name: 'Stellar (XLM)', url: 'https://stellarchain.io/address/' },
+                ada: { name: 'Cardano (ADA)', url: 'https://cardanoscan.io/address/' },
+                sol: { name: 'Solana', url: 'https://explorer.solana.com/address/' },
+                near: { name: 'NEAR', url: 'https://explorer.near.org/accounts/' },
+                algo: { name: 'Algorand (ALGO)', url: 'https://algoexplorer.io/address/' },
+                tez: { name: 'Tezos', url: 'https://tzkt.io/' },
+                bnbb: { name: 'BNB Beacon Chain', url: 'https://explorer.bnbchain.org/address/' }
             };
             
             // Определяет сеть по формату адреса
@@ -584,23 +597,90 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
                 const normalizedAddress = address.trim();
                 const networks = [];
 
-                // Проверка на Ethereum
+                // EVM 0x-адреса → несколько сетей
                 if (/^0x[a-fA-F0-9]{40}$/.test(normalizedAddress)) {
-                    networks.push('eth');
+                    networks.push('eth','bsc','polygon','arbitrum','optimism','avalanche','fantom','base','zksync');
                 }
-                // Проверка на TRON
+
+                // TRON (Base58Check), обычно T + 33 символа
                 if (/^T[a-zA-Z0-9]{33}$/.test(normalizedAddress)) {
                     networks.push('tron');
                 }
-                // Проверка на TON
+
+                // TON (base64url, длина 48-49, начинается с U/Q/E)
                 if (/^[UQE][a-zA-Z0-9_-]{47,48}$/.test(normalizedAddress)) {
                     networks.push('ton');
                 }
-                // Проверка на Bitcoin
-                if (/^1[a-km-zA-HJ-NP-Z1-9]{25,34}$/.test(normalizedAddress) || /^3[a-km-zA-HJ-NP-Z1-9]{25,34}$/.test(normalizedAddress) || /^bc1[ac-hj-np-z02-9]{25,39}$/.test(normalizedAddress)) {
+
+                // BTC (legacy + segwit/bech32)
+                if (/^1[a-km-zA-HJ-NP-Z1-9]{25,34}$/.test(normalizedAddress)
+                 || /^3[a-km-zA-HJ-NP-Z1-9]{25,34}$/.test(normalizedAddress)
+                 || /^bc1[ac-hj-np-z02-9]{25,89}$/.test(normalizedAddress)) {
                     networks.push('btc');
                 }
-                
+
+                // BCH (cashaddr): bitcoincash:... или q/p префикс длиной ~42
+                if (/^(bitcoincash:)?[qp][a-z0-9]{41,50}$/i.test(normalizedAddress)) {
+                    networks.push('bch');
+                }
+
+                // Litecoin (legacy + bech32: ltc1)
+                if (/^L[1-9A-HJ-NP-Za-km-z]{26,33}$/.test(normalizedAddress)
+                 || /^M[1-9A-HJ-NP-Za-km-z]{26,33}$/.test(normalizedAddress)
+                 || /^ltc1[ac-hj-np-z02-9]{25,89}$/.test(normalizedAddress)) {
+                    networks.push('ltc');
+                }
+
+                // Dogecoin
+                if (/^D[1-9A-HJ-NP-Za-km-z]{25,34}$/.test(normalizedAddress)) {
+                    networks.push('doge');
+                }
+
+                // Dash
+                if (/^X[1-9A-HJ-NP-Za-km-z]{25,34}$/.test(normalizedAddress)) {
+                    networks.push('dash');
+                }
+
+                // XRP (Ripple) r + base58 25-35
+                if (/^r[1-9A-HJ-NP-Za-km-z]{24,34}$/.test(normalizedAddress)) {
+                    networks.push('xrp');
+                }
+
+                // Stellar (G + 55 base32)
+                if (/^G[A-Z2-7]{55}$/.test(normalizedAddress)) {
+                    networks.push('xlm');
+                }
+
+                // Cardano (bech32 addr1...)
+                if (/^addr1[0-9a-z]{20,}$/i.test(normalizedAddress)) {
+                    networks.push('ada');
+                }
+
+                // Solana (base58 32-44) — эвристика
+                if (/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(normalizedAddress)) {
+                    networks.push('sol');
+                }
+
+                // NEAR (аккаунты заканчиваются на .near)
+                if (/\.near$/i.test(normalizedAddress)) {
+                    networks.push('near');
+                }
+
+                // Algorand (58 символов base32 A-Z2-7)
+                if (/^[A-Z2-7]{58}$/i.test(normalizedAddress)) {
+                    networks.push('algo');
+                }
+
+                // Tezos (tz1/tz2/tz3)
+                if (/^tz[1-3][1-9A-HJ-NP-Za-km-z]{33}$/.test(normalizedAddress)) {
+                    networks.push('tez');
+                }
+
+                // BNB Beacon Chain (bnb1...)
+                if (/^bnb1[0-9a-z]{10,}$/i.test(normalizedAddress)) {
+                    networks.push('bnbb');
+                }
+
                 return networks.length > 0 ? networks : null;
             }
 
