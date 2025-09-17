@@ -10,55 +10,94 @@
         /* Устанавливаем шрифт Inter */
         body {
             font-family: 'Inter', sans-serif;
-            @apply bg-gray-100;
         }
+
+        /* Позиционирование canvas для фона */
+        #background-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* Цвета для темной темы */
+        .dark .bg-gray-100 { @apply bg-gray-900; }
+        .dark .bg-white { @apply bg-gray-800; }
+        .dark .shadow-xl { @apply shadow-2xl shadow-black/50; }
+        .dark .text-gray-800 { @apply text-gray-100; }
+        .dark .text-gray-600 { @apply text-gray-300; }
+        .dark .bg-gray-50 { @apply bg-gray-900; }
+        .dark .border-gray-200 { @apply border-gray-700; }
+        .dark .text-gray-700 { @apply text-gray-200; }
+        .dark .text-gray-500 { @apply text-gray-400; }
+        .dark .border-gray-300 { @apply border-gray-600; }
+        .dark .placeholder-gray-400::placeholder { @apply text-gray-500; }
+        .dark .text-blue-600 { @apply text-orange-400; }
+        .dark .hover\:text-blue-800:hover { @apply hover:text-orange-300; }
+        .dark .focus\:ring-blue-500:focus { @apply ring-orange-400; }
+        .dark .bg-blue-600 { @apply bg-orange-600; }
+        .dark .hover\:bg-blue-700:hover { @apply hover:bg-orange-700; }
+        .dark .hover\:bg-gray-50:hover { @apply hover:bg-gray-700; }
+        .dark .text-gray-400 { @apply text-gray-500; }
+        .dark .hover\:text-gray-600:hover { @apply hover:text-gray-400; }
+        .dark .focus\:ring-gray-400:focus { @apply ring-gray-500; }
     </style>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4 transition-colors duration-500">
+    <!-- Анимированный фон Canvas -->
+    <canvas id="background-canvas"></canvas>
 
     <!-- Основной контейнер-карточка -->
-    <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-2xl">
+    <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-2xl relative z-10 transition-colors duration-500">
+        
+        <!-- Кнопка смены темы -->
+        <button id="theme-toggle" class="absolute top-4 right-4 p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-orange-400 transition-colors duration-500">
+            <!-- Иконка Луны (по умолчанию) -->
+            <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 text-gray-500 dark:text-orange-400 transition-transform transform duration-500">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 12a9.75 9.75 0 0018.752 3.002z" />
+            </svg>
+            <!-- Иконка Солнца (скрыта по умолчанию) -->
+            <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 text-gray-500 dark:text-orange-400 transition-transform transform duration-500 absolute top-2 right-2 scale-0">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.364l-1.556 1.556M21 12h-2.25m-.364 6.364l-1.556-1.556M12 21v-2.25m-6.364-.364l1.556-1.556M3 12H5.25m.364-6.364l1.556 1.556" />
+            </svg>
+        </button>
 
-        <!-- Главная страница -->
+        <!-- Главная страница (по умолчанию видимая) -->
         <div id="home-page" class="space-y-6">
-            <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">
+            <h1 class="text-3xl font-bold text-center text-gray-800 mb-6 transition-colors duration-500">
                 Инструменты для антифрода
             </h1>
-            <p class="text-lg text-gray-600 text-center mb-8">
+            <p class="text-lg text-gray-600 text-center mb-8 transition-colors duration-500">
                 Добро пожаловать. Выберите необходимый инструмент ниже.
             </p>
             <div class="flex flex-col space-y-4">
                 <button 
                     id="go-to-generator-btn" 
-                    class="w-full bg-blue-600 text-white font-medium text-lg py-4 px-8 rounded-lg hover:bg-blue-700 transition-all shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                    class="w-full bg-blue-600 dark:bg-orange-600 text-white font-medium text-lg py-4 px-8 rounded-lg hover:bg-blue-700 dark:hover:bg-orange-700 transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-orange-400 focus:ring-offset-2"
                 >
                     Перейти к Длинному ID вывода
-                </button>
-                 <button 
-                    id="go-to-summarizer-btn" 
-                    class="w-full bg-blue-600 text-white font-medium text-lg py-4 px-8 rounded-lg hover:bg-blue-700 transition-all shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                >
-                    ✨ Перейти к Анализатору текста ✨
                 </button>
             </div>
         </div>
 
         <!-- Раздел "Длинный ID вывода" (изначально скрытый) -->
         <div id="generator-page" class="hidden">
-            <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">
+            <h1 class="text-3xl font-bold text-center text-gray-800 mb-6 transition-colors duration-500">
                 Инструменты для антифрода
             </h1>
-            <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
-                <h2 class="text-xl font-semibold text-gray-700 mb-4">
+            <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 transition-colors duration-500">
+                <h2 class="text-xl font-semibold text-gray-700 mb-4 transition-colors duration-500">
                     Длинный ID вывода
                 </h2>
-                <p class="text-sm text-gray-500 mb-4">
+                <p class="text-sm text-gray-500 mb-4 transition-colors duration-500">
                     Вставьте один или несколько номеров инвойсов, каждый с новой строки.
                 </p>
 
                 <textarea 
                     id="invoice-input" 
-                    class="w-full h-32 p-3 text-sm rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4 transition-colors" 
+                    class="w-full h-32 p-3 text-sm rounded-lg border border-gray-300 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-orange-400 mb-4 transition-colors" 
                     placeholder="Например:
 1757862788425449503
 1757862788425449504
@@ -68,13 +107,13 @@
                 <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                     <button 
                         id="generate-btn" 
-                        class="w-full bg-blue-600 text-white font-medium py-3 px-6 rounded-lg hover:bg-blue-700 transition-all shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                        class="w-full bg-blue-600 dark:bg-orange-600 text-white font-medium py-3 px-6 rounded-lg hover:bg-blue-700 dark:hover:bg-orange-700 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-orange-400 focus:ring-offset-2"
                     >
                         Сгенерировать ссылки
                     </button>
                     <button 
                         id="open-all-btn" 
-                        class="w-full bg-gray-400 text-white font-medium py-3 px-6 rounded-lg hover:bg-gray-500 transition-all shadow-md focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 hidden"
+                        class="w-full bg-gray-400 dark:bg-gray-500 text-white font-medium py-3 px-6 rounded-lg hover:bg-gray-500 dark:hover:bg-gray-600 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-gray-400 dark:focus:ring-gray-500 focus:ring-offset-2 hidden"
                     >
                         Открыть все
                     </button>
@@ -86,52 +125,7 @@
             </div>
              <button 
                 id="back-from-generator-btn" 
-                class="mt-6 w-full text-blue-600 font-medium py-3 px-6 rounded-lg hover:underline transition-all focus:outline-none"
-            >
-                ← Вернуться назад
-            </button>
-        </div>
-        
-        <!-- Раздел "Анализатор текста" (изначально скрытый) -->
-        <div id="summarizer-page" class="hidden">
-            <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">
-                Инструменты для антифрода
-            </h1>
-            <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
-                <h2 class="text-xl font-semibold text-gray-700 mb-4">
-                    Анализатор текста
-                </h2>
-                <p class="text-sm text-gray-500 mb-4">
-                    Вставьте текст для анализа, и мы сгенерируем краткое резюме.
-                </p>
-
-                <textarea 
-                    id="text-input" 
-                    class="w-full h-48 p-3 text-sm rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4 transition-colors" 
-                    placeholder="Вставьте текст здесь..."
-                ></textarea>
-                
-                <button 
-                    id="summarize-btn" 
-                    class="w-full bg-blue-600 text-white font-medium py-3 px-6 rounded-lg hover:bg-blue-700 transition-all shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                >
-                    ✨ Резюмировать текст ✨
-                </button>
-                
-                <div id="summary-output" class="mt-6">
-                    <div id="loading-indicator" class="hidden flex justify-center items-center">
-                        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                        <span class="text-gray-600">Генерирую резюме...</span>
-                    </div>
-                    <p id="summary-text" class="text-gray-700 leading-relaxed"></p>
-                </div>
-            </div>
-             <button 
-                id="back-from-summarizer-btn" 
-                class="mt-6 w-full text-blue-600 font-medium py-3 px-6 rounded-lg hover:underline transition-all focus:outline-none"
+                class="mt-6 w-full text-blue-600 dark:text-orange-400 font-medium py-3 px-6 rounded-lg hover:underline transition-all focus:outline-none"
             >
                 ← Вернуться назад
             </button>
@@ -140,49 +134,154 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const moonIcon = document.getElementById('moon-icon');
+            const sunIcon = document.getElementById('sun-icon');
+
             const homePage = document.getElementById('home-page');
             const generatorPage = document.getElementById('generator-page');
-            const summarizerPage = document.getElementById('summarizer-page');
-            
             const goToGeneratorBtn = document.getElementById('go-to-generator-btn');
-            const goToSummarizerBtn = document.getElementById('go-to-summarizer-btn');
             const backFromGeneratorBtn = document.getElementById('back-from-generator-btn');
-            const backFromSummarizerBtn = document.getElementById('back-from-summarizer-btn');
 
             const generateBtn = document.getElementById('generate-btn');
             const openAllBtn = document.getElementById('open-all-btn');
             const invoiceInput = document.getElementById('invoice-input');
             const linksOutput = document.getElementById('links-output');
+            
+            const canvas = document.getElementById('background-canvas');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            const particleCount = 75;
+            const maxDistance = 120;
 
-            const summarizeBtn = document.getElementById('summarize-btn');
-            const textInput = document.getElementById('text-input');
-            const summaryOutput = document.getElementById('summary-output');
-            const loadingIndicator = document.getElementById('loading-indicator');
-            const summaryText = document.getElementById('summary-text');
+            // Класс для частицы
+            class Particle {
+                constructor(x, y, radius, color) {
+                    this.x = x;
+                    this.y = y;
+                    this.radius = radius;
+                    this.color = color;
+                    this.velocity = {
+                        x: (Math.random() - 0.5) * 0.5,
+                        y: (Math.random() - 0.5) * 0.5
+                    };
+                }
 
-            // API key for Gemini API (empty, will be provided by Canvas environment)
-            const apiKey = ""; 
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+                    ctx.fillStyle = this.color;
+                    ctx.fill();
+                    ctx.closePath();
+                }
 
-            // Функция для переключения между страницами
+                update() {
+                    if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
+                        this.velocity.x = -this.velocity.x;
+                    }
+                    if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
+                        this.velocity.y = -this.velocity.y;
+                    }
+                    this.x += this.velocity.x;
+                    this.y += this.velocity.y;
+                    this.draw();
+                }
+            }
+
+            // Инициализация частиц
+            function initParticles() {
+                particles = [];
+                for (let i = 0; i < particleCount; i++) {
+                    const radius = Math.random() * 2 + 1;
+                    const x = Math.random() * (canvas.width - radius * 2) + radius;
+                    const y = Math.random() * (canvas.height - radius * 2) + radius;
+                    const color = document.documentElement.classList.contains('dark') ? 'rgba(255, 255, 255, 0.6)' : 'rgba(0, 0, 0, 0.4)';
+                    particles.push(new Particle(x, y, radius, color));
+                }
+            }
+            
+            // Анимационный цикл
+            function animate() {
+                requestAnimationFrame(animate);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                for (let i = 0; i < particles.length; i++) {
+                    particles[i].update();
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+
+                        if (distance < maxDistance) {
+                            const opacity = 1 - (distance / maxDistance);
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            const lineColor = document.documentElement.classList.contains('dark') ? 'rgba(255, 255, 255, ' + opacity + ')' : 'rgba(0, 0, 0, ' + opacity + ')';
+                            ctx.strokeStyle = lineColor;
+                            ctx.lineWidth = 0.5;
+                            ctx.stroke();
+                            ctx.closePath();
+                        }
+                    }
+                }
+            }
+
+            // Функция для обновления размеров canvas
+            function updateCanvasSize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                initParticles();
+            }
+
+            // Изначальная настройка canvas
+            updateCanvasSize();
+            window.addEventListener('resize', updateCanvasSize);
+            animate();
+
+            // Логика смены темы
+            function updateTheme(isDark) {
+                if (isDark) {
+                    document.documentElement.classList.add('dark');
+                    moonIcon.classList.add('scale-0');
+                    sunIcon.classList.remove('scale-0');
+                    
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    moonIcon.classList.remove('scale-0');
+                    sunIcon.classList.add('scale-0');
+                }
+                initParticles(); // Перезапуск частиц с новым цветом
+            }
+
+            // Проверяем системные предпочтения
+            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+            if (prefersDarkScheme.matches) {
+                updateTheme(true);
+            }
+
+            themeToggleBtn.addEventListener('click', () => {
+                const isDark = document.documentElement.classList.contains('dark');
+                updateTheme(!isDark);
+            });
+
+
+            // Логика переключения страниц
             function showPage(pageId) {
                 homePage.classList.add('hidden');
                 generatorPage.classList.add('hidden');
-                summarizerPage.classList.add('hidden');
                 
                 if (pageId === 'home') {
                     homePage.classList.remove('hidden');
                 } else if (pageId === 'generator') {
                     generatorPage.classList.remove('hidden');
-                } else if (pageId === 'summarizer') {
-                    summarizerPage.classList.remove('hidden');
                 }
             }
 
             // Обработчики для кнопок перехода
             goToGeneratorBtn.addEventListener('click', () => showPage('generator'));
-            goToSummarizerBtn.addEventListener('click', () => showPage('summarizer'));
             backFromGeneratorBtn.addEventListener('click', () => showPage('home'));
-            backFromSummarizerBtn.addEventListener('click', () => showPage('home'));
+
 
             // Логика генератора инвойсов
             const baseUrl = "https://lixog.com/ru/admin/app/asyncpayment/list?filter%5B_page%5D=1&filter%5B_per_page%5D=250&filter%5B_sort_by%5D=createdAt&filter%5B_sort_order%5D=DESC&filter%5Buuid%5D%5Btype%5D=3&filter%5Buuid%5D%5Bvalue%5D=";
@@ -198,7 +297,7 @@
 
                 if (invoices.length === 0) {
                     const noLinks = document.createElement('p');
-                    noLinks.className = "text-center text-gray-500 italic mt-4";
+                    noLinks.className = "text-center text-gray-500 italic mt-4 transition-colors duration-500";
                     noLinks.textContent = "Пожалуйста, введите номера инвойсов.";
                     linksOutput.appendChild(noLinks);
                     return;
@@ -211,13 +310,13 @@
                     link.href = fullUrl;
                     link.textContent = `Инвойс: ${invoice}`;
                     link.target = "_blank"; 
-                    link.className = "text-blue-600 hover:text-blue-800 hover:underline transition-colors text-sm truncate";
+                    link.className = "text-blue-600 dark:text-orange-400 hover:text-blue-800 dark:hover:text-orange-300 hover:underline transition-colors text-sm truncate";
 
                     const linkContainer = document.createElement('div');
-                    linkContainer.className = "flex items-center justify-between p-3 bg-white rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors";
+                    linkContainer.className = "flex items-center justify-between p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-500";
 
                     const copyBtn = document.createElement('button');
-                    copyBtn.className = "text-gray-400 hover:text-gray-600 transition-colors ml-4 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md";
+                    copyBtn.className = "text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-400 transition-colors ml-4 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-orange-400 rounded-md";
                     copyBtn.innerHTML = `
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                             <path d="M7 9a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2H9a2 2 0 01-2-2V9z" />
@@ -238,7 +337,7 @@
                         
                         const originalSVG = copyBtn.innerHTML;
                         copyBtn.innerHTML = `
-                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 dark:text-green-400" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                             </svg>
                         `;
@@ -263,51 +362,6 @@
                 links.forEach(link => {
                     window.open(link.href, '_blank');
                 });
-            });
-
-            // Логика суммаризатора текста (Gemini API)
-            summarizeBtn.addEventListener('click', async () => {
-                const textToSummarize = textInput.value.trim();
-
-                if (textToSummarize.length === 0) {
-                    summaryText.textContent = "Пожалуйста, введите текст для анализа.";
-                    return;
-                }
-
-                summaryText.textContent = '';
-                loadingIndicator.classList.remove('hidden');
-
-                const systemPrompt = "Вы — профессиональный антифрод аналитик. Ваша задача — лаконично и по делу резюмировать предоставленный текст, выделяя ключевые моменты, связанные с анализом мошенничества, транзакций или подозрительной активности. Сохраняйте деловой и нейтральный тон.";
-                const userQuery = `Резюмируй следующий текст: ${textToSummarize}`;
-                
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-
-                const payload = {
-                    contents: [{ parts: [{ text: userQuery }] }],
-                    systemInstruction: { parts: [{ text: systemPrompt }] },
-                };
-
-                try {
-                    const response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
-                    if (!response.ok) {
-                        throw new Error(`API response error: ${response.status}`);
-                    }
-
-                    const result = await response.json();
-                    const summary = result?.candidates?.[0]?.content?.parts?.[0]?.text || "Не удалось сгенерировать резюме. Пожалуйста, попробуйте еще раз.";
-                    
-                    summaryText.textContent = summary;
-                } catch (error) {
-                    console.error('Gemini API Error:', error);
-                    summaryText.textContent = 'Произошла ошибка при обращении к API. Пожалуйста, проверьте подключение или повторите попытку.';
-                } finally {
-                    loadingIndicator.classList.add('hidden');
-                }
             });
         });
     </script>
