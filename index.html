@@ -67,6 +67,22 @@
                 >
                     Криптокошельки
                 </a>
+                <a 
+                    id="go-to-btech-generator-btn"
+                    href="#btech-generator"
+                    target="_blank" rel="noopener noreferrer"
+                    class="w-full text-center bg-teal-500 dark:bg-teal-600 text-white font-medium text-lg py-4 px-8 rounded-lg hover:bg-teal-600 dark:hover:bg-teal-700 transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 focus:ring-offset-2"
+                >
+                    BTech: проверка кошельков
+                </a>
+                <a 
+                    id="go-to-payplay-generator-btn"
+                    href="#payplay-generator"
+                    target="_blank" rel="noopener noreferrer"
+                    class="w-full text-center bg-teal-500 dark:bg-teal-600 text-white font-medium text-lg py-4 px-8 rounded-lg hover:bg-teal-600 dark:hover:bg-teal-700 transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 focus:ring-offset-2"
+                >
+                    PayPlay: депозиты и выводы
+                </a>
             </div>
         </div>
 
@@ -216,6 +232,98 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
                 ← Вернуться назад
             </button>
         </div>
+
+        <!-- Новый раздел "BTech проверка кошельков" (изначально скрытый) -->
+        <div id="btech-generator-page" class="hidden">
+            <h1 class="text-3xl font-bold text-center text-slate-800 dark:text-slate-100 mb-6 transition-colors duration-500">
+                Инструменты для антифрода
+            </h1>
+            <div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 transition-colors duration-500">
+                <h2 class="text-xl font-semibold text-slate-700 dark:text-slate-200 mb-4 transition-colors duration-500">
+                    BTech: ссылки на проверку кошельков
+                </h2>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mb-4 transition-colors duration-500">
+                    Вставьте один или несколько адресов, каждый с новой строки. Для каждого адреса будут сгенерированы ссылки в кабинете BTech.
+                </p>
+
+                <textarea 
+                    id="btech-input" 
+                    class="w-full h-32 p-3 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 mb-4 transition-colors" 
+                    placeholder="Например:\nUQB9Ez1OQlyOAN4BVROkTmbm0WOyHnFyCux1eZZeXeKMVQN6\n0x71c7656ec7ab88b098defb751b7401b5f6d8976f"
+                ></textarea>
+                
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                    <button 
+                        id="btech-generate-btn" 
+                        class="w-full bg-teal-500 dark:bg-teal-600 text-white font-medium py-3 px-6 rounded-lg hover:bg-teal-600 dark:hover:bg-teal-700 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 focus:ring-offset-2"
+                    >
+                        Сгенерировать ссылки
+                    </button>
+                    <button 
+                        id="btech-open-all-btn" 
+                        class="w-full bg-slate-300 dark:bg-slate-700 text-slate-800 dark:text-slate-200 font-medium py-3 px-6 rounded-lg hover:bg-slate-400 dark:hover:bg-slate-600 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-slate-500 focus:ring-offset-2 hidden"
+                    >
+                        Открыть все
+                    </button>
+                </div>
+                
+                <div id="btech-links-output" class="mt-6 flex flex-col space-y-2">
+                    <!-- Сюда будут добавляться сгенерированные ссылки -->
+                </div>
+            </div>
+             <button 
+                id="back-from-btech-generator-btn" 
+                class="mt-6 w-full text-teal-600 dark:text-teal-400 font-medium py-3 px-6 rounded-lg hover:underline transition-all focus:outline-none"
+            >
+                ← Вернуться назад
+            </button>
+        </div>
+
+        <!-- Новый раздел "PayPlay проверки" (изначально скрытый) -->
+        <div id="payplay-generator-page" class="hidden">
+            <h1 class="text-3xl font-bold text-center text-slate-800 dark:text-slate-100 mb-6 transition-colors duration-500">
+                Инструменты для антифрода
+            </h1>
+            <div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 transition-colors duration-500">
+                <h2 class="text-xl font-semibold text-slate-700 dark:text-slate-200 mb-4 transition-colors duration-500">
+                    PayPlay: ссылки по депозитам и выводам
+                </h2>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mb-4 transition-colors duration-500">
+                    Вставьте один или несколько значений (адрес/txid/ID), каждый с новой строки. Для каждого значения создадим две ссылки: депозиты и выводы.
+                </p>
+
+                <textarea 
+                    id="payplay-input" 
+                    class="w-full h-32 p-3 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teал-400 mb-4 transition-colors" 
+                    placeholder="Например:\nUQB9Ez1OQlyOAN4BVROkTmbm0WOyHnFyCux1eZZeXeKMVQN6\n0x71c7656ec7ab88b098defb751b7401b5f6d8976f"
+                ></textarea>
+                
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                    <button 
+                        id="payplay-generate-btn" 
+                        class="w-full bg-teal-500 dark:bg-teal-600 text-white font-medium py-3 px-6 rounded-lg hover:bg-teal-600 dark:hover:bg-teal-700 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 focus:ring-offset-2"
+                    >
+                        Сгенерировать ссылки
+                    </button>
+                    <button 
+                        id="payplay-open-all-btn" 
+                        class="w-full bg-slate-300 dark:bg-slate-700 text-slate-800 dark:text-slate-200 font-medium py-3 px-6 rounded-lg hover:bg-slate-400 dark:hover:bg-slate-600 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-slate-500 focus:ring-offset-2 hidden"
+                    >
+                        Открыть все
+                    </button>
+                </div>
+                
+                <div id="payplay-links-output" class="mt-6 flex flex-col space-y-2">
+                    <!-- Сюда будут добавляться сгенерированные ссылки -->
+                </div>
+            </div>
+             <button 
+                id="back-from-payplay-generator-btn" 
+                class="mt-6 w-full text-teal-600 dark:text-teal-400 font-medium py-3 px-6 rounded-lg hover:underline transition-all focus:outline-none"
+            >
+                ← Вернуться назад
+            </button>
+        </div>
     </div>
 
     <script>
@@ -224,14 +332,20 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
             const generatorPage = document.getElementById('generator-page');
             const userGeneratorPage = document.getElementById('user-generator-page');
             const cryptoGeneratorPage = document.getElementById('crypto-generator-page');
+            const btechGeneratorPage = document.getElementById('btech-generator-page');
+            const payplayGeneratorPage = document.getElementById('payplay-generator-page');
 
             const goToGeneratorBtn = document.getElementById('go-to-generator-btn');
             const goToUserGeneratorBtn = document.getElementById('go-to-user-generator-btn');
             const goToCryptoGeneratorBtn = document.getElementById('go-to-crypto-generator-btn');
+            const goToBtechGeneratorBtn = document.getElementById('go-to-btech-generator-btn');
+            const goToPayplayGeneratorBtn = document.getElementById('go-to-payplay-generator-btn');
 
             const backFromGeneratorBtn = document.getElementById('back-from-generator-btn');
             const backFromUserGeneratorBtn = document.getElementById('back-from-user-generator-btn');
             const backFromCryptoGeneratorBtn = document.getElementById('back-from-crypto-generator-btn');
+            const backFromBtechGeneratorBtn = document.getElementById('back-from-btech-generator-btn');
+            const backFromPayplayGeneratorBtn = document.getElementById('back-from-payplay-generator-btn');
 
 
             const generateBtn = document.getElementById('generate-btn');
@@ -248,6 +362,16 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
             const cryptoOpenAllBtn = document.getElementById('crypto-open-all-btn');
             const cryptoInput = document.getElementById('crypto-input');
             const cryptoLinksOutput = document.getElementById('crypto-links-output');
+
+            const btechGenerateBtn = document.getElementById('btech-generate-btn');
+            const btechOpenAllBtn = document.getElementById('btech-open-all-btn');
+            const btechInput = document.getElementById('btech-input');
+            const btechLinksOutput = document.getElementById('btech-links-output');
+
+            const payplayGenerateBtn = document.getElementById('payplay-generate-btn');
+            const payplayOpenAllBtn = document.getElementById('payplay-open-all-btn');
+            const payplayInput = document.getElementById('payplay-input');
+            const payplayLinksOutput = document.getElementById('payplay-links-output');
             
             const canvas = document.getElementById('background-canvas');
             const ctx = canvas.getContext('2d');
@@ -395,6 +519,8 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
                 generatorPage.classList.add('hidden');
                 userGeneratorPage.classList.add('hidden');
                 cryptoGeneratorPage.classList.add('hidden');
+                btechGeneratorPage.classList.add('hidden');
+                payplayGeneratorPage.classList.add('hidden');
                 
                 if (pageId === 'home') {
                     homePage.classList.remove('hidden');
@@ -404,13 +530,17 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
                     userGeneratorPage.classList.remove('hidden');
                 } else if (pageId === 'crypto-generator') {
                     cryptoGeneratorPage.classList.remove('hidden');
+                } else if (pageId === 'btech-generator') {
+                    btechGeneratorPage.classList.remove('hidden');
+                } else if (pageId === 'payplay-generator') {
+                    payplayGeneratorPage.classList.remove('hidden');
                 }
             }
 
             // Обработка хеша для открытия нужного раздела при загрузке/смене адреса
             function handleHashChange() {
                 const hash = window.location.hash.replace('#', '');
-                if (hash === 'generator' || hash === 'user-generator' || hash === 'crypto-generator' || hash === 'home') {
+                if (hash === 'generator' || hash === 'user-generator' || hash === 'crypto-generator' || hash === 'btech-generator' || hash === 'payplay-generator' || hash === 'home') {
                     showPage(hash);
                 } else {
                     showPage('home');
@@ -422,10 +552,113 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
             backFromGeneratorBtn.addEventListener('click', () => { window.location.hash = 'home'; });
             backFromUserGeneratorBtn.addEventListener('click', () => { window.location.hash = 'home'; });
             backFromCryptoGeneratorBtn.addEventListener('click', () => { window.location.hash = 'home'; });
+            backFromBtechGeneratorBtn.addEventListener('click', () => { window.location.hash = 'home'; });
+            backFromPayplayGeneratorBtn.addEventListener('click', () => { window.location.hash = 'home'; });
 
             // Инициализация отображения по текущему хешу и подписка на изменения
             handleHashChange();
             window.addEventListener('hashchange', handleHashChange);
+
+            // Генерация ссылок для PayPlay
+            const payplayBaseDeposits = 'https://crm.payplay.io/transactions/deposits';
+            const payplayBaseWithdrawals = 'https://crm.payplay.io/transactions/withdrawals';
+
+            function buildPayplayUrl(base, query) {
+                const params = new URLSearchParams();
+                params.set('search', query);
+                return `${base}?${params.toString()}`;
+            }
+
+            payplayGenerateBtn.addEventListener('click', () => {
+                const values = payplayInput.value
+                    .split('\n')
+                    .map(v => v.trim())
+                    .filter(v => v.length > 0);
+
+                payplayLinksOutput.innerHTML = '';
+                payplayOpenAllBtn.classList.add('hidden');
+
+                if (values.length === 0) {
+                    const noLinks = document.createElement('p');
+                    noLinks.className = "text-center text-slate-500 italic mt-4 transition-colors duration-500";
+                    noLinks.textContent = "Пожалуйста, введите значения для поиска.";
+                    payplayLinksOutput.appendChild(noLinks);
+                    return;
+                }
+
+                values.forEach(val => {
+                    const q = encodeURIComponent(val);
+                    const depUrl = buildPayplayUrl(payplayBaseDeposits, q);
+                    const wdrUrl = buildPayplayUrl(payplayBaseWithdrawals, q);
+
+                    const depLink = createLinkElement(`PayPlay Deposits: ${val}`, depUrl);
+                    const depCopy = createCopyButton(depLink);
+                    payplayLinksOutput.appendChild(createLinkContainer(depLink, depCopy));
+
+                    const wdrLink = createLinkElement(`PayPlay Withdrawals: ${val}`, wdrUrl);
+                    const wdrCopy = createCopyButton(wdrLink);
+                    payplayLinksOutput.appendChild(createLinkContainer(wdrLink, wdrCopy));
+                });
+
+                if (payplayLinksOutput.querySelectorAll('a').length > 0) {
+                    payplayOpenAllBtn.classList.remove('hidden');
+                }
+            });
+
+            payplayOpenAllBtn.addEventListener('click', () => {
+                const links = payplayLinksOutput.querySelectorAll('a');
+                links.forEach(link => {
+                    window.open(link.href, '_blank');
+                });
+            });
+
+            // Генерация ссылок для BTech Backoffice
+            const btechBase = 'https://backoffice.b-tech.tech/0b37f21a-43bf-41f7-a534-35ae9ce507da/transactions';
+            const btechTables = ['customerAddress','foreignId','merchantAccountId','merchantUserId','paymentAddress','txid'];
+
+            function buildBtechUrl(query) {
+                const params = new URLSearchParams();
+                btechTables.forEach((t) => {
+                    params.append('table', `${t},${query}`);
+                });
+                return `${btechBase}?${params.toString()}`;
+            }
+
+            btechGenerateBtn.addEventListener('click', () => {
+                const values = btechInput.value
+                    .split('\n')
+                    .map(v => v.trim())
+                    .filter(v => v.length > 0);
+
+                btechLinksOutput.innerHTML = '';
+                btechOpenAllBtn.classList.add('hidden');
+
+                if (values.length === 0) {
+                    const noLinks = document.createElement('p');
+                    noLinks.className = "text-center text-slate-500 italic mt-4 transition-colors duration-500";
+                    noLinks.textContent = "Пожалуйста, введите адреса/значения для поиска.";
+                    btechLinksOutput.appendChild(noLinks);
+                    return;
+                }
+
+                values.forEach(val => {
+                    const url = buildBtechUrl(encodeURIComponent(val));
+                    const link = createLinkElement(`BTech: ${val}`, url);
+                    const copyBtn = createCopyButton(link);
+                    btechLinksOutput.appendChild(createLinkContainer(link, copyBtn));
+                });
+
+                if (btechLinksOutput.querySelectorAll('a').length > 0) {
+                    btechOpenAllBtn.classList.remove('hidden');
+                }
+            });
+
+            btechOpenAllBtn.addEventListener('click', () => {
+                const links = btechLinksOutput.querySelectorAll('a');
+                links.forEach(link => {
+                    window.open(link.href, '_blank');
+                });
+            });
 
             // Функция для создания элемента ссылки
             function createLinkElement(text, href) {
