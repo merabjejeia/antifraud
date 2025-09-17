@@ -2,142 +2,150 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Генератор ссылок</title>
+  <link rel="icon" type="image/png" href="favicon.png">
   <style>
+    /* Общие стили */
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
-      padding: 20px;
-      transition: background 0.5s, color 0.5s;
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
+      font-family: "Inter", sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      transition: background 0.4s, color 0.4s;
     }
     .container {
-      background: rgba(0, 0, 0, 0.6);
-      padding: 20px;
-      border-radius: 10px;
-      max-width: 900px;
-      margin: auto;
+      width: 100%;
+      max-width: 600px;
+      padding: 24px;
+      border-radius: 16px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+      background: var(--bg);
+      color: var(--text);
     }
+
+    h1 {
+      font-size: 1.6rem;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
     textarea, input, button {
       width: 100%;
       margin: 10px 0;
-      padding: 10px;
-      font-size: 14px;
-      border-radius: 5px;
-      border: 1px solid #333;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      font-size: 1rem;
+      box-sizing: border-box;
+      background: var(--input-bg);
+      color: var(--text);
+      transition: 0.3s;
     }
+
+    textarea:focus, input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
     button {
       cursor: pointer;
-      transition: background 0.3s;
+      border: none;
+      background: var(--accent);
+      color: white;
+      font-weight: 500;
+      transition: background 0.3s, transform 0.2s;
     }
     button:hover {
-      opacity: 0.8;
+      background: var(--accent-hover);
+      transform: translateY(-1px);
     }
-    .output {
-      padding: 10px;
-      border-radius: 5px;
-      min-height: 100px;
-      white-space: pre-wrap;
-    }
-    .controls {
+
+    .links {
+      margin-top: 20px;
       display: flex;
+      flex-direction: column;
       gap: 10px;
-      flex-wrap: wrap;
     }
-    .controls button {
-      flex: 1;
-      min-width: 120px;
+    .link-item a {
+      color: var(--accent);
+      text-decoration: none;
+      word-break: break-all;
     }
-    /* Light theme */
-    body.light {
-      background: url('https://images.unsplash.com/photo-1556742400-b5b7c5121f1b?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
-      color: #222;
+    .link-item a:hover {
+      text-decoration: underline;
     }
-    body.light textarea, body.light input, body.light .output {
-      background: #fff;
-      color: #000;
-      border: 1px solid #ccc;
+
+    /* Темы */
+    :root {
+      --bg: #ffffff;
+      --text: #1a1a1a;
+      --border: #dcdcdc;
+      --input-bg: #f9f9f9;
+      --accent: #4f46e5;
+      --accent-hover: #3730a3;
     }
-    body.light button {
-      background: #4CAF50;
-      color: white;
-      border: none;
-    }
-    /* Dark theme */
     body.dark {
-      background: url('https://images.unsplash.com/photo-1622625074247-1d94d0f90e1a?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
-      color: #e0e0e0;
+      --bg: #18181b;
+      --text: #e4e4e7;
+      --border: #3f3f46;
+      --input-bg: #27272a;
+      --accent: #6366f1;
+      --accent-hover: #4f46e5;
     }
-    body.dark textarea, body.dark input, body.dark .output {
-      background: #1e1e1e;
-      color: #e0e0e0;
-      border: 1px solid #444;
+
+    .theme-toggle {
+      text-align: right;
+      margin-bottom: 10px;
     }
-    body.dark button {
-      background: #333;
-      color: #fff;
-      border: none;
+    .theme-toggle button {
+      width: auto;
+      padding: 8px 14px;
+      font-size: 0.9rem;
     }
   </style>
 </head>
-<body class="dark">
+<body>
   <div class="container">
-    <h2>Генератор ссылок по шаблону</h2>
-
-    <div class="controls">
-      <button onclick="generateLinks()">Сгенерировать ссылки</button>
-      <button onclick="copyLinks()">Скопировать всё</button>
-      <button onclick="openAll()">Открыть все</button>
+    <div class="theme-toggle">
       <button onclick="toggleTheme()">Сменить тему</button>
     </div>
-
-    <label>Список инвойсов (по одному в строке):</label>
-    <textarea id="invoices" rows="6" placeholder="Вставьте инвойсы сюда..."></textarea>
-
-    <label>Шаблон ссылки (используйте {invoice} как метку):</label>
-    <textarea id="template" rows="4">https://api.sequoiapay.co/?date_from=17.08.2025&date_to=16.09.2025&length=50&merchant=608&search_column=%255B%2522%255B%255C%2522external_id%255C%2522%252C%255C%2522{invoice}%255C%2522%255D%2522%252C%2522%255B%255C%2522filter_user_comment%255C%2522%252Cnull%255D%2522%255D</textarea>
-
-    <h3>Результат:</h3>
-    <div class="output" id="output"></div>
+    <h1>Генератор ссылок</h1>
+    <textarea id="invoices" rows="4" placeholder="Вставьте инвойсы по одному в строке"></textarea>
+    <input type="text" id="baseUrl" placeholder="Базовый URL (пример: https://api.sequoiapay.co/...)">
+    <input type="text" id="replaceKey" placeholder="Что заменить (например external_id)">
+    <button onclick="generateLinks()">Сгенерировать ссылки</button>
+    <button onclick="openAll()">Открыть все</button>
+    <div class="links" id="links"></div>
   </div>
 
   <script>
     function generateLinks() {
-      const invoicesText = document.getElementById("invoices").value;
-      const template = document.getElementById("template").value;
-      const invoices = invoicesText.split(/\n|\r/).map(x => x.trim()).filter(x => x);
-      let result = "";
-      invoices.forEach(inv => {
-        result += template.replace("{invoice}", inv) + "\n";
-      });
-      document.getElementById("output").textContent = result;
-    }
+      const invoices = document.getElementById("invoices").value.trim().split("\n");
+      const baseUrl = document.getElementById("baseUrl").value.trim();
+      const replaceKey = document.getElementById("replaceKey").value.trim();
+      const linksContainer = document.getElementById("links");
+      linksContainer.innerHTML = "";
 
-    function copyLinks() {
-      const text = document.getElementById("output").textContent;
-      navigator.clipboard.writeText(text).then(() => {
-        alert("Ссылки скопированы в буфер обмена!");
+      invoices.forEach(inv => {
+        if (!inv) return;
+        const url = baseUrl.replace(replaceKey, inv);
+        const div = document.createElement("div");
+        div.classList.add("link-item");
+        div.innerHTML = `<a href="${url}" target="_blank">${url}</a>`;
+        linksContainer.appendChild(div);
       });
     }
 
     function openAll() {
-      const links = document.getElementById("output").textContent.split(/\n/).filter(x => x.trim());
-      links.forEach(link => {
-        window.open(link, "_blank");
-      });
+      const links = document.querySelectorAll(".link-item a");
+      links.forEach(link => window.open(link.href, "_blank"));
     }
 
     function toggleTheme() {
-      const body = document.body;
-      if (body.classList.contains("dark")) {
-        body.classList.remove("dark");
-        body.classList.add("light");
-      } else {
-        body.classList.remove("light");
-        body.classList.add("dark");
-      }
+      document.body.classList.toggle("dark");
     }
   </script>
 </body>
