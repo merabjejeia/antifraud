@@ -21,55 +21,33 @@
             height: 100%;
             z-index: -1;
         }
-
-        /* Цвета для темной темы */
-        .dark .bg-gray-100 { @apply bg-gray-900; }
-        .dark .bg-white { @apply bg-gray-800; }
-        .dark .shadow-xl { @apply shadow-2xl shadow-black/50; }
-        .dark .text-gray-800 { @apply text-gray-100; }
-        .dark .text-gray-600 { @apply text-gray-300; }
-        .dark .bg-gray-50 { @apply bg-gray-900; }
-        .dark .border-gray-200 { @apply border-gray-700; }
-        .dark .text-gray-700 { @apply text-gray-200; }
-        .dark .text-gray-500 { @apply text-gray-400; }
-        .dark .border-gray-300 { @apply border-gray-600; }
-        .dark .placeholder-gray-400::placeholder { @apply text-gray-500; }
-        .dark .text-blue-600 { @apply text-orange-400; }
-        .dark .hover\:text-blue-800:hover { @apply hover:text-orange-300; }
-        .dark .focus\:ring-blue-500:focus { @apply ring-orange-400; }
-        .dark .bg-blue-600 { @apply bg-orange-600; }
-        .dark .hover\:bg-blue-700:hover { @apply hover:bg-orange-700; }
-        .dark .hover\:bg-gray-50:hover { @apply hover:bg-gray-700; }
-        .dark .text-gray-400 { @apply text-gray-500; }
-        .dark .hover\:text-gray-600:hover { @apply hover:text-gray-400; }
-        .dark .focus\:ring-gray-400:focus { @apply ring-gray-500; }
     </style>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4 transition-colors duration-500">
+<body class="bg-gray-100 dark:bg-gray-900 flex items-center justify-center min-h-screen p-4 transition-colors duration-500">
     <!-- Анимированный фон Canvas -->
     <canvas id="background-canvas"></canvas>
 
     <!-- Основной контейнер-карточка -->
-    <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-2xl relative z-10 transition-colors duration-500">
+    <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl dark:shadow-2xl dark:shadow-black/50 w-full max-w-2xl relative z-10 transition-colors duration-500">
         
         <!-- Кнопка смены темы -->
         <button id="theme-toggle" class="absolute top-4 right-4 p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-orange-400 transition-colors duration-500">
-            <!-- Иконка Луны (по умолчанию) -->
-            <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 text-gray-500 dark:text-orange-400 transition-transform transform duration-500">
+            <!-- Иконка Луны -->
+            <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 text-gray-500 dark:text-orange-400 transition-transform duration-500">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 12a9.75 9.75 0 0018.752 3.002z" />
             </svg>
-            <!-- Иконка Солнца (скрыта по умолчанию) -->
-            <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 text-gray-500 dark:text-orange-400 transition-transform transform duration-500 absolute top-2 right-2 scale-0">
+            <!-- Иконка Солнца -->
+            <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 text-gray-500 dark:text-orange-400 transition-transform duration-500 absolute top-2 right-2 scale-0">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.364l-1.556 1.556M21 12h-2.25m-.364 6.364l-1.556-1.556M12 21v-2.25m-6.364-.364l1.556-1.556M3 12H5.25m.364-6.364l1.556 1.556" />
             </svg>
         </button>
 
         <!-- Главная страница (по умолчанию видимая) -->
         <div id="home-page" class="space-y-6">
-            <h1 class="text-3xl font-bold text-center text-gray-800 mb-6 transition-colors duration-500">
+            <h1 class="text-3xl font-bold text-center text-gray-800 dark:text-gray-100 mb-6 transition-colors duration-500">
                 Инструменты для антифрода
             </h1>
-            <p class="text-lg text-gray-600 text-center mb-8 transition-colors duration-500">
+            <p class="text-lg text-gray-600 dark:text-gray-300 text-center mb-8 transition-colors duration-500">
                 Добро пожаловать. Выберите необходимый инструмент ниже.
             </p>
             <div class="flex flex-col space-y-4">
@@ -79,25 +57,37 @@
                 >
                     Перейти к Длинному ID вывода
                 </button>
+                <button 
+                    id="go-to-user-generator-btn" 
+                    class="w-full bg-blue-600 dark:bg-orange-600 text-white font-medium text-lg py-4 px-8 rounded-lg hover:bg-blue-700 dark:hover:bg-orange-700 transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-orange-400 focus:ring-offset-2"
+                >
+                    Перейти к Открытию пользователей
+                </button>
+                <button 
+                    id="go-to-crypto-generator-btn" 
+                    class="w-full bg-blue-600 dark:bg-orange-600 text-white font-medium text-lg py-4 px-8 rounded-lg hover:bg-blue-700 dark:hover:bg-orange-700 transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-orange-400 focus:ring-offset-2"
+                >
+                    Перейти к Криптокошелькам
+                </button>
             </div>
         </div>
 
         <!-- Раздел "Длинный ID вывода" (изначально скрытый) -->
         <div id="generator-page" class="hidden">
-            <h1 class="text-3xl font-bold text-center text-gray-800 mb-6 transition-colors duration-500">
+            <h1 class="text-3xl font-bold text-center text-gray-800 dark:text-gray-100 mb-6 transition-colors duration-500">
                 Инструменты для антифрода
             </h1>
-            <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 transition-colors duration-500">
-                <h2 class="text-xl font-semibold text-gray-700 mb-4 transition-colors duration-500">
+            <div class="bg-gray-50 dark:bg-gray-900 p-6 rounded-xl border border-gray-200 dark:border-gray-700 transition-colors duration-500">
+                <h2 class="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-4 transition-colors duration-500">
                     Длинный ID вывода
                 </h2>
-                <p class="text-sm text-gray-500 mb-4 transition-colors duration-500">
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-4 transition-colors duration-500">
                     Вставьте один или несколько номеров инвойсов, каждый с новой строки.
                 </p>
 
                 <textarea 
                     id="invoice-input" 
-                    class="w-full h-32 p-3 text-sm rounded-lg border border-gray-300 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-orange-400 mb-4 transition-colors" 
+                    class="w-full h-32 p-3 text-sm rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-orange-400 mb-4 transition-colors" 
                     placeholder="Например:
 1757862788425449503
 1757862788425449504
@@ -130,6 +120,104 @@
                 ← Вернуться назад
             </button>
         </div>
+
+        <!-- Новый раздел "Открытие пользователей" (изначально скрытый) -->
+        <div id="user-generator-page" class="hidden">
+            <h1 class="text-3xl font-bold text-center text-gray-800 dark:text-gray-100 mb-6 transition-colors duration-500">
+                Инструменты для антифрода
+            </h1>
+            <div class="bg-gray-50 dark:bg-gray-900 p-6 rounded-xl border border-gray-200 dark:border-gray-700 transition-colors duration-500">
+                <h2 class="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-4 transition-colors duration-500">
+                    Открыть пользователей по ID
+                </h2>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-4 transition-colors duration-500">
+                    Вставьте один или несколько ID пользователей, каждый с новой строки.
+                </p>
+
+                <textarea 
+                    id="user-input" 
+                    class="w-full h-32 p-3 text-sm rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-orange-400 mb-4 transition-colors" 
+                    placeholder="Например:
+23440844
+23440845
+23440846"
+                ></textarea>
+                
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                    <button 
+                        id="user-generate-btn" 
+                        class="w-full bg-blue-600 dark:bg-orange-600 text-white font-medium py-3 px-6 rounded-lg hover:bg-blue-700 dark:hover:bg-orange-700 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-orange-400 focus:ring-offset-2"
+                    >
+                        Сгенерировать ссылки
+                    </button>
+                    <button 
+                        id="user-open-all-btn" 
+                        class="w-full bg-gray-400 dark:bg-gray-500 text-white font-medium py-3 px-6 rounded-lg hover:bg-gray-500 dark:hover:bg-gray-600 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-gray-400 dark:focus:ring-gray-500 focus:ring-offset-2 hidden"
+                    >
+                        Открыть все
+                    </button>
+                </div>
+                
+                <div id="user-links-output" class="mt-6 flex flex-col space-y-2">
+                    <!-- Сюда будут добавляться сгенерированные ссылки -->
+                </div>
+            </div>
+             <button 
+                id="back-from-user-generator-btn" 
+                class="mt-6 w-full text-blue-600 dark:text-orange-400 font-medium py-3 px-6 rounded-lg hover:underline transition-all focus:outline-none"
+            >
+                ← Вернуться назад
+            </button>
+        </div>
+        
+        <!-- Новый раздел "Криптокошельки" (изначально скрытый) -->
+        <div id="crypto-generator-page" class="hidden">
+            <h1 class="text-3xl font-bold text-center text-gray-800 dark:text-gray-100 mb-6 transition-colors duration-500">
+                Инструменты для антифрода
+            </h1>
+            <div class="bg-gray-50 dark:bg-gray-900 p-6 rounded-xl border border-gray-200 dark:border-gray-700 transition-colors duration-500">
+                <h2 class="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-4 transition-colors duration-500">
+                    Криптокошельки
+                </h2>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-4 transition-colors duration-500">
+                    Вставьте один или несколько адресов кошельков, каждый с новой строки.
+                </p>
+
+                <textarea 
+                    id="crypto-input" 
+                    class="w-full h-32 p-3 text-sm rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-orange-400 mb-4 transition-colors" 
+                    placeholder="Например:
+0x71c7656ec7ab88b098defb751b7401b5f6d8976f
+1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
+H68Jv329h58L98eW6Xz7m71y932c9jE9c8D6vS4p"
+                ></textarea>
+                
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                    <button 
+                        id="crypto-generate-btn" 
+                        class="w-full bg-blue-600 dark:bg-orange-600 text-white font-medium py-3 px-6 rounded-lg hover:bg-blue-700 dark:hover:bg-orange-700 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-orange-400 focus:ring-offset-2"
+                    >
+                        Сгенерировать ссылки
+                    </button>
+                    <button 
+                        id="crypto-open-all-btn" 
+                        class="w-full bg-gray-400 dark:bg-gray-500 text-white font-medium py-3 px-6 rounded-lg hover:bg-gray-500 dark:hover:bg-gray-600 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-gray-400 dark:focus:ring-gray-500 focus:ring-offset-2 hidden"
+                    >
+                        Открыть все
+                    </button>
+                </div>
+                
+                <div id="crypto-links-output" class="mt-6 flex flex-col space-y-2">
+                    <!-- Сюда будут добавляться сгенерированные ссылки -->
+                </div>
+            </div>
+             <button 
+                id="back-from-crypto-generator-btn" 
+                class="mt-6 w-full text-blue-600 dark:text-orange-400 font-medium py-3 px-6 rounded-lg hover:underline transition-all focus:outline-none"
+            >
+                ← Вернуться назад
+            </button>
+        </div>
     </div>
 
     <script>
@@ -140,13 +228,32 @@
 
             const homePage = document.getElementById('home-page');
             const generatorPage = document.getElementById('generator-page');
+            const userGeneratorPage = document.getElementById('user-generator-page');
+            const cryptoGeneratorPage = document.getElementById('crypto-generator-page');
+
             const goToGeneratorBtn = document.getElementById('go-to-generator-btn');
+            const goToUserGeneratorBtn = document.getElementById('go-to-user-generator-btn');
+            const goToCryptoGeneratorBtn = document.getElementById('go-to-crypto-generator-btn');
+
             const backFromGeneratorBtn = document.getElementById('back-from-generator-btn');
+            const backFromUserGeneratorBtn = document.getElementById('back-from-user-generator-btn');
+            const backFromCryptoGeneratorBtn = document.getElementById('back-from-crypto-generator-btn');
+
 
             const generateBtn = document.getElementById('generate-btn');
             const openAllBtn = document.getElementById('open-all-btn');
             const invoiceInput = document.getElementById('invoice-input');
             const linksOutput = document.getElementById('links-output');
+            
+            const userGenerateBtn = document.getElementById('user-generate-btn');
+            const userOpenAllBtn = document.getElementById('user-open-all-btn');
+            const userInput = document.getElementById('user-input');
+            const userLinksOutput = document.getElementById('user-links-output');
+
+            const cryptoGenerateBtn = document.getElementById('crypto-generate-btn');
+            const cryptoOpenAllBtn = document.getElementById('crypto-open-all-btn');
+            const cryptoInput = document.getElementById('crypto-input');
+            const cryptoLinksOutput = document.getElementById('crypto-links-output');
             
             const canvas = document.getElementById('background-canvas');
             const ctx = canvas.getContext('2d');
@@ -243,21 +350,27 @@
             function updateTheme(isDark) {
                 if (isDark) {
                     document.documentElement.classList.add('dark');
+                    moonIcon.classList.remove('scale-100');
                     moonIcon.classList.add('scale-0');
                     sunIcon.classList.remove('scale-0');
-                    
+                    sunIcon.classList.add('scale-100');
+                    localStorage.theme = 'dark';
                 } else {
                     document.documentElement.classList.remove('dark');
                     moonIcon.classList.remove('scale-0');
+                    moonIcon.classList.add('scale-100');
+                    sunIcon.classList.remove('scale-100');
                     sunIcon.classList.add('scale-0');
+                    localStorage.theme = 'light';
                 }
                 initParticles(); // Перезапуск частиц с новым цветом
             }
 
-            // Проверяем системные предпочтения
-            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-            if (prefersDarkScheme.matches) {
+            // Проверяем системные предпочтения и localStorage при загрузке
+            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
                 updateTheme(true);
+            } else {
+                updateTheme(false);
             }
 
             themeToggleBtn.addEventListener('click', () => {
@@ -270,21 +383,85 @@
             function showPage(pageId) {
                 homePage.classList.add('hidden');
                 generatorPage.classList.add('hidden');
+                userGeneratorPage.classList.add('hidden');
+                cryptoGeneratorPage.classList.add('hidden');
                 
                 if (pageId === 'home') {
                     homePage.classList.remove('hidden');
                 } else if (pageId === 'generator') {
                     generatorPage.classList.remove('hidden');
+                } else if (pageId === 'user-generator') {
+                    userGeneratorPage.classList.remove('hidden');
+                } else if (pageId === 'crypto-generator') {
+                    cryptoGeneratorPage.classList.remove('hidden');
                 }
             }
 
             // Обработчики для кнопок перехода
             goToGeneratorBtn.addEventListener('click', () => showPage('generator'));
+            goToUserGeneratorBtn.addEventListener('click', () => showPage('user-generator'));
+            goToCryptoGeneratorBtn.addEventListener('click', () => showPage('crypto-generator'));
+            
             backFromGeneratorBtn.addEventListener('click', () => showPage('home'));
+            backFromUserGeneratorBtn.addEventListener('click', () => showPage('home'));
+            backFromCryptoGeneratorBtn.addEventListener('click', () => showPage('home'));
 
+            // Функция для создания элемента ссылки
+            function createLinkElement(text, href) {
+                const link = document.createElement('a');
+                link.href = href;
+                link.textContent = text;
+                link.target = "_blank"; 
+                link.className = "text-blue-600 dark:text-orange-400 hover:text-blue-800 dark:hover:text-orange-300 hover:underline transition-colors text-sm truncate";
+                return link;
+            }
+
+            // Функция для создания элемента кнопки копирования
+            function createCopyButton(linkElement) {
+                const copyBtn = document.createElement('button');
+                copyBtn.className = "text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-400 transition-colors ml-4 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-orange-400 rounded-md";
+                copyBtn.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M7 9a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2H9a2 2 0 01-2-2V9z" />
+                        <path d="M5 3a2 2 0 00-2 2v6a2 2 0 002 2V5h8a2 2 0 00-2-2H5z" />
+                    </svg>
+                `;
+                copyBtn.title = "Скопировать ссылку";
+                copyBtn.addEventListener('click', (event) => {
+                    event.preventDefault(); 
+                    const linkToCopy = linkElement.href;
+                    const tempInput = document.createElement('textarea');
+                    tempInput.value = linkToCopy;
+                    document.body.appendChild(tempInput);
+                    tempInput.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(tempInput);
+                    
+                    const originalSVG = copyBtn.innerHTML;
+                    copyBtn.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 dark:text-green-400" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                        </svg>
+                    `;
+
+                    setTimeout(() => {
+                        copyBtn.innerHTML = originalSVG;
+                    }, 2000);
+                });
+                return copyBtn;
+            }
+
+            // Функция для создания элемента-контейнера ссылки
+            function createLinkContainer(link, copyBtn) {
+                const linkContainer = document.createElement('div');
+                linkContainer.className = "flex items-center justify-between p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-500";
+                linkContainer.appendChild(link);
+                linkContainer.appendChild(copyBtn);
+                return linkContainer;
+            }
 
             // Логика генератора инвойсов
-            const baseUrl = "https://lixog.com/ru/admin/app/asyncpayment/list?filter%5B_page%5D=1&filter%5B_per_page%5D=250&filter%5B_sort_by%5D=createdAt&filter%5B_sort_order%5D=DESC&filter%5Buuid%5D%5Btype%5D=3&filter%5Buuid%5D%5Bvalue%5D=";
+            const invoiceBaseUrl = "https://lixog.com/ru/admin/app/asyncpayment/list?filter%5B_page%5D=1&filter%5B_per_page%5D=250&filter%5B_sort_by%5D=createdAt&filter%5B_sort_order%5D=DESC&filter%5Buuid%5D%5Btype%5D=3&filter%5Buuid%5D%5Bvalue%5D=";
 
             generateBtn.addEventListener('click', () => {
                 const invoices = invoiceInput.value
@@ -304,52 +481,10 @@
                 }
 
                 invoices.forEach(invoice => {
-                    const fullUrl = `${baseUrl}${encodeURIComponent(invoice)}`;
-                    
-                    const link = document.createElement('a');
-                    link.href = fullUrl;
-                    link.textContent = `Инвойс: ${invoice}`;
-                    link.target = "_blank"; 
-                    link.className = "text-blue-600 dark:text-orange-400 hover:text-blue-800 dark:hover:text-orange-300 hover:underline transition-colors text-sm truncate";
-
-                    const linkContainer = document.createElement('div');
-                    linkContainer.className = "flex items-center justify-between p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-500";
-
-                    const copyBtn = document.createElement('button');
-                    copyBtn.className = "text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-400 transition-colors ml-4 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-orange-400 rounded-md";
-                    copyBtn.innerHTML = `
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M7 9a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2H9a2 2 0 01-2-2V9z" />
-                            <path d="M5 3a2 2 0 00-2 2v6a2 2 0 002 2V5h8a2 2 0 00-2-2H5z" />
-                        </svg>
-                    `;
-                    
-                    copyBtn.title = "Скопировать ссылку";
-                    copyBtn.addEventListener('click', (event) => {
-                        event.preventDefault(); 
-                        const linkToCopy = link.href;
-                        const tempInput = document.createElement('textarea');
-                        tempInput.value = linkToCopy;
-                        document.body.appendChild(tempInput);
-                        tempInput.select();
-                        document.execCommand('copy');
-                        document.body.removeChild(tempInput);
-                        
-                        const originalSVG = copyBtn.innerHTML;
-                        copyBtn.innerHTML = `
-                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 dark:text-green-400" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                            </svg>
-                        `;
-
-                        setTimeout(() => {
-                            copyBtn.innerHTML = originalSVG;
-                        }, 2000);
-                    });
-
-                    linkContainer.appendChild(link);
-                    linkContainer.appendChild(copyBtn);
-                    linksOutput.appendChild(linkContainer);
+                    const fullUrl = `${invoiceBaseUrl}${encodeURIComponent(invoice)}`;
+                    const link = createLinkElement(`Инвойс: ${invoice}`, fullUrl);
+                    const copyBtn = createCopyButton(link);
+                    linksOutput.appendChild(createLinkContainer(link, copyBtn));
                 });
 
                 if (invoices.length > 0) {
@@ -359,6 +494,140 @@
 
             openAllBtn.addEventListener('click', () => {
                 const links = linksOutput.querySelectorAll('a');
+                links.forEach(link => {
+                    window.open(link.href, '_blank');
+                });
+            });
+
+            // Логика генератора пользователей
+            const userBaseUrl = "https://lixog.com/ru/admin/app/user/";
+
+            userGenerateBtn.addEventListener('click', () => {
+                const userIds = userInput.value
+                    .split('\n')
+                    .map(id => id.trim())
+                    .filter(id => id.length > 0);
+
+                userLinksOutput.innerHTML = '';
+                userOpenAllBtn.classList.add('hidden'); 
+
+                if (userIds.length === 0) {
+                    const noLinks = document.createElement('p');
+                    noLinks.className = "text-center text-gray-500 italic mt-4 transition-colors duration-500";
+                    noLinks.textContent = "Пожалуйста, введите ID пользователей.";
+                    userLinksOutput.appendChild(noLinks);
+                    return;
+                }
+
+                userIds.forEach(userId => {
+                    const fullUrl = `${userBaseUrl}${encodeURIComponent(userId)}/show`;
+                    const link = createLinkElement(`Пользователь: ${userId}`, fullUrl);
+                    const copyBtn = createCopyButton(link);
+                    userLinksOutput.appendChild(createLinkContainer(link, copyBtn));
+                });
+
+                if (userIds.length > 0) {
+                    userOpenAllBtn.classList.remove('hidden');
+                }
+            });
+
+            userOpenAllBtn.addEventListener('click', () => {
+                const links = userLinksOutput.querySelectorAll('a');
+                links.forEach(link => {
+                    window.open(link.href, '_blank');
+                });
+            });
+
+            // Логика генератора криптокошельков
+            const cryptoExplorers = {
+                btc: {
+                    name: 'Bitcoin',
+                    url: 'https://blockchain.com/btc/address/'
+                },
+                eth: {
+                    name: 'Ethereum',
+                    url: 'https://etherscan.io/address/'
+                },
+                sol: {
+                    name: 'Solana',
+                    url: 'https://solscan.io/address/'
+                },
+                ltc: {
+                    name: 'Litecoin',
+                    url: 'https://live.blockcypher.com/ltc/address/'
+                },
+                doge: {
+                    name: 'Dogecoin',
+                    url: 'https://dogechain.info/address/'
+                }
+            };
+
+            function getWalletNetwork(address) {
+                const normalizedAddress = address.trim();
+                // Bitcoin (P2PKH, P2SH, Bech32)
+                if (/^1[a-km-zA-HJ-NP-Z1-9]{25,34}$/.test(normalizedAddress) || /^3[a-km-zA-HJ-NP-Z1-9]{25,34}$/.test(normalizedAddress) || /^bc1[ac-hj-np-z02-9]{25,39}$/.test(normalizedAddress)) {
+                    return 'btc';
+                }
+                // Ethereum and other EVM chains (simple heuristic)
+                if (/^0x[a-fA-F0-9]{40}$/.test(normalizedAddress)) {
+                    return 'eth'; // Assume Ethereum for simplicity
+                }
+                // Solana (Base58, length can vary)
+                if (/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(normalizedAddress) && normalizedAddress.length > 40) {
+                    return 'sol';
+                }
+                // Litecoin
+                if (/^[LM][a-km-zA-HJ-NP-Z1-9]{26,33}$/.test(normalizedAddress)) {
+                    return 'ltc';
+                }
+                // Dogecoin
+                if (/^D[5-9A-HJ-NP-Z]{32}$/.test(normalizedAddress)) {
+                    return 'doge';
+                }
+                return null;
+            }
+
+            cryptoGenerateBtn.addEventListener('click', () => {
+                const addresses = cryptoInput.value
+                    .split('\n')
+                    .map(address => address.trim())
+                    .filter(address => address.length > 0);
+
+                cryptoLinksOutput.innerHTML = '';
+                cryptoOpenAllBtn.classList.add('hidden'); 
+
+                if (addresses.length === 0) {
+                    const noLinks = document.createElement('p');
+                    noLinks.className = "text-center text-gray-500 italic mt-4 transition-colors duration-500";
+                    noLinks.textContent = "Пожалуйста, введите адреса кошельков.";
+                    cryptoLinksOutput.appendChild(noLinks);
+                    return;
+                }
+
+                addresses.forEach(address => {
+                    const network = getWalletNetwork(address);
+                    
+                    if (network) {
+                        const explorer = cryptoExplorers[network];
+                        const fullUrl = `${explorer.url}${encodeURIComponent(address)}`;
+                        const link = createLinkElement(`${explorer.name}: ${address}`, fullUrl);
+                        const copyBtn = createCopyButton(link);
+                        cryptoLinksOutput.appendChild(createLinkContainer(link, copyBtn));
+                    } else {
+                        const unknownLink = document.createElement('p');
+                        unknownLink.className = "text-red-500 dark:text-red-400 text-sm italic mt-2";
+                        unknownLink.textContent = `Адрес "${address}" не распознан.`;
+                        cryptoLinksOutput.appendChild(unknownLink);
+                    }
+                });
+
+                if (cryptoLinksOutput.querySelectorAll('a').length > 0) {
+                    cryptoOpenAllBtn.classList.remove('hidden');
+                }
+            });
+
+            cryptoOpenAllBtn.addEventListener('click', () => {
+                const links = cryptoLinksOutput.querySelectorAll('a');
                 links.forEach(link => {
                     window.open(link.href, '_blank');
                 });
