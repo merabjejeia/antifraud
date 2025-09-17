@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Генератор ссылок</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      transition: background 0.5s, color 0.5s;
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+    .container {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 900px;
+      margin: auto;
+    }
+    textarea, input, button {
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+      font-size: 14px;
+      border-radius: 5px;
+      border: 1px solid #333;
+    }
+    button {
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      opacity: 0.8;
+    }
+    .output {
+      padding: 10px;
+      border-radius: 5px;
+      min-height: 100px;
+      white-space: pre-wrap;
+    }
+    .controls {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .controls button {
+      flex: 1;
+      min-width: 120px;
+    }
+    /* Light theme */
+    body.light {
+      background: url('https://images.unsplash.com/photo-1556742400-b5b7c5121f1b?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
+      color: #222;
+    }
+    body.light textarea, body.light input, body.light .output {
+      background: #fff;
+      color: #000;
+      border: 1px solid #ccc;
+    }
+    body.light button {
+      background: #4CAF50;
+      color: white;
+      border: none;
+    }
+    /* Dark theme */
+    body.dark {
+      background: url('https://images.unsplash.com/photo-1622625074247-1d94d0f90e1a?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
+      color: #e0e0e0;
+    }
+    body.dark textarea, body.dark input, body.dark .output {
+      background: #1e1e1e;
+      color: #e0e0e0;
+      border: 1px solid #444;
+    }
+    body.dark button {
+      background: #333;
+      color: #fff;
+      border: none;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <h2>Генератор ссылок по шаблону</h2>
+
+    <div class="controls">
+      <button onclick="generateLinks()">Сгенерировать ссылки</button>
+      <button onclick="copyLinks()">Скопировать всё</button>
+      <button onclick="openAll()">Открыть все</button>
+      <button onclick="toggleTheme()">Сменить тему</button>
+    </div>
+
+    <label>Список инвойсов (по одному в строке):</label>
+    <textarea id="invoices" rows="6" placeholder="Вставьте инвойсы сюда..."></textarea>
+
+    <label>Шаблон ссылки (используйте {invoice} как метку):</label>
+    <textarea id="template" rows="4">https://api.sequoiapay.co/?date_from=17.08.2025&date_to=16.09.2025&length=50&merchant=608&search_column=%255B%2522%255B%255C%2522external_id%255C%2522%252C%255C%2522{invoice}%255C%2522%255D%2522%252C%2522%255B%255C%2522filter_user_comment%255C%2522%252Cnull%255D%2522%255D</textarea>
+
+    <h3>Результат:</h3>
+    <div class="output" id="output"></div>
+  </div>
+
+  <script>
+    function generateLinks() {
+      const invoicesText = document.getElementById("invoices").value;
+      const template = document.getElementById("template").value;
+      const invoices = invoicesText.split(/\n|\r/).map(x => x.trim()).filter(x => x);
+      let result = "";
+      invoices.forEach(inv => {
+        result += template.replace("{invoice}", inv) + "\n";
+      });
+      document.getElementById("output").textContent = result;
+    }
+
+    function copyLinks() {
+      const text = document.getElementById("output").textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        alert("Ссылки скопированы в буфер обмена!");
+      });
+    }
+
+    function openAll() {
+      const links = document.getElementById("output").textContent.split(/\n/).filter(x => x.trim());
+      links.forEach(link => {
+        window.open(link, "_blank");
+      });
+    }
+
+    function toggleTheme() {
+      const body = document.body;
+      if (body.classList.contains("dark")) {
+        body.classList.remove("dark");
+        body.classList.add("light");
+      } else {
+        body.classList.remove("light");
+        body.classList.add("dark");
+      }
+    }
+  </script>
+</body>
+</html>
