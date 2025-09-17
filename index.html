@@ -109,7 +109,7 @@
     <div class="theme-toggle">
       <button onclick="toggleTheme()">Сменить тему</button>
     </div>
-    <h2>Генератор ссылок по шаблону</h2>
+    <h1>Генератор ссылок по шаблону</h1>
   
   <label>Список инвойсов (по одному в строке):</label>
   <textarea id="invoices" rows="6" placeholder="Вставьте инвойсы сюда..."></textarea>
@@ -118,7 +118,7 @@
   <textarea id="template" rows="4">https://api.sequoiapay.co/?date_from=17.08.2025&date_to=16.09.2025&length=50&merchant=608&search_column=%255B%2522%255B%255C%2522external_id%255C%2522%252C%255C%2522{invoice}%255C%2522%255D%2522%252C%2522%255B%255C%2522filter_user_comment%255C%2522%252Cnull%255D%2522%255D</textarea>
 
   <button onclick="generateLinks()">Сгенерировать ссылки</button>
-  <button onclick="copyLinks()">Скопировать всё</button>
+  <button onclick="openLinks()">Открыть все</button>
 
   <h3>Результат:</h3>
   <div class="output" id="output"></div>
@@ -139,6 +139,13 @@
       const text = document.getElementById("output").textContent;
       navigator.clipboard.writeText(text).then(() => {
         alert("Ссылки скопированы в буфер обмена!");
+      });
+    }
+
+    function openLinks() {
+      const links = document.getElementById("output").textContent.split(/\n/).filter(x => x);
+      links.forEach(link => {
+        window.open(link, '_blank');
       });
     }
   </script>
