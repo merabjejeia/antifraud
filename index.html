@@ -43,24 +43,30 @@
                 Добро пожаловать. Выберите необходимый инструмент ниже.
             </p>
             <div class="flex flex-col space-y-4">
-                <button 
-                    id="go-to-generator-btn" 
-                    class="w-full bg-teal-500 dark:bg-teal-600 text-white font-medium text-lg py-4 px-8 rounded-lg hover:bg-teal-600 dark:hover:bg-teal-700 transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 focus:ring-offset-2"
+                <a 
+                    id="go-to-generator-btn"
+                    href="#generator"
+                    target="_blank" rel="noopener noreferrer"
+                    class="w-full text-center bg-teal-500 dark:bg-teal-600 text-white font-medium text-lg py-4 px-8 rounded-lg hover:bg-teal-600 dark:hover:bg-teal-700 transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 focus:ring-offset-2"
                 >
                     Длинный ID вывода
-                </button>
-                <button 
-                    id="go-to-user-generator-btn" 
-                    class="w-full bg-teal-500 dark:bg-teal-600 text-white font-medium text-lg py-4 px-8 rounded-lg hover:bg-teal-600 dark:hover:bg-teal-700 transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 focus:ring-offset-2"
+                </a>
+                <a 
+                    id="go-to-user-generator-btn"
+                    href="#user-generator"
+                    target="_blank" rel="noopener noreferrer"
+                    class="w-full text-center bg-teal-500 dark:bg-teal-600 text-white font-medium text-lg py-4 px-8 rounded-lg hover:bg-teal-600 dark:hover:bg-teal-700 transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 focus:ring-offset-2"
                 >
                     ID пользователя
-                </button>
-                <button 
-                    id="go-to-crypto-generator-btn" 
-                    class="w-full bg-teal-500 dark:bg-teal-600 text-white font-medium text-lg py-4 px-8 rounded-lg hover:bg-teal-600 dark:hover:bg-teal-700 transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 focus:ring-offset-2"
+                </a>
+                <a 
+                    id="go-to-crypto-generator-btn"
+                    href="#crypto-generator"
+                    target="_blank" rel="noopener noreferrer"
+                    class="w-full text-center bg-teal-500 dark:bg-teal-600 text-white font-medium text-lg py-4 px-8 rounded-lg hover:bg-teal-600 dark:hover:bg-teal-700 transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 focus:ring-offset-2"
                 >
                     Криптокошельки
-                </button>
+                </a>
             </div>
         </div>
 
@@ -401,14 +407,33 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
                 }
             }
 
-            // Обработчики для кнопок перехода
-            goToGeneratorBtn.addEventListener('click', () => showPage('generator'));
-            goToUserGeneratorBtn.addEventListener('click', () => showPage('user-generator'));
-            goToCryptoGeneratorBtn.addEventListener('click', () => showPage('crypto-generator'));
+            // Обработка хеша для открытия нужного раздела при загрузке/смене адреса
+            function handleHashChange() {
+                const hash = window.location.hash.replace('#', '');
+                if (hash === 'generator' || hash === 'user-generator' || hash === 'crypto-generator' || hash === 'home') {
+                    showPage(hash);
+                } else {
+                    showPage('home');
+                }
+            }
+
+            // Обработчики для кнопок перехода (открытие в новой вкладке)
+            function openInNewTabWithHash(hash) {
+                const baseUrl = window.location.href.split('#')[0];
+                window.open(`${baseUrl}#${hash}`, '_blank', 'noopener,noreferrer');
+            }
+
+            goToGeneratorBtn.addEventListener('click', () => openInNewTabWithHash('generator'));
+            goToUserGeneratorBtn.addEventListener('click', () => openInNewTabWithHash('user-generator'));
+            goToCryptoGeneratorBtn.addEventListener('click', () => openInNewTabWithHash('crypto-generator'));
             
-            backFromGeneratorBtn.addEventListener('click', () => showPage('home'));
-            backFromUserGeneratorBtn.addEventListener('click', () => showPage('home'));
-            backFromCryptoGeneratorBtn.addEventListener('click', () => showPage('home'));
+            backFromGeneratorBtn.addEventListener('click', () => { window.location.hash = 'home'; });
+            backFromUserGeneratorBtn.addEventListener('click', () => { window.location.hash = 'home'; });
+            backFromCryptoGeneratorBtn.addEventListener('click', () => { window.location.hash = 'home'; });
+
+            // Инициализация отображения по текущему хешу и подписка на изменения
+            handleHashChange();
+            window.addEventListener('hashchange', handleHashChange);
 
             // Функция для создания элемента ссылки
             function createLinkElement(text, href) {
