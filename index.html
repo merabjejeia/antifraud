@@ -10,6 +10,7 @@
     
     <!-- Подключение Tailwind CSS из CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js" integrity="sha512-NYQdGqVmzD0wL3oJt2YzX6qQ6rQY3kXWkWZ2b1i9iQx1lG9Nn3m0zN0Ih6M1FvX7kR9H3m1s9m1G6mS6y0m1w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
         /* Устанавливаем шрифт Inter */
         body {
@@ -83,6 +84,14 @@
                 >
                     PayPlay: депозиты и выводы
                 </a>
+                <a 
+                    id="go-to-tracker-generator-btn"
+                    href="#tracker-generator"
+                    target="_blank" rel="noopener noreferrer"
+                    class="w-full text-center bg-teal-500 dark:bg-teal-600 text-white font-medium text-lg py-4 px-8 rounded-lg hover:bg-teal-600 dark:hover:bg-teal-700 transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 focus:ring-offset-2"
+                >
+                    Трекинг транзакций и визуализация
+                </a>
             </div>
         </div>
 
@@ -135,6 +144,54 @@
             </button>
         </div>
 
+        <!-- Новый раздел "Трекинг транзакций и визуализация" (изначально скрытый) -->
+        <div id="tracker-generator-page" class="hidden">
+            <h1 class="text-3xl font-bold text-center text-slate-800 dark:text-slate-100 mb-6 transition-colors duration-500">
+                Инструменты для антифрода
+            </h1>
+            <div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 transition-colors duration-500">
+                <h2 class="text-xl font-semibold text-slate-700 dark:text-slate-200 mb-4 transition-colors duration-500">
+                    Трекинг транзакций и граф переводов
+                </h2>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mb-4 transition-colors duration-500">
+                    Вставьте адрес кошелька. Опционально укажите API ключ Etherscan для ETH. Будут сгенерированы ссылки на обозреватели и построен граф недавних переводов (если доступен API).
+                </p>
+
+                <label class="block text-sm text-slate-600 dark:text-slate-400 mb-1">Адрес кошелька</label>
+                <input id="tracker-address" class="w-full p-3 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 mb-3 transition-colors" placeholder="0x..., bc1..., T..., UQ..., r..." />
+
+                <label class="block text-sm text-slate-600 dark:text-slate-400 mb-1">Etherscan API Key (опционально)</label>
+                <input id="tracker-etherscan-key" class="w-full p-3 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 mb-4 transition-colors" placeholder="если хотите подтянуть транзакции ETH" />
+
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                    <button 
+                        id="tracker-generate-links-btn" 
+                        class="w-full bg-teal-500 dark:bg-teal-600 text-white font-medium py-3 px-6 rounded-lg hover:bg-teal-600 dark:hover:bg-teal-700 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 focus:ring-offset-2"
+                    >
+                        Сгенерировать ссылки
+                    </button>
+                    <button 
+                        id="tracker-build-graph-btn" 
+                        class="w-full bg-slate-300 dark:bg-slate-700 text-slate-800 dark:text-slate-200 font-medium py-3 px-6 rounded-lg hover:bg-slate-400 dark:hover:bg-slate-600 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-slate-500 focus:ring-offset-2"
+                    >
+                        Построить граф
+                    </button>
+                </div>
+
+                <div id="tracker-links-output" class="mt-6 flex flex-col space-y-2"></div>
+                <div class="mt-6">
+                    <h3 class="text-lg font-semibold text-slate-700 dark:text-slate-200 mb-2">Визуализация</h3>
+                    <div id="tracker-graph" class="w-full h-80 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden"></div>
+                    <p id="tracker-graph-note" class="text-xs text-slate-500 dark:text-slate-400 mt-2">Примечание: граф строится по публичным API (BTC: blockchain.info, TRON: Tronscan, ETH: Etherscan c API ключом). Может быть ограничен CORS или лимитами.</p>
+                </div>
+            </div>
+             <button 
+                id="back-from-tracker-generator-btn" 
+                class="mt-6 w-full text-teal-600 dark:text-teal-400 font-medium py-3 px-6 rounded-lg hover:underline transition-all focus:outline-none"
+            >
+                ← Вернуться назад
+            </button>
+        </div>
         <!-- Новый раздел "Открытие пользователей" (изначально скрытый) -->
         <div id="user-generator-page" class="hidden">
             <h1 class="text-3xl font-bold text-center text-slate-800 dark:text-slate-100 mb-6 transition-colors duration-500">
@@ -334,18 +391,21 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
             const cryptoGeneratorPage = document.getElementById('crypto-generator-page');
             const btechGeneratorPage = document.getElementById('btech-generator-page');
             const payplayGeneratorPage = document.getElementById('payplay-generator-page');
+            const trackerGeneratorPage = document.getElementById('tracker-generator-page');
 
             const goToGeneratorBtn = document.getElementById('go-to-generator-btn');
             const goToUserGeneratorBtn = document.getElementById('go-to-user-generator-btn');
             const goToCryptoGeneratorBtn = document.getElementById('go-to-crypto-generator-btn');
             const goToBtechGeneratorBtn = document.getElementById('go-to-btech-generator-btn');
             const goToPayplayGeneratorBtn = document.getElementById('go-to-payplay-generator-btn');
+            const goToTrackerGeneratorBtn = document.getElementById('go-to-tracker-generator-btn');
 
             const backFromGeneratorBtn = document.getElementById('back-from-generator-btn');
             const backFromUserGeneratorBtn = document.getElementById('back-from-user-generator-btn');
             const backFromCryptoGeneratorBtn = document.getElementById('back-from-crypto-generator-btn');
             const backFromBtechGeneratorBtn = document.getElementById('back-from-btech-generator-btn');
             const backFromPayplayGeneratorBtn = document.getElementById('back-from-payplay-generator-btn');
+            const backFromTrackerGeneratorBtn = document.getElementById('back-from-tracker-generator-btn');
 
 
             const generateBtn = document.getElementById('generate-btn');
@@ -372,6 +432,13 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
             const payplayOpenAllBtn = document.getElementById('payplay-open-all-btn');
             const payplayInput = document.getElementById('payplay-input');
             const payplayLinksOutput = document.getElementById('payplay-links-output');
+
+            const trackerAddressInput = document.getElementById('tracker-address');
+            const trackerEtherscanKeyInput = document.getElementById('tracker-etherscan-key');
+            const trackerGenerateLinksBtn = document.getElementById('tracker-generate-links-btn');
+            const trackerBuildGraphBtn = document.getElementById('tracker-build-graph-btn');
+            const trackerLinksOutput = document.getElementById('tracker-links-output');
+            const trackerGraphEl = document.getElementById('tracker-graph');
             
             const canvas = document.getElementById('background-canvas');
             const ctx = canvas.getContext('2d');
@@ -521,6 +588,7 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
                 cryptoGeneratorPage.classList.add('hidden');
                 btechGeneratorPage.classList.add('hidden');
                 payplayGeneratorPage.classList.add('hidden');
+                trackerGeneratorPage.classList.add('hidden');
                 
                 if (pageId === 'home') {
                     homePage.classList.remove('hidden');
@@ -534,13 +602,15 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
                     btechGeneratorPage.classList.remove('hidden');
                 } else if (pageId === 'payplay-generator') {
                     payplayGeneratorPage.classList.remove('hidden');
+                } else if (pageId === 'tracker-generator') {
+                    trackerGeneratorPage.classList.remove('hidden');
                 }
             }
 
             // Обработка хеша для открытия нужного раздела при загрузке/смене адреса
             function handleHashChange() {
                 const hash = window.location.hash.replace('#', '');
-                if (hash === 'generator' || hash === 'user-generator' || hash === 'crypto-generator' || hash === 'btech-generator' || hash === 'payplay-generator' || hash === 'home') {
+                if (hash === 'generator' || hash === 'user-generator' || hash === 'crypto-generator' || hash === 'btech-generator' || hash === 'payplay-generator' || hash === 'tracker-generator' || hash === 'home') {
                     showPage(hash);
                 } else {
                     showPage('home');
@@ -554,10 +624,186 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
             backFromCryptoGeneratorBtn.addEventListener('click', () => { window.location.hash = 'home'; });
             backFromBtechGeneratorBtn.addEventListener('click', () => { window.location.hash = 'home'; });
             backFromPayplayGeneratorBtn.addEventListener('click', () => { window.location.hash = 'home'; });
+            backFromTrackerGeneratorBtn.addEventListener('click', () => { window.location.hash = 'home'; });
 
             // Инициализация отображения по текущему хешу и подписка на изменения
             handleHashChange();
             window.addEventListener('hashchange', handleHashChange);
+
+            // Трекинг: генерация ссылок в обозревателях
+            trackerGenerateLinksBtn?.addEventListener('click', () => {
+                const addr = (trackerAddressInput?.value || '').trim();
+                trackerLinksOutput.innerHTML = '';
+                if (!addr) {
+                    const p = document.createElement('p');
+                    p.className = 'text-center text-slate-500 italic mt-2';
+                    p.textContent = 'Введите адрес кошелька.';
+                    trackerLinksOutput.appendChild(p);
+                    return;
+                }
+
+                const networks = getWalletNetwork(addr) || [];
+                if (networks.length === 0) {
+                    const p = document.createElement('p');
+                    p.className = 'text-center text-slate-500 italic mt-2';
+                    p.textContent = 'Не удалось распознать сеть адреса.';
+                    trackerLinksOutput.appendChild(p);
+                    return;
+                }
+
+                networks.forEach(nw => {
+                    const ex = cryptoExplorers[nw];
+                    if (!ex) return;
+                    const url = `${ex.url}${encodeURIComponent(addr)}`;
+                    const link = createLinkElement(`${ex.name}: ${addr}`, url);
+                    const copyBtn = createCopyButton(link);
+                    trackerLinksOutput.appendChild(createLinkContainer(link, copyBtn));
+                });
+            });
+
+            // Трекинг: построение небольшого графа переводов для популярных сетей
+            trackerBuildGraphBtn?.addEventListener('click', async () => {
+                const addr = (trackerAddressInput?.value || '').trim();
+                trackerGraphEl.innerHTML = '';
+                if (!addr) return;
+
+                const networks = getWalletNetwork(addr) || [];
+                let graph = { nodes: [], links: [] };
+                try {
+                    if (networks.includes('eth')) {
+                        const key = (trackerEtherscanKeyInput?.value || '').trim();
+                        if (key) {
+                            const url = `https://api.etherscan.io/api?module=account&action=txlist&address=${addr}&startblock=0&endblock=99999999&page=1&offset=20&sort=desc&apikey=${key}`;
+                            const res = await fetch(url);
+                            const data = await res.json();
+                            if (data && data.result && Array.isArray(data.result)) {
+                                graph = buildGraphFromEthTxs(addr, data.result);
+                            }
+                        }
+                    } else if (networks.includes('btc')) {
+                        const res = await fetch(`https://blockchain.info/rawaddr/${addr}?cors=true`);
+                        const data = await res.json();
+                        if (data && data.txs) {
+                            graph = buildGraphFromBtcTxs(addr, data.txs.slice(0, 10));
+                        }
+                    } else if (networks.includes('tron')) {
+                        const res = await fetch(`https://apilist.tronscan.org/api/transaction?sort=-timestamp&count=true&limit=20&start=0&address=${addr}`);
+                        const data = await res.json();
+                        if (data && data.data) {
+                            graph = buildGraphFromTronTxs(addr, data.data);
+                        }
+                    }
+                } catch (e) {
+                    // ignore
+                }
+
+                renderForceGraph(trackerGraphEl, graph);
+            });
+
+            function buildGraphFromEthTxs(center, txs) {
+                const nodesMap = new Map();
+                const links = [];
+                function touch(id) { if (!nodesMap.has(id)) nodesMap.set(id, { id }); }
+                touch(center);
+                txs.forEach(tx => {
+                    const from = tx.from?.toLowerCase();
+                    const to = tx.to?.toLowerCase();
+                    if (!from || !to) return;
+                    touch(from); touch(to);
+                    links.push({ source: from, target: to });
+                });
+                return { nodes: Array.from(nodesMap.values()), links };
+            }
+
+            function buildGraphFromBtcTxs(center, txs) {
+                const nodesMap = new Map();
+                const links = [];
+                function touch(id) { if (!nodesMap.has(id)) nodesMap.set(id, { id }); }
+                touch(center);
+                txs.forEach(tx => {
+                    const inputs = (tx.inputs || []).map(i => i.prev_out && i.prev_out.addr).filter(Boolean);
+                    const outputs = (tx.out || []).map(o => o.addr).filter(Boolean);
+                    inputs.forEach(i => { touch(i); links.push({ source: i, target: center }); });
+                    outputs.forEach(o => { touch(o); links.push({ source: center, target: o }); });
+                });
+                return { nodes: Array.from(nodesMap.values()), links };
+            }
+
+            function buildGraphFromTronTxs(center, txs) {
+                const nodesMap = new Map();
+                const links = [];
+                function touch(id) { if (!nodesMap.has(id)) nodesMap.set(id, { id }); }
+                touch(center);
+                txs.forEach(tx => {
+                    const from = tx.ownerAddress || tx.owner_address || tx.from;
+                    const to = tx.toAddress || tx.to_address || tx.to;
+                    if (!from || !to) return;
+                    touch(from); touch(to);
+                    links.push({ source: from, target: to });
+                });
+                return { nodes: Array.from(nodesMap.values()), links };
+            }
+
+            function renderForceGraph(container, graph) {
+                const width = container.clientWidth;
+                const height = container.clientHeight;
+                const svg = d3.select(container).append('svg').attr('width', width).attr('height', height);
+                const color = d3.scaleOrdinal(d3.schemeTableau10);
+
+                const simulation = d3.forceSimulation(graph.nodes)
+                    .force('link', d3.forceLink(graph.links).id(d => d.id).distance(60))
+                    .force('charge', d3.forceManyBody().strength(-120))
+                    .force('center', d3.forceCenter(width / 2, height / 2));
+
+                const link = svg.append('g')
+                    .attr('stroke', '#94a3b8')
+                    .attr('stroke-opacity', 0.6)
+                    .selectAll('line')
+                    .data(graph.links)
+                    .join('line')
+                    .attr('stroke-width', 1);
+
+                const node = svg.append('g')
+                    .attr('stroke', '#fff')
+                    .attr('stroke-width', 1.5)
+                    .selectAll('circle')
+                    .data(graph.nodes)
+                    .join('circle')
+                    .attr('r', 6)
+                    .attr('fill', d => color(d.id))
+                    .call(d3.drag()
+                        .on('start', (event, d) => { if (!event.active) simulation.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
+                        .on('drag', (event, d) => { d.fx = event.x; d.fy = event.y; })
+                        .on('end', (event, d) => { if (!event.active) simulation.alphaTarget(0); d.fx = null; d.fy = null; }));
+
+                const label = svg.append('g')
+                    .selectAll('text')
+                    .data(graph.nodes)
+                    .join('text')
+                    .text(d => shortAddr(d.id))
+                    .attr('font-size', '10px')
+                    .attr('fill', '#64748b');
+
+                simulation.on('tick', () => {
+                    link
+                        .attr('x1', d => d.source.x)
+                        .attr('y1', d => d.source.y)
+                        .attr('x2', d => d.target.x)
+                        .attr('y2', d => d.target.y);
+                    node
+                        .attr('cx', d => d.x)
+                        .attr('cy', d => d.y);
+                    label
+                        .attr('x', d => d.x + 8)
+                        .attr('y', d => d.y + 3);
+                });
+            }
+
+            function shortAddr(a) {
+                if (!a) return '';
+                if (a.length <= 12) return a;
+                return a.slice(0, 6) + '…' + a.slice(-4);
+            }
 
             // Генерация ссылок для PayPlay
             const payplayBaseDeposits = 'https://crm.payplay.io/transactions/deposits';
