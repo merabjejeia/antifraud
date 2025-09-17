@@ -23,49 +23,49 @@
         }
     </style>
 </head>
-<body class="bg-gray-100 dark:bg-gray-900 flex items-center justify-center min-h-screen p-4 transition-colors duration-500">
+<body class="bg-slate-50 dark:bg-slate-950 flex items-center justify-center min-h-screen p-4 transition-colors duration-500">
     <!-- Анимированный фон Canvas -->
     <canvas id="background-canvas"></canvas>
 
     <!-- Основной контейнер-карточка -->
-    <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl dark:shadow-2xl dark:shadow-black/50 w-full max-w-2xl relative z-10 transition-colors duration-500">
+    <div class="bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-xl dark:shadow-2xl dark:shadow-black/50 w-full max-w-2xl relative z-10 transition-colors duration-500">
         
         <!-- Кнопка смены темы -->
-        <button id="theme-toggle" class="absolute top-4 right-4 p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-orange-400 transition-colors duration-500">
+        <button id="theme-toggle" class="absolute top-4 right-4 p-2 rounded-full text-slate-400 dark:text-teal-400 hover:text-slate-600 dark:hover:text-teal-300 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 transition-colors duration-500">
             <!-- Иконка Луны -->
-            <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 text-gray-500 dark:text-orange-400 transition-transform duration-500">
+            <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 transition-transform duration-500">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 12a9.75 9.75 0 0018.752 3.002z" />
             </svg>
             <!-- Иконка Солнца -->
-            <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 text-gray-500 dark:text-orange-400 transition-transform duration-500 absolute top-2 right-2 scale-0">
+            <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 transition-transform duration-500 absolute top-2 right-2 scale-0">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.364l-1.556 1.556M21 12h-2.25m-.364 6.364l-1.556-1.556M12 21v-2.25m-6.364-.364l1.556-1.556M3 12H5.25m.364-6.364l1.556 1.556" />
             </svg>
         </button>
 
         <!-- Главная страница (по умолчанию видимая) -->
         <div id="home-page" class="space-y-6">
-            <h1 class="text-3xl font-bold text-center text-gray-800 dark:text-gray-100 mb-6 transition-colors duration-500">
+            <h1 class="text-3xl font-bold text-center text-slate-800 dark:text-slate-100 mb-6 transition-colors duration-500">
                 Инструменты для антифрода
             </h1>
-            <p class="text-lg text-gray-600 dark:text-gray-300 text-center mb-8 transition-colors duration-500">
+            <p class="text-lg text-slate-600 dark:text-slate-400 text-center mb-8 transition-colors duration-500">
                 Добро пожаловать. Выберите необходимый инструмент ниже.
             </p>
             <div class="flex flex-col space-y-4">
                 <button 
                     id="go-to-generator-btn" 
-                    class="w-full bg-blue-600 dark:bg-orange-600 text-white font-medium text-lg py-4 px-8 rounded-lg hover:bg-blue-700 dark:hover:bg-orange-700 transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-orange-400 focus:ring-offset-2"
+                    class="w-full bg-teal-500 dark:bg-teal-600 text-white font-medium text-lg py-4 px-8 rounded-lg hover:bg-teal-600 dark:hover:bg-teal-700 transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 focus:ring-offset-2"
                 >
                     Перейти к Длинному ID вывода
                 </button>
                 <button 
                     id="go-to-user-generator-btn" 
-                    class="w-full bg-blue-600 dark:bg-orange-600 text-white font-medium text-lg py-4 px-8 rounded-lg hover:bg-blue-700 dark:hover:bg-orange-700 transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-orange-400 focus:ring-offset-2"
+                    class="w-full bg-teal-500 dark:bg-teal-600 text-white font-medium text-lg py-4 px-8 rounded-lg hover:bg-teal-600 dark:hover:bg-teal-700 transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 focus:ring-offset-2"
                 >
                     Перейти к Открытию пользователей
                 </button>
                 <button 
                     id="go-to-crypto-generator-btn" 
-                    class="w-full bg-blue-600 dark:bg-orange-600 text-white font-medium text-lg py-4 px-8 rounded-lg hover:bg-blue-700 dark:hover:bg-orange-700 transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-orange-400 focus:ring-offset-2"
+                    class="w-full bg-teal-500 dark:bg-teal-600 text-white font-medium text-lg py-4 px-8 rounded-lg hover:bg-teal-600 dark:hover:bg-teal-700 transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 focus:ring-offset-2"
                 >
                     Перейти к Криптокошелькам
                 </button>
@@ -74,20 +74,20 @@
 
         <!-- Раздел "Длинный ID вывода" (изначально скрытый) -->
         <div id="generator-page" class="hidden">
-            <h1 class="text-3xl font-bold text-center text-gray-800 dark:text-gray-100 mb-6 transition-colors duration-500">
+            <h1 class="text-3xl font-bold text-center text-slate-800 dark:text-slate-100 mb-6 transition-colors duration-500">
                 Инструменты для антифрода
             </h1>
-            <div class="bg-gray-50 dark:bg-gray-900 p-6 rounded-xl border border-gray-200 dark:border-gray-700 transition-colors duration-500">
-                <h2 class="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-4 transition-colors duration-500">
+            <div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 transition-colors duration-500">
+                <h2 class="text-xl font-semibold text-slate-700 dark:text-slate-200 mb-4 transition-colors duration-500">
                     Длинный ID вывода
                 </h2>
-                <p class="text-sm text-gray-500 dark:text-gray-400 mb-4 transition-colors duration-500">
+                <p class="text-sm text-slate-500 dark:text-slate-400 mb-4 transition-colors duration-500">
                     Вставьте один или несколько номеров инвойсов, каждый с новой строки.
                 </p>
 
                 <textarea 
                     id="invoice-input" 
-                    class="w-full h-32 p-3 text-sm rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-orange-400 mb-4 transition-colors" 
+                    class="w-full h-32 p-3 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 mb-4 transition-colors" 
                     placeholder="Например:
 1757862788425449503
 1757862788425449504
@@ -97,13 +97,13 @@
                 <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                     <button 
                         id="generate-btn" 
-                        class="w-full bg-blue-600 dark:bg-orange-600 text-white font-medium py-3 px-6 rounded-lg hover:bg-blue-700 dark:hover:bg-orange-700 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-orange-400 focus:ring-offset-2"
+                        class="w-full bg-teal-500 dark:bg-teal-600 text-white font-medium py-3 px-6 rounded-lg hover:bg-teal-600 dark:hover:bg-teal-700 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 focus:ring-offset-2"
                     >
                         Сгенерировать ссылки
                     </button>
                     <button 
                         id="open-all-btn" 
-                        class="w-full bg-gray-400 dark:bg-gray-500 text-white font-medium py-3 px-6 rounded-lg hover:bg-gray-500 dark:hover:bg-gray-600 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-gray-400 dark:focus:ring-gray-500 focus:ring-offset-2 hidden"
+                        class="w-full bg-slate-300 dark:bg-slate-700 text-slate-800 dark:text-slate-200 font-medium py-3 px-6 rounded-lg hover:bg-slate-400 dark:hover:bg-slate-600 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-slate-500 focus:ring-offset-2 hidden"
                     >
                         Открыть все
                     </button>
@@ -115,7 +115,7 @@
             </div>
              <button 
                 id="back-from-generator-btn" 
-                class="mt-6 w-full text-blue-600 dark:text-orange-400 font-medium py-3 px-6 rounded-lg hover:underline transition-all focus:outline-none"
+                class="mt-6 w-full text-teal-600 dark:text-teal-400 font-medium py-3 px-6 rounded-lg hover:underline transition-all focus:outline-none"
             >
                 ← Вернуться назад
             </button>
@@ -123,20 +123,20 @@
 
         <!-- Новый раздел "Открытие пользователей" (изначально скрытый) -->
         <div id="user-generator-page" class="hidden">
-            <h1 class="text-3xl font-bold text-center text-gray-800 dark:text-gray-100 mb-6 transition-colors duration-500">
+            <h1 class="text-3xl font-bold text-center text-slate-800 dark:text-slate-100 mb-6 transition-colors duration-500">
                 Инструменты для антифрода
             </h1>
-            <div class="bg-gray-50 dark:bg-gray-900 p-6 rounded-xl border border-gray-200 dark:border-gray-700 transition-colors duration-500">
-                <h2 class="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-4 transition-colors duration-500">
+            <div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 transition-colors duration-500">
+                <h2 class="text-xl font-semibold text-slate-700 dark:text-slate-200 mb-4 transition-colors duration-500">
                     Открыть пользователей по ID
                 </h2>
-                <p class="text-sm text-gray-500 dark:text-gray-400 mb-4 transition-colors duration-500">
+                <p class="text-sm text-slate-500 dark:text-slate-400 mb-4 transition-colors duration-500">
                     Вставьте один или несколько ID пользователей, каждый с новой строки.
                 </p>
 
                 <textarea 
                     id="user-input" 
-                    class="w-full h-32 p-3 text-sm rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-orange-400 mb-4 transition-colors" 
+                    class="w-full h-32 p-3 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 mb-4 transition-colors" 
                     placeholder="Например:
 23440844
 23440845
@@ -146,13 +146,13 @@
                 <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                     <button 
                         id="user-generate-btn" 
-                        class="w-full bg-blue-600 dark:bg-orange-600 text-white font-medium py-3 px-6 rounded-lg hover:bg-blue-700 dark:hover:bg-orange-700 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-orange-400 focus:ring-offset-2"
+                        class="w-full bg-teal-500 dark:bg-teal-600 text-white font-medium py-3 px-6 rounded-lg hover:bg-teal-600 dark:hover:bg-teal-700 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 focus:ring-offset-2"
                     >
                         Сгенерировать ссылки
                     </button>
                     <button 
                         id="user-open-all-btn" 
-                        class="w-full bg-gray-400 dark:bg-gray-500 text-white font-medium py-3 px-6 rounded-lg hover:bg-gray-500 dark:hover:bg-gray-600 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-gray-400 dark:focus:ring-gray-500 focus:ring-offset-2 hidden"
+                        class="w-full bg-slate-300 dark:bg-slate-700 text-slate-800 dark:text-slate-200 font-medium py-3 px-6 rounded-lg hover:bg-slate-400 dark:hover:bg-slate-600 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-slate-500 focus:ring-offset-2 hidden"
                     >
                         Открыть все
                     </button>
@@ -164,7 +164,7 @@
             </div>
              <button 
                 id="back-from-user-generator-btn" 
-                class="mt-6 w-full text-blue-600 dark:text-orange-400 font-medium py-3 px-6 rounded-lg hover:underline transition-all focus:outline-none"
+                class="mt-6 w-full text-teal-600 dark:text-teal-400 font-medium py-3 px-6 rounded-lg hover:underline transition-all focus:outline-none"
             >
                 ← Вернуться назад
             </button>
@@ -172,20 +172,20 @@
         
         <!-- Новый раздел "Криптокошельки" (изначально скрытый) -->
         <div id="crypto-generator-page" class="hidden">
-            <h1 class="text-3xl font-bold text-center text-gray-800 dark:text-gray-100 mb-6 transition-colors duration-500">
+            <h1 class="text-3xl font-bold text-center text-slate-800 dark:text-slate-100 mb-6 transition-colors duration-500">
                 Инструменты для антифрода
             </h1>
-            <div class="bg-gray-50 dark:bg-gray-900 p-6 rounded-xl border border-gray-200 dark:border-gray-700 transition-colors duration-500">
-                <h2 class="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-4 transition-colors duration-500">
+            <div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 transition-colors duration-500">
+                <h2 class="text-xl font-semibold text-slate-700 dark:text-slate-200 mb-4 transition-colors duration-500">
                     Криптокошельки
                 </h2>
-                <p class="text-sm text-gray-500 dark:text-gray-400 mb-4 transition-colors duration-500">
+                <p class="text-sm text-slate-500 dark:text-slate-400 mb-4 transition-colors duration-500">
                     Вставьте один или несколько адресов кошельков, каждый с новой строки.
                 </p>
 
                 <textarea 
                     id="crypto-input" 
-                    class="w-full h-32 p-3 text-sm rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-orange-400 mb-4 transition-colors" 
+                    class="w-full h-32 p-3 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 mb-4 transition-colors" 
                     placeholder="Например:
 0x71c7656ec7ab88b098defb751b7401b5f6d8976f
 TJRv2961d1QeJz7w1d6D38yP7R2b9c3x8C
@@ -195,13 +195,13 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
                 <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                     <button 
                         id="crypto-generate-btn" 
-                        class="w-full bg-blue-600 dark:bg-orange-600 text-white font-medium py-3 px-6 rounded-lg hover:bg-blue-700 dark:hover:bg-orange-700 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-orange-400 focus:ring-offset-2"
+                        class="w-full bg-teal-500 dark:bg-teal-600 text-white font-medium py-3 px-6 rounded-lg hover:bg-teal-600 dark:hover:bg-teal-700 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 focus:ring-offset-2"
                     >
                         Сгенерировать ссылки
                     </button>
                     <button 
                         id="crypto-open-all-btn" 
-                        class="w-full bg-gray-400 dark:bg-gray-500 text-white font-medium py-3 px-6 rounded-lg hover:bg-gray-500 dark:hover:bg-gray-600 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-gray-400 dark:focus:ring-gray-500 focus:ring-offset-2 hidden"
+                        class="w-full bg-slate-300 dark:bg-slate-700 text-slate-800 dark:text-slate-200 font-medium py-3 px-6 rounded-lg hover:bg-slate-400 dark:hover:bg-slate-600 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-slate-500 focus:ring-offset-2 hidden"
                     >
                         Открыть все
                     </button>
@@ -213,7 +213,7 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
             </div>
              <button 
                 id="back-from-crypto-generator-btn" 
-                class="mt-6 w-full text-blue-600 dark:text-orange-400 font-medium py-3 px-6 rounded-lg hover:underline transition-all focus:outline-none"
+                class="mt-6 w-full text-teal-600 dark:text-teal-400 font-medium py-3 px-6 rounded-lg hover:underline transition-all focus:outline-none"
             >
                 ← Вернуться назад
             </button>
@@ -258,20 +258,34 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
             const canvas = document.getElementById('background-canvas');
             const ctx = canvas.getContext('2d');
             let particles = [];
-            const particleCount = 75;
-            const maxDistance = 120;
+            const particleCount = 200; // Увеличено количество частиц для большей плотности
+            const maxDistance = 180; // Увеличено расстояние для линий
+            // Объект для отслеживания позиции мыши
+            const mouse = {
+                x: undefined,
+                y: undefined,
+                radius: 150 // Радиус взаимодействия с мышью
+            };
+
+            // Слушатель событий для отслеживания движения мыши
+            window.addEventListener('mousemove', (event) => {
+                mouse.x = event.clientX;
+                mouse.y = event.clientY;
+            });
 
             // Класс для частицы
             class Particle {
                 constructor(x, y, radius, color) {
                     this.x = x;
                     this.y = y;
+                    this.baseRadius = radius; // Базовый радиус для анимации
                     this.radius = radius;
                     this.color = color;
                     this.velocity = {
                         x: (Math.random() - 0.5) * 0.5,
                         y: (Math.random() - 0.5) * 0.5
                     };
+                    this.phase = Math.random() * Math.PI * 2; // Фаза для анимации
                 }
 
                 draw() {
@@ -283,12 +297,39 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
                 }
 
                 update() {
+                    // Анимация "дыхания"
+                    this.phase += 0.05;
+                    this.radius = this.baseRadius + Math.sin(this.phase) * 0.5;
+
+                    // Проверка столкновения с границами канваса
                     if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
                         this.velocity.x = -this.velocity.x;
                     }
                     if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
                         this.velocity.y = -this.velocity.y;
                     }
+
+                    // Логика плавного притяжения к мыши
+                    if (mouse.x !== undefined && mouse.y !== undefined) {
+                        const dx = mouse.x - this.x;
+                        const dy = mouse.y - this.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+
+                        if (distance < mouse.radius) {
+                            const attractionFactor = 0.002; // Коэффициент силы притяжения (уменьшен)
+                            const dampingFactor = 0.95; // Коэффициент затухания
+
+                            // Вычисляем ускорение к курсору
+                            this.velocity.x += dx * attractionFactor;
+                            this.velocity.y += dy * attractionFactor;
+
+                            // Применяем затухание для плавности
+                            this.velocity.x *= dampingFactor;
+                            this.velocity.y *= dampingFactor;
+                        }
+                    }
+
+                    // Применение скорости
                     this.x += this.velocity.x;
                     this.y += this.velocity.y;
                     this.draw();
@@ -302,7 +343,7 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
                     const radius = Math.random() * 2 + 1;
                     const x = Math.random() * (canvas.width - radius * 2) + radius;
                     const y = Math.random() * (canvas.height - radius * 2) + radius;
-                    const color = document.documentElement.classList.contains('dark') ? 'rgba(255, 255, 255, 0.6)' : 'rgba(0, 0, 0, 0.4)';
+                    const color = document.documentElement.classList.contains('dark') ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.2)'; // Уменьшена прозрачность
                     particles.push(new Particle(x, y, radius, color));
                 }
             }
@@ -320,7 +361,7 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
                         const distance = Math.sqrt(dx * dx + dy * dy);
 
                         if (distance < maxDistance) {
-                            const opacity = 1 - (distance / maxDistance);
+                            const opacity = 0.5 - (distance / maxDistance) * 0.5; // Уменьшена прозрачность
                             ctx.beginPath();
                             ctx.moveTo(particles[i].x, particles[i].y);
                             ctx.lineTo(particles[j].x, particles[j].y);
@@ -363,14 +404,18 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
                     sunIcon.classList.add('scale-0');
                     localStorage.theme = 'light';
                 }
-                initParticles(); // Перезапуск частиц с новым цветом
+                initParticles(); // Перезапуск частиц с новым цвером
             }
 
-            // Проверяем системные предпочтения и localStorage при загрузке
-            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            // Проверяем localStorage при загрузке. Предпочтение отдается явному выбору пользователя.
+            const storedTheme = localStorage.getItem('theme');
+            if (storedTheme === 'dark') {
                 updateTheme(true);
-            } else {
+            } else if (storedTheme === 'light') {
                 updateTheme(false);
+            } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                // Если нет сохраненной темы, используем системные предпочтения
+                updateTheme(true);
             }
 
             themeToggleBtn.addEventListener('click', () => {
@@ -412,14 +457,14 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
                 link.href = href;
                 link.textContent = text;
                 link.target = "_blank"; 
-                link.className = "text-blue-600 dark:text-orange-400 hover:text-blue-800 dark:hover:text-orange-300 hover:underline transition-colors text-sm truncate";
+                link.className = "text-teal-600 dark:text-teal-400 hover:text-teal-700 dark:hover:text-teal-300 hover:underline transition-colors text-sm truncate";
                 return link;
             }
 
             // Функция для создания элемента кнопки копирования
             function createCopyButton(linkElement) {
                 const copyBtn = document.createElement('button');
-                copyBtn.className = "text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-400 transition-colors ml-4 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-orange-400 rounded-md";
+                copyBtn.className = "text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-400 transition-colors ml-4 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 rounded-md";
                 copyBtn.innerHTML = `
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path d="M7 9a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2H9a2 2 0 01-2-2V9z" />
@@ -454,7 +499,7 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
             // Функция для создания элемента-контейнера ссылки
             function createLinkContainer(link, copyBtn) {
                 const linkContainer = document.createElement('div');
-                linkContainer.className = "flex items-center justify-between p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-500";
+                linkContainer.className = "flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors duration-500";
                 linkContainer.appendChild(link);
                 linkContainer.appendChild(copyBtn);
                 return linkContainer;
@@ -474,7 +519,7 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
 
                 if (invoices.length === 0) {
                     const noLinks = document.createElement('p');
-                    noLinks.className = "text-center text-gray-500 italic mt-4 transition-colors duration-500";
+                    noLinks.className = "text-center text-slate-500 italic mt-4 transition-colors duration-500";
                     noLinks.textContent = "Пожалуйста, введите номера инвойсов.";
                     linksOutput.appendChild(noLinks);
                     return;
@@ -513,7 +558,7 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
 
                 if (userIds.length === 0) {
                     const noLinks = document.createElement('p');
-                    noLinks.className = "text-center text-gray-500 italic mt-4 transition-colors duration-500";
+                    noLinks.className = "text-center text-slate-500 italic mt-4 transition-colors duration-500";
                     noLinks.textContent = "Пожалуйста, введите ID пользователей.";
                     userLinksOutput.appendChild(noLinks);
                     return;
@@ -548,22 +593,6 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
                     name: 'Ethereum',
                     url: 'https://etherscan.io/address/'
                 },
-                bnb: {
-                    name: 'BNB Chain (BEP20)',
-                    url: 'https://bscscan.com/address/'
-                },
-                sol: {
-                    name: 'Solana',
-                    url: 'https://solscan.io/address/'
-                },
-                ltc: {
-                    name: 'Litecoin',
-                    url: 'https://live.blockcypher.com/ltc/address/'
-                },
-                doge: {
-                    name: 'Dogecoin',
-                    url: 'https://dogechain.info/address/'
-                },
                 tron: {
                     name: 'TRON (TRC20)',
                     url: 'https://tronscan.org/#/address/'
@@ -573,38 +602,30 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
                     url: 'https://tonviewer.com/'
                 }
             };
-
+            
+            // Определяет сеть по формату адреса
             function getWalletNetwork(address) {
                 const normalizedAddress = address.trim();
-                // Bitcoin (P2PKH, P2SH, Bech32)
-                if (/^1[a-km-zA-HJ-NP-Z1-9]{25,34}$/.test(normalizedAddress) || /^3[a-km-zA-HJ-NP-Z1-9]{25,34}$/.test(normalizedAddress) || /^bc1[ac-hj-np-z02-9]{25,39}$/.test(normalizedAddress)) {
-                    return 'btc';
-                }
-                // TRON (TRC20)
-                if (/^T[a-zA-Z0-9]{33}$/.test(normalizedAddress)) {
-                    return 'tron';
-                }
-                // TON
-                if (/^[UQE][a-zA-Z0-9_-]{47,48}$/.test(normalizedAddress)) {
-                    return 'ton';
-                }
-                // Ethereum and other EVM chains (BEP20)
+                const networks = [];
+
+                // Проверка на Ethereum
                 if (/^0x[a-fA-F0-9]{40}$/.test(normalizedAddress)) {
-                    return 'eth_bnb';
+                    networks.push('eth');
                 }
-                // Solana (Base58, length can vary)
-                if (/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(normalizedAddress) && normalizedAddress.length > 40) {
-                    return 'sol';
+                // Проверка на TRON
+                if (/^T[a-zA-Z0-9]{33}$/.test(normalizedAddress)) {
+                    networks.push('tron');
                 }
-                // Litecoin
-                if (/^[LM][a-km-zA-HJ-NP-Z1-9]{26,33}$/.test(normalizedAddress)) {
-                    return 'ltc';
+                // Проверка на TON
+                if (/^[UQE][a-zA-Z0-9_-]{47,48}$/.test(normalizedAddress)) {
+                    networks.push('ton');
                 }
-                // Dogecoin
-                if (/^D[5-9A-HJ-NP-Z]{32}$/.test(normalizedAddress)) {
-                    return 'doge';
+                // Проверка на Bitcoin
+                if (/^1[a-km-zA-HJ-NP-Z1-9]{25,34}$/.test(normalizedAddress) || /^3[a-km-zA-HJ-NP-Z1-9]{25,34}$/.test(normalizedAddress) || /^bc1[ac-hj-np-z02-9]{25,39}$/.test(normalizedAddress)) {
+                    networks.push('btc');
                 }
-                return null;
+                
+                return networks.length > 0 ? networks : null;
             }
 
             cryptoGenerateBtn.addEventListener('click', () => {
@@ -618,29 +639,23 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
 
                 if (addresses.length === 0) {
                     const noLinks = document.createElement('p');
-                    noLinks.className = "text-center text-gray-500 italic mt-4 transition-colors duration-500";
+                    noLinks.className = "text-center text-slate-500 italic mt-4 transition-colors duration-500";
                     noLinks.textContent = "Пожалуйста, введите адреса кошельков.";
                     cryptoLinksOutput.appendChild(noLinks);
                     return;
                 }
 
                 addresses.forEach(address => {
-                    const network = getWalletNetwork(address);
+                    const networks = getWalletNetwork(address);
                     
-                    if (network === 'eth_bnb') {
-                        const ethLink = createLinkElement(`${cryptoExplorers.eth.name}: ${address}`, `${cryptoExplorers.eth.url}${encodeURIComponent(address)}`);
-                        const ethCopyBtn = createCopyButton(ethLink);
-                        cryptoLinksOutput.appendChild(createLinkContainer(ethLink, ethCopyBtn));
-
-                        const bnbLink = createLinkElement(`${cryptoExplorers.bnb.name}: ${address}`, `${cryptoExplorers.bnb.url}${encodeURIComponent(address)}`);
-                        const bnbCopyBtn = createCopyButton(bnbLink);
-                        cryptoLinksOutput.appendChild(createLinkContainer(bnbLink, bnbCopyBtn));
-                    } else if (network) {
-                        const explorer = cryptoExplorers[network];
-                        const fullUrl = `${explorer.url}${encodeURIComponent(address)}`;
-                        const link = createLinkElement(`${explorer.name}: ${address}`, fullUrl);
-                        const copyBtn = createCopyButton(link);
-                        cryptoLinksOutput.appendChild(createLinkContainer(link, copyBtn));
+                    if (networks) {
+                        networks.forEach(network => {
+                            const explorer = cryptoExplorers[network];
+                            const fullUrl = `${explorer.url}${encodeURIComponent(address)}`;
+                            const link = createLinkElement(`${explorer.name}: ${address}`, fullUrl);
+                            const copyBtn = createCopyButton(link);
+                            cryptoLinksOutput.appendChild(createLinkContainer(link, copyBtn));
+                        });
                     } else {
                         const unknownLink = document.createElement('p');
                         unknownLink.className = "text-red-500 dark:text-red-400 text-sm italic mt-2";
