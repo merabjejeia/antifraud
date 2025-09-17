@@ -1,153 +1,315 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Генератор ссылок</title>
-  <link rel="icon" type="image/png" href="favicon.png">
-  <style>
-    body {
-      margin: 0;
-      font-family: "Inter", sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      min-height: 100vh;
-      transition: background 0.4s, color 0.4s;
-      background: var(--bg);
-      color: var(--text);
-    }
-    .container {
-      width: 100%;
-      max-width: 650px;
-      margin: 40px auto;
-      padding: 24px;
-      border-radius: 16px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-      background: var(--container-bg);
-    }
-    h1 {
-      font-size: 1.6rem;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-    textarea, input, button {
-      width: 100%;
-      margin: 10px 0;
-      padding: 12px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      font-size: 1rem;
-      box-sizing: border-box;
-      background: var(--input-bg);
-      color: var(--text);
-      transition: 0.3s;
-    }
-    textarea:focus, input:focus {
-      outline: none;
-      border-color: var(--accent);
-    }
-    button {
-      cursor: pointer;
-      border: none;
-      background: var(--accent);
-      color: white;
-      font-weight: 500;
-      transition: background 0.3s, transform 0.2s;
-    }
-    button:hover {
-      background: var(--accent-hover);
-      transform: translateY(-1px);
-    }
-    .links {
-      margin-top: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .link-item a {
-      color: var(--accent);
-      text-decoration: none;
-      word-break: break-all;
-    }
-    .link-item a:hover {
-      text-decoration: underline;
-    }
-    /* Светлая тема */
-    :root {
-      --bg: #f3f4f6;
-      --container-bg: #ffffff;
-      --text: #1a1a1a;
-      --border: #dcdcdc;
-      --input-bg: #f9f9f9;
-      --accent: #4f46e5;
-      --accent-hover: #3730a3;
-    }
-    /* Тёмная тема с оранжевым акцентом */
-    body.dark {
-      --bg: #0a0a0a;
-      --container-bg: #18181b;
-      --text: #e4e4e7;
-      --border: #3f3f46;
-      --input-bg: #1a1a1a;
-      --accent: #f97316;
-      --accent-hover: #ea580c;
-    }
-    .theme-toggle {
-      text-align: right;
-      margin-bottom: 10px;
-    }
-    .theme-toggle button {
-      width: auto;
-      padding: 8px 14px;
-      font-size: 0.9rem;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Инструменты для антифрода</title>
+    <!-- Подключение Tailwind CSS из CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Устанавливаем шрифт Inter */
+        body {
+            font-family: 'Inter', sans-serif;
+            @apply bg-gray-100;
+        }
+    </style>
 </head>
-<body>
-  <div class="container">
-    <div class="theme-toggle">
-      <button onclick="toggleTheme()">Сменить тему</button>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+
+    <!-- Основной контейнер-карточка -->
+    <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-2xl">
+
+        <!-- Главная страница -->
+        <div id="home-page" class="space-y-6">
+            <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">
+                Инструменты для антифрода
+            </h1>
+            <p class="text-lg text-gray-600 text-center mb-8">
+                Добро пожаловать. Выберите необходимый инструмент ниже.
+            </p>
+            <div class="flex flex-col space-y-4">
+                <button 
+                    id="go-to-generator-btn" 
+                    class="w-full bg-blue-600 text-white font-medium text-lg py-4 px-8 rounded-lg hover:bg-blue-700 transition-all shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                >
+                    Перейти к Длинному ID вывода
+                </button>
+                 <button 
+                    id="go-to-summarizer-btn" 
+                    class="w-full bg-blue-600 text-white font-medium text-lg py-4 px-8 rounded-lg hover:bg-blue-700 transition-all shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                >
+                    ✨ Перейти к Анализатору текста ✨
+                </button>
+            </div>
+        </div>
+
+        <!-- Раздел "Длинный ID вывода" (изначально скрытый) -->
+        <div id="generator-page" class="hidden">
+            <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">
+                Инструменты для антифрода
+            </h1>
+            <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                <h2 class="text-xl font-semibold text-gray-700 mb-4">
+                    Длинный ID вывода
+                </h2>
+                <p class="text-sm text-gray-500 mb-4">
+                    Вставьте один или несколько номеров инвойсов, каждый с новой строки.
+                </p>
+
+                <textarea 
+                    id="invoice-input" 
+                    class="w-full h-32 p-3 text-sm rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4 transition-colors" 
+                    placeholder="Например:
+1757862788425449503
+1757862788425449504
+1757862788425449505"
+                ></textarea>
+                
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                    <button 
+                        id="generate-btn" 
+                        class="w-full bg-blue-600 text-white font-medium py-3 px-6 rounded-lg hover:bg-blue-700 transition-all shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                    >
+                        Сгенерировать ссылки
+                    </button>
+                    <button 
+                        id="open-all-btn" 
+                        class="w-full bg-gray-400 text-white font-medium py-3 px-6 rounded-lg hover:bg-gray-500 transition-all shadow-md focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 hidden"
+                    >
+                        Открыть все
+                    </button>
+                </div>
+                
+                <div id="links-output" class="mt-6 flex flex-col space-y-2">
+                    <!-- Сюда будут добавляться сгенерированные ссылки -->
+                </div>
+            </div>
+             <button 
+                id="back-from-generator-btn" 
+                class="mt-6 w-full text-blue-600 font-medium py-3 px-6 rounded-lg hover:underline transition-all focus:outline-none"
+            >
+                ← Вернуться назад
+            </button>
+        </div>
+        
+        <!-- Раздел "Анализатор текста" (изначально скрытый) -->
+        <div id="summarizer-page" class="hidden">
+            <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">
+                Инструменты для антифрода
+            </h1>
+            <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                <h2 class="text-xl font-semibold text-gray-700 mb-4">
+                    Анализатор текста
+                </h2>
+                <p class="text-sm text-gray-500 mb-4">
+                    Вставьте текст для анализа, и мы сгенерируем краткое резюме.
+                </p>
+
+                <textarea 
+                    id="text-input" 
+                    class="w-full h-48 p-3 text-sm rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4 transition-colors" 
+                    placeholder="Вставьте текст здесь..."
+                ></textarea>
+                
+                <button 
+                    id="summarize-btn" 
+                    class="w-full bg-blue-600 text-white font-medium py-3 px-6 rounded-lg hover:bg-blue-700 transition-all shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                >
+                    ✨ Резюмировать текст ✨
+                </button>
+                
+                <div id="summary-output" class="mt-6">
+                    <div id="loading-indicator" class="hidden flex justify-center items-center">
+                        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        <span class="text-gray-600">Генерирую резюме...</span>
+                    </div>
+                    <p id="summary-text" class="text-gray-700 leading-relaxed"></p>
+                </div>
+            </div>
+             <button 
+                id="back-from-summarizer-btn" 
+                class="mt-6 w-full text-blue-600 font-medium py-3 px-6 rounded-lg hover:underline transition-all focus:outline-none"
+            >
+                ← Вернуться назад
+            </button>
+        </div>
     </div>
-    <h1>Генератор ссылок по шаблону</h1>
-  
-  <label>Список инвойсов (по одному в строке):</label>
-  <textarea id="invoices" rows="6" placeholder="Вставьте инвойсы сюда..."></textarea>
 
-  <label>Шаблон ссылки (используйте {invoice} как метку):</label>
-  <textarea id="template" rows="4">https://api.sequoiapay.co/?date_from=17.08.2025&date_to=16.09.2025&length=50&merchant=608&search_column=%255B%2522%255B%255C%2522external_id%255C%2522%252C%255C%2522{invoice}%255C%2522%255D%2522%252C%2522%255B%255C%2522filter_user_comment%255C%2522%252Cnull%255D%2522%255D</textarea>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const homePage = document.getElementById('home-page');
+            const generatorPage = document.getElementById('generator-page');
+            const summarizerPage = document.getElementById('summarizer-page');
+            
+            const goToGeneratorBtn = document.getElementById('go-to-generator-btn');
+            const goToSummarizerBtn = document.getElementById('go-to-summarizer-btn');
+            const backFromGeneratorBtn = document.getElementById('back-from-generator-btn');
+            const backFromSummarizerBtn = document.getElementById('back-from-summarizer-btn');
 
-  <button onclick="generateLinks()">Сгенерировать ссылки</button>
-  <button onclick="openLinks()">Открыть все</button>
+            const generateBtn = document.getElementById('generate-btn');
+            const openAllBtn = document.getElementById('open-all-btn');
+            const invoiceInput = document.getElementById('invoice-input');
+            const linksOutput = document.getElementById('links-output');
 
-  <h3>Результат:</h3>
-  <div class="output" id="output"></div>
+            const summarizeBtn = document.getElementById('summarize-btn');
+            const textInput = document.getElementById('text-input');
+            const summaryOutput = document.getElementById('summary-output');
+            const loadingIndicator = document.getElementById('loading-indicator');
+            const summaryText = document.getElementById('summary-text');
 
-  <script>
-    function generateLinks() {
-      const invoicesText = document.getElementById("invoices").value;
-      const template = document.getElementById("template").value;
-      const invoices = invoicesText.split(/\n|\r/).map(x => x.trim()).filter(x => x);
-      let result = "";
-      invoices.forEach(inv => {
-        result += template.replace("{invoice}", inv) + "\n";
-      });
-      document.getElementById("output").textContent = result;
-    }
+            // API key for Gemini API (empty, will be provided by Canvas environment)
+            const apiKey = ""; 
 
-    function copyLinks() {
-      const text = document.getElementById("output").textContent;
-      navigator.clipboard.writeText(text).then(() => {
-        alert("Ссылки скопированы в буфер обмена!");
-      });
-    }
+            // Функция для переключения между страницами
+            function showPage(pageId) {
+                homePage.classList.add('hidden');
+                generatorPage.classList.add('hidden');
+                summarizerPage.classList.add('hidden');
+                
+                if (pageId === 'home') {
+                    homePage.classList.remove('hidden');
+                } else if (pageId === 'generator') {
+                    generatorPage.classList.remove('hidden');
+                } else if (pageId === 'summarizer') {
+                    summarizerPage.classList.remove('hidden');
+                }
+            }
 
-    function openLinks() {
-      const links = document.getElementById("output").textContent.split(/\n/).filter(x => x);
-      links.forEach(link => {
-        window.open(link, '_blank');
-      });
-    }
-  </script>
+            // Обработчики для кнопок перехода
+            goToGeneratorBtn.addEventListener('click', () => showPage('generator'));
+            goToSummarizerBtn.addEventListener('click', () => showPage('summarizer'));
+            backFromGeneratorBtn.addEventListener('click', () => showPage('home'));
+            backFromSummarizerBtn.addEventListener('click', () => showPage('home'));
+
+            // Логика генератора инвойсов
+            const baseUrl = "https://lixog.com/ru/admin/app/asyncpayment/list?filter%5B_page%5D=1&filter%5B_per_page%5D=250&filter%5B_sort_by%5D=createdAt&filter%5B_sort_order%5D=DESC&filter%5Buuid%5D%5Btype%5D=3&filter%5Buuid%5D%5Bvalue%5D=";
+
+            generateBtn.addEventListener('click', () => {
+                const invoices = invoiceInput.value
+                    .split('\n')
+                    .map(invoice => invoice.trim())
+                    .filter(invoice => invoice.length > 0);
+
+                linksOutput.innerHTML = '';
+                openAllBtn.classList.add('hidden'); 
+
+                if (invoices.length === 0) {
+                    const noLinks = document.createElement('p');
+                    noLinks.className = "text-center text-gray-500 italic mt-4";
+                    noLinks.textContent = "Пожалуйста, введите номера инвойсов.";
+                    linksOutput.appendChild(noLinks);
+                    return;
+                }
+
+                invoices.forEach(invoice => {
+                    const fullUrl = `${baseUrl}${encodeURIComponent(invoice)}`;
+                    
+                    const link = document.createElement('a');
+                    link.href = fullUrl;
+                    link.textContent = `Инвойс: ${invoice}`;
+                    link.target = "_blank"; 
+                    link.className = "text-blue-600 hover:text-blue-800 hover:underline transition-colors text-sm truncate";
+
+                    const linkContainer = document.createElement('div');
+                    linkContainer.className = "flex items-center justify-between p-3 bg-white rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors";
+
+                    const copyBtn = document.createElement('button');
+                    copyBtn.className = "text-gray-400 hover:text-gray-600 transition-colors ml-4 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md";
+                    copyBtn.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M7 9a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2H9a2 2 0 01-2-2V9z" />
+                            <path d="M5 3a2 2 0 00-2 2v6a2 2 0 002 2V5h8a2 2 0 00-2-2H5z" />
+                        </svg>
+                    `;
+                    
+                    copyBtn.title = "Скопировать ссылку";
+                    copyBtn.addEventListener('click', (event) => {
+                        event.preventDefault(); 
+                        const linkToCopy = link.href;
+                        const tempInput = document.createElement('textarea');
+                        tempInput.value = linkToCopy;
+                        document.body.appendChild(tempInput);
+                        tempInput.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(tempInput);
+                        
+                        const originalSVG = copyBtn.innerHTML;
+                        copyBtn.innerHTML = `
+                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                        `;
+
+                        setTimeout(() => {
+                            copyBtn.innerHTML = originalSVG;
+                        }, 2000);
+                    });
+
+                    linkContainer.appendChild(link);
+                    linkContainer.appendChild(copyBtn);
+                    linksOutput.appendChild(linkContainer);
+                });
+
+                if (invoices.length > 0) {
+                    openAllBtn.classList.remove('hidden');
+                }
+            });
+
+            openAllBtn.addEventListener('click', () => {
+                const links = linksOutput.querySelectorAll('a');
+                links.forEach(link => {
+                    window.open(link.href, '_blank');
+                });
+            });
+
+            // Логика суммаризатора текста (Gemini API)
+            summarizeBtn.addEventListener('click', async () => {
+                const textToSummarize = textInput.value.trim();
+
+                if (textToSummarize.length === 0) {
+                    summaryText.textContent = "Пожалуйста, введите текст для анализа.";
+                    return;
+                }
+
+                summaryText.textContent = '';
+                loadingIndicator.classList.remove('hidden');
+
+                const systemPrompt = "Вы — профессиональный антифрод аналитик. Ваша задача — лаконично и по делу резюмировать предоставленный текст, выделяя ключевые моменты, связанные с анализом мошенничества, транзакций или подозрительной активности. Сохраняйте деловой и нейтральный тон.";
+                const userQuery = `Резюмируй следующий текст: ${textToSummarize}`;
+                
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                const payload = {
+                    contents: [{ parts: [{ text: userQuery }] }],
+                    systemInstruction: { parts: [{ text: systemPrompt }] },
+                };
+
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`API response error: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    const summary = result?.candidates?.[0]?.content?.parts?.[0]?.text || "Не удалось сгенерировать резюме. Пожалуйста, попробуйте еще раз.";
+                    
+                    summaryText.textContent = summary;
+                } catch (error) {
+                    console.error('Gemini API Error:', error);
+                    summaryText.textContent = 'Произошла ошибка при обращении к API. Пожалуйста, проверьте подключение или повторите попытку.';
+                } finally {
+                    loadingIndicator.classList.add('hidden');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
