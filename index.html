@@ -188,8 +188,8 @@
                     class="w-full h-32 p-3 text-sm rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-orange-400 mb-4 transition-colors" 
                     placeholder="Например:
 0x71c7656ec7ab88b098defb751b7401b5f6d8976f
-1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
-H68Jv329h58L98eW6Xz7m71y932c9jE9c8D6vS4p"
+TJRv2961d1QeJz7w1d6D38yP7R2b9c3x8C
+EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
                 ></textarea>
                 
                 <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
@@ -548,6 +548,10 @@ H68Jv329h58L98eW6Xz7m71y932c9jE9c8D6vS4p"
                     name: 'Ethereum',
                     url: 'https://etherscan.io/address/'
                 },
+                bnb: {
+                    name: 'BNB Chain (BEP20)',
+                    url: 'https://bscscan.com/address/'
+                },
                 sol: {
                     name: 'Solana',
                     url: 'https://solscan.io/address/'
@@ -559,6 +563,14 @@ H68Jv329h58L98eW6Xz7m71y932c9jE9c8D6vS4p"
                 doge: {
                     name: 'Dogecoin',
                     url: 'https://dogechain.info/address/'
+                },
+                tron: {
+                    name: 'TRON (TRC20)',
+                    url: 'https://tronscan.org/#/address/'
+                },
+                ton: {
+                    name: 'TON',
+                    url: 'https://tonviewer.com/'
                 }
             };
 
@@ -568,9 +580,17 @@ H68Jv329h58L98eW6Xz7m71y932c9jE9c8D6vS4p"
                 if (/^1[a-km-zA-HJ-NP-Z1-9]{25,34}$/.test(normalizedAddress) || /^3[a-km-zA-HJ-NP-Z1-9]{25,34}$/.test(normalizedAddress) || /^bc1[ac-hj-np-z02-9]{25,39}$/.test(normalizedAddress)) {
                     return 'btc';
                 }
-                // Ethereum and other EVM chains (simple heuristic)
+                // TRON (TRC20)
+                if (/^T[a-zA-Z0-9]{33}$/.test(normalizedAddress)) {
+                    return 'tron';
+                }
+                // TON
+                if (/^[UQE][a-zA-Z0-9_-]{47,48}$/.test(normalizedAddress)) {
+                    return 'ton';
+                }
+                // Ethereum and other EVM chains (BEP20)
                 if (/^0x[a-fA-F0-9]{40}$/.test(normalizedAddress)) {
-                    return 'eth'; // Assume Ethereum for simplicity
+                    return 'eth_bnb';
                 }
                 // Solana (Base58, length can vary)
                 if (/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(normalizedAddress) && normalizedAddress.length > 40) {
@@ -607,7 +627,15 @@ H68Jv329h58L98eW6Xz7m71y932c9jE9c8D6vS4p"
                 addresses.forEach(address => {
                     const network = getWalletNetwork(address);
                     
-                    if (network) {
+                    if (network === 'eth_bnb') {
+                        const ethLink = createLinkElement(`${cryptoExplorers.eth.name}: ${address}`, `${cryptoExplorers.eth.url}${encodeURIComponent(address)}`);
+                        const ethCopyBtn = createCopyButton(ethLink);
+                        cryptoLinksOutput.appendChild(createLinkContainer(ethLink, ethCopyBtn));
+
+                        const bnbLink = createLinkElement(`${cryptoExplorers.bnb.name}: ${address}`, `${cryptoExplorers.bnb.url}${encodeURIComponent(address)}`);
+                        const bnbCopyBtn = createCopyButton(bnbLink);
+                        cryptoLinksOutput.appendChild(createLinkContainer(bnbLink, bnbCopyBtn));
+                    } else if (network) {
                         const explorer = cryptoExplorers[network];
                         const fullUrl = `${explorer.url}${encodeURIComponent(address)}`;
                         const link = createLinkElement(`${explorer.name}: ${address}`, fullUrl);
