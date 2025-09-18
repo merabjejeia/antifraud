@@ -428,10 +428,30 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
                         Извлечь уникальные значения
                     </button>
                     <button 
-                        id="user-data-copy-btn" 
+                        id="user-data-copy-table-btn" 
                         class="w-full bg-slate-300 dark:bg-slate-700 text-slate-800 dark:text-slate-200 font-medium py-3 px-6 rounded-lg hover:bg-slate-400 dark:hover:bg-slate-600 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-slate-500 focus:ring-offset-2 hidden"
                     >
-                        Копировать результат
+                        Копировать таблицу
+                    </button>
+                </div>
+                <div class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <button 
+                        id="user-data-copy-asn-btn" 
+                        class="w-full bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 font-medium py-2 px-4 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-slate-500 hidden"
+                    >
+                        Копировать ASN (столбик)
+                    </button>
+                    <button 
+                        id="user-data-copy-devices-btn" 
+                        class="w-full bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 font-medium py-2 px-4 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-slate-500 hidden"
+                    >
+                        Копировать устройства (столбик)
+                    </button>
+                    <button 
+                        id="user-data-copy-lines-btn" 
+                        class="w-full bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 font-medium py-2 px-4 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-slate-500 hidden"
+                    >
+                        Копировать как строки
                     </button>
                 </div>
                 
@@ -505,6 +525,10 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
             const userDataCopyBtn = document.getElementById('user-data-copy-btn');
             const userDataInput = document.getElementById('user-data-input');
             const userDataOutput = document.getElementById('user-data-output');
+            const userDataCopyTableBtn = document.getElementById('user-data-copy-table-btn');
+            const userDataCopyAsnBtn = document.getElementById('user-data-copy-asn-btn');
+            const userDataCopyDevicesBtn = document.getElementById('user-data-copy-devices-btn');
+            const userDataCopyLinesBtn = document.getElementById('user-data-copy-lines-btn');
 
             
             
@@ -1147,7 +1171,10 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
             userDataAnalyzeBtn.addEventListener('click', () => {
                 const inputData = userDataInput.value.trim();
                 userDataOutput.innerHTML = '';
-                userDataCopyBtn.classList.add('hidden');
+                userDataCopyTableBtn.classList.add('hidden');
+                userDataCopyAsnBtn.classList.add('hidden');
+                userDataCopyDevicesBtn.classList.add('hidden');
+                userDataCopyLinesBtn.classList.add('hidden');
 
                 if (!inputData) {
                     const noData = document.createElement('p');
@@ -1196,9 +1223,6 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
 
                 // Отображаем результаты
                 displayResults();
-                
-                // Добавляем отладочную информацию
-                displayDebugInfo(lines);
             });
 
 
@@ -1268,53 +1292,13 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
 
                 // Показываем кнопку копирования если есть результаты
                 if (asnArray.length > 0 || devicesArray.length > 0) {
-                    userDataCopyBtn.classList.remove('hidden');
+                    userDataCopyTableBtn.classList.remove('hidden');
+                    userDataCopyAsnBtn.classList.remove('hidden');
+                    userDataCopyDevicesBtn.classList.remove('hidden');
+                    userDataCopyLinesBtn.classList.remove('hidden');
                 }
 
                 userDataOutput.appendChild(resultsContainer);
-            }
-
-            function displayDebugInfo(lines) {
-                // Создаем отладочную секцию
-                const debugSection = document.createElement('div');
-                debugSection.className = "bg-yellow-50 dark:bg-yellow-900/20 p-4 rounded-lg border border-yellow-200 dark:border-yellow-800 mt-4";
-                
-                const debugTitle = document.createElement('h3');
-                debugTitle.className = "text-lg font-semibold text-yellow-700 dark:text-yellow-300 mb-2";
-                debugTitle.textContent = "Отладочная информация:";
-                
-                const debugContent = document.createElement('div');
-                debugContent.className = "text-sm text-yellow-600 dark:text-yellow-400 space-y-2";
-                
-                // Показываем первые несколько строк для отладки
-                const sampleLines = lines.slice(0, 3);
-                sampleLines.forEach((line, index) => {
-                    const lineDiv = document.createElement('div');
-                    lineDiv.className = "font-mono text-xs";
-                    lineDiv.innerHTML = `<strong>Строка ${index + 1}:</strong> ${line.replace(/\t/g, ' | ')}`;
-                    debugContent.appendChild(lineDiv);
-                    
-                    // Показываем разделенные колонки
-                    const columns = line.split('\t').filter(col => col.trim());
-                    const columnsDiv = document.createElement('div');
-                    columnsDiv.className = "ml-4 text-xs text-yellow-500";
-                    columnsDiv.innerHTML = `<strong>Колонки (${columns.length}):</strong> ${columns.map((col, i) => `[${i}]: "${col.trim()}"`).join(', ')}`;
-                    debugContent.appendChild(columnsDiv);
-                    
-                    // Показываем извлеченные значения
-                    if (columns.length >= 6) {
-                        const asn = columns[1]?.trim();
-                        const userAgent = columns[4]?.trim();
-                        const extractedDiv = document.createElement('div');
-                        extractedDiv.className = "ml-8 text-xs text-green-600 dark:text-green-400";
-                        extractedDiv.innerHTML = `<strong>Извлечено:</strong> ASN="${asn}", UserAgent="${userAgent ? userAgent.substring(0, 50) + '...' : 'не найден'}"`;
-                        debugContent.appendChild(extractedDiv);
-                    }
-                });
-                
-                debugSection.appendChild(debugTitle);
-                debugSection.appendChild(debugContent);
-                userDataOutput.appendChild(debugSection);
             }
 
             userDataCopyBtn.addEventListener('click', () => {
@@ -1347,6 +1331,52 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
                 }).catch(err => {
                     console.error('Ошибка копирования:', err);
                     alert('Не удалось скопировать данные. Попробуйте выделить и скопировать вручную.');
+                });
+            });
+
+            // Копировать только ASN (столбик)
+            userDataCopyAsnBtn.addEventListener('click', () => {
+                const asnArray = Array.from(uniqueResults.asn).sort();
+                const text = asnArray.join('\n');
+                navigator.clipboard.writeText(text).then(() => {
+                    const originalText = userDataCopyAsnBtn.textContent;
+                    userDataCopyAsnBtn.textContent = 'Скопировано!';
+                    userDataCopyAsnBtn.className = userDataCopyAsnBtn.className.replace('bg-slate-200 dark:bg-slate-800', 'bg-green-500 dark:bg-green-600');
+                    setTimeout(() => {
+                        userDataCopyAsnBtn.textContent = originalText;
+                        userDataCopyAsnBtn.className = userDataCopyAsnBtn.className.replace('bg-green-500 dark:bg-green-600', 'bg-slate-200 dark:bg-slate-800');
+                    }, 2000);
+                });
+            });
+
+            // Копировать только устройства (столбик)
+            userDataCopyDevicesBtn.addEventListener('click', () => {
+                const devicesArray = Array.from(uniqueResults.devices).sort();
+                const text = devicesArray.join('\n');
+                navigator.clipboard.writeText(text).then(() => {
+                    const originalText = userDataCopyDevicesBtn.textContent;
+                    userDataCopyDevicesBtn.textContent = 'Скопировано!';
+                    userDataCopyDevicesBtn.className = userDataCopyDevicesBtn.className.replace('bg-slate-200 dark:bg-slate-800', 'bg-green-500 dark:bg-green-600');
+                    setTimeout(() => {
+                        userDataCopyDevicesBtn.textContent = originalText;
+                        userDataCopyDevicesBtn.className = userDataCopyDevicesBtn.className.replace('bg-green-500 dark:bg-green-600', 'bg-slate-200 dark:bg-slate-800');
+                    }, 2000);
+                });
+            });
+
+            // Копировать как две строки (через запятую)
+            userDataCopyLinesBtn.addEventListener('click', () => {
+                const asnArray = Array.from(uniqueResults.asn).sort();
+                const devicesArray = Array.from(uniqueResults.devices).sort();
+                const text = `ASN: ${asnArray.join(', ')}\nУстройство: ${devicesArray.join(', ')}`;
+                navigator.clipboard.writeText(text).then(() => {
+                    const originalText = userDataCopyLinesBtn.textContent;
+                    userDataCopyLinesBtn.textContent = 'Скопировано!';
+                    userDataCopyLinesBtn.className = userDataCopyLinesBtn.className.replace('bg-slate-200 dark:bg-slate-800', 'bg-green-500 dark:bg-green-600');
+                    setTimeout(() => {
+                        userDataCopyLinesBtn.textContent = originalText;
+                        userDataCopyLinesBtn.className = userDataCopyLinesBtn.className.replace('bg-green-500 dark:bg-green-600', 'bg-slate-200 dark:bg-slate-800');
+                    }, 2000);
                 });
             });
         });
