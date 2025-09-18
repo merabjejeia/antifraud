@@ -1170,24 +1170,24 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
                 // Сбрасываем результаты
                 uniqueResults = { asn: new Set(), devices: new Set() };
 
-                // Пропускаем заголовок (первую строку)
-                for (let i = 1; i < lines.length; i++) {
+                // Обрабатываем все строки (нет заголовка в вашем формате)
+                for (let i = 0; i < lines.length; i++) {
                     const line = lines[i].trim();
                     if (!line) continue;
 
-                    // Разделяем по табу или множественным пробелам
-                    const columns = line.split(/\t|\s{2,}/).filter(col => col.trim());
+                    // Разделяем по табу
+                    const columns = line.split('\t').filter(col => col.trim());
                     
                     if (columns.length >= 6) {
-                        // ASN - 3-я колонка (индекс 2)
-                        const asn = columns[2]?.trim();
-                        if (asn && asn !== 'ASN' && !isNaN(asn)) {
+                        // ASN - 2-я колонка (индекс 1) - IP адрес, ASN, страна, город, user agent, регион
+                        const asn = columns[1]?.trim();
+                        if (asn && !isNaN(asn)) {
                             uniqueResults.asn.add(asn);
                         }
 
-                        // User agent - 6-я колонка (индекс 5)
-                        const userAgent = columns[5]?.trim();
-                        if (userAgent && userAgent !== 'User agent' && userAgent.startsWith('Mozilla/')) {
+                        // User agent - 5-я колонка (индекс 4)
+                        const userAgent = columns[4]?.trim();
+                        if (userAgent && userAgent.startsWith('Mozilla/')) {
                             // Сохраняем полный User Agent
                             uniqueResults.devices.add(userAgent);
                         }
@@ -1295,11 +1295,21 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
                     debugContent.appendChild(lineDiv);
                     
                     // Показываем разделенные колонки
-                    const columns = line.split(/\t|\s{2,}/).filter(col => col.trim());
+                    const columns = line.split('\t').filter(col => col.trim());
                     const columnsDiv = document.createElement('div');
                     columnsDiv.className = "ml-4 text-xs text-yellow-500";
                     columnsDiv.innerHTML = `<strong>Колонки (${columns.length}):</strong> ${columns.map((col, i) => `[${i}]: "${col.trim()}"`).join(', ')}`;
                     debugContent.appendChild(columnsDiv);
+                    
+                    // Показываем извлеченные значения
+                    if (columns.length >= 6) {
+                        const asn = columns[1]?.trim();
+                        const userAgent = columns[4]?.trim();
+                        const extractedDiv = document.createElement('div');
+                        extractedDiv.className = "ml-8 text-xs text-green-600 dark:text-green-400";
+                        extractedDiv.innerHTML = `<strong>Извлечено:</strong> ASN="${asn}", UserAgent="${userAgent ? userAgent.substring(0, 50) + '...' : 'не найден'}"`;
+                        debugContent.appendChild(extractedDiv);
+                    }
                 });
                 
                 debugSection.appendChild(debugTitle);
