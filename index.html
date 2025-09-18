@@ -364,8 +364,6 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
             const generatorPage = document.getElementById('generator-page');
             const userGeneratorPage = document.getElementById('user-generator-page');
             const cryptoGeneratorPage = document.getElementById('crypto-generator-page');
-            const btechGeneratorPage = document.getElementById('btech-generator-page');
-            const payplayGeneratorPage = document.getElementById('payplay-generator-page');
             const userDataPage = document.getElementById('user-data-page');
             const pairsGeneratorPage = document.getElementById('pairs-generator-page');
             
@@ -373,8 +371,6 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
             const goToGeneratorBtn = document.getElementById('go-to-generator-btn');
             const goToUserGeneratorBtn = document.getElementById('go-to-user-generator-btn');
             const goToCryptoGeneratorBtn = document.getElementById('go-to-crypto-generator-btn');
-            const goToBtechGeneratorBtn = document.getElementById('go-to-btech-generator-btn');
-            const goToPayplayGeneratorBtn = document.getElementById('go-to-payplay-generator-btn');
             const goToUserDataBtn = document.getElementById('go-to-user-data-btn');
             const goToPairsGeneratorBtn = document.getElementById('go-to-pairs-generator-btn');
             
@@ -382,8 +378,6 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
             const backFromGeneratorBtn = document.getElementById('back-from-generator-btn');
             const backFromUserGeneratorBtn = document.getElementById('back-from-user-generator-btn');
             const backFromCryptoGeneratorBtn = document.getElementById('back-from-crypto-generator-btn');
-            const backFromBtechGeneratorBtn = document.getElementById('back-from-btech-generator-btn');
-            const backFromPayplayGeneratorBtn = document.getElementById('back-from-payplay-generator-btn');
             const backFromUserDataBtn = document.getElementById('back-from-user-data-btn');
             const backFromPairsGeneratorBtn = document.getElementById('back-from-pairs-generator-btn');
             
@@ -593,8 +587,6 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
                 else if (pageId === 'generator') container = generatorPage;
                 else if (pageId === 'user-generator') container = userGeneratorPage;
                 else if (pageId === 'crypto-generator') container = cryptoGeneratorPage;
-                else if (pageId === 'btech-generator') container = btechGeneratorPage;
-                else if (pageId === 'payplay-generator') container = payplayGeneratorPage;
                 else if (pageId === 'pairs-generator') container = pairsGeneratorPage;
                 else if (pageId === 'user-data') container = userDataPage;
                 if (container) {
@@ -608,8 +600,6 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
                 generatorPage.classList.add('hidden');
                 userGeneratorPage.classList.add('hidden');
                 cryptoGeneratorPage.classList.add('hidden');
-                btechGeneratorPage.classList.add('hidden');
-                payplayGeneratorPage.classList.add('hidden');
                 pairsGeneratorPage.classList.add('hidden');
                 userDataPage.classList.add('hidden');
                 
@@ -623,10 +613,6 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
                     userGeneratorPage.classList.remove('hidden');
                 } else if (pageId === 'crypto-generator') {
                     cryptoGeneratorPage.classList.remove('hidden');
-                } else if (pageId === 'btech-generator') {
-                    btechGeneratorPage.classList.remove('hidden');
-                } else if (pageId === 'payplay-generator') {
-                    payplayGeneratorPage.classList.remove('hidden');
                 } else if (pageId === 'pairs-generator') {
                     pairsGeneratorPage.classList.remove('hidden');
                 } else if (pageId === 'user-data') {
