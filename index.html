@@ -81,6 +81,14 @@
                     PayPlay: депозиты и выводы
                 </a>
                 <a 
+                    id="go-to-pairs-generator-btn"
+                    href="#pairs-generator"
+                    target="_blank" rel="noopener noreferrer"
+                    class="w-full text-center bg-teal-500 dark:bg-teal-600 text-white font-medium text-lg py-4 px-8 rounded-lg hover:bg-teal-600 dark:hover:bg-teal-700 transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 focus:ring-offset-2"
+                >
+                    Пары кошельков → ссылки проверки
+                </a>
+                <a 
                     id="go-to-user-data-btn"
                     href="#user-data"
                     target="_blank" rel="noopener noreferrer"
@@ -330,6 +338,65 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
             </button>
         </div>
 
+        <!-- Новый раздел "Пары кошельков → ссылки проверки" (изначально скрытый) -->
+        <div id="pairs-generator-page" class="hidden">
+            <h1 class="text-3xl font-bold text-center text-slate-800 dark:text-slate-100 mb-6 transition-colors duration-500">
+                Инструменты для антифрода
+            </h1>
+            <div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 transition-colors duration-500">
+                <h2 class="text-xl font-semibold text-slate-700 dark:text-slate-200 mb-4 transition-colors duration-500">
+                    Пары кошельков → ссылки проверки
+                </h2>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mb-4 transition-colors duration-500">
+                    Вставьте пары адресов (по одному набору в строке, разделение табом/пробелами). Укажите адрес, для которого проверка не нужна.
+                </p>
+
+                <label class="block text-sm text-slate-600 dark:text-slate-400 mb-1">Пары адресов</label>
+                <textarea 
+                    id="pairs-input" 
+                    class="w-full h-32 p-3 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 mb-4 transition-colors" 
+                    placeholder="addrA\taddrB\naddrC addrD\naddrE,addrF"
+                ></textarea>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+                    <div class="sm:col-span-2">
+                        <label class="block text-sm text-slate-600 dark:text-slate-400 mb-1">Адрес, который исключить из проверки</label>
+                        <input id="pairs-main" class="w-full p-3 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 transition-colors" placeholder="Например: TZC3fi5Qt9jwVt8nMSFYuGANTXwJgzezKG" />
+                    </div>
+                    <div>
+                        <label class="block text-sm text-slate-600 dark:text-slate-400 mb-1">Сервис проверки</label>
+                        <select id="pairs-service" class="w-full p-3 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400">
+                            <option value="btech">BTech</option>
+                            <option value="payplay">PayPlay</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                    <button 
+                        id="pairs-generate-btn" 
+                        class="w-full bg-teal-500 dark:bg-teal-600 text-white font-medium py-3 px-6 rounded-lg hover:bg-teal-600 dark:hover:bg-teal-700 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 focus:ring-offset-2"
+                    >
+                        Сгенерировать ссылки
+                    </button>
+                    <button 
+                        id="pairs-open-all-btn" 
+                        class="w-full bg-slate-300 dark:bg-slate-700 text-slate-800 dark:text-slate-200 font-medium py-3 px-6 rounded-lg hover:bg-slate-400 dark:hover:bg-slate-600 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-slate-500 focus:ring-offset-2 hidden"
+                    >
+                        Открыть все
+                    </button>
+                </div>
+
+                <div id="pairs-links-output" class="mt-6 flex flex-col space-y-2"></div>
+            </div>
+             <button 
+                id="back-from-pairs-generator-btn" 
+                class="mt-6 w-full text-teal-600 dark:text-teal-400 font-medium py-3 px-6 rounded-lg hover:underline transition-all focus:outline-none"
+            >
+                ← Вернуться назад
+            </button>
+        </div>
+
         <!-- Новый раздел "Анализ логов пользователей" (изначально скрытый) -->
         <div id="user-data-page" class="hidden">
             <h1 class="text-3xl font-bold text-center text-slate-800 dark:text-slate-100 mb-6 transition-colors duration-500">
@@ -408,6 +475,7 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
             const btechGeneratorPage = document.getElementById('btech-generator-page');
             const payplayGeneratorPage = document.getElementById('payplay-generator-page');
             const userDataPage = document.getElementById('user-data-page');
+            const pairsGeneratorPage = document.getElementById('pairs-generator-page');
             
 
             const goToGeneratorBtn = document.getElementById('go-to-generator-btn');
@@ -416,6 +484,7 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
             const goToBtechGeneratorBtn = document.getElementById('go-to-btech-generator-btn');
             const goToPayplayGeneratorBtn = document.getElementById('go-to-payplay-generator-btn');
             const goToUserDataBtn = document.getElementById('go-to-user-data-btn');
+            const goToPairsGeneratorBtn = document.getElementById('go-to-pairs-generator-btn');
             
 
             const backFromGeneratorBtn = document.getElementById('back-from-generator-btn');
@@ -424,6 +493,7 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
             const backFromBtechGeneratorBtn = document.getElementById('back-from-btech-generator-btn');
             const backFromPayplayGeneratorBtn = document.getElementById('back-from-payplay-generator-btn');
             const backFromUserDataBtn = document.getElementById('back-from-user-data-btn');
+            const backFromPairsGeneratorBtn = document.getElementById('back-from-pairs-generator-btn');
             
 
 
@@ -451,6 +521,14 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
             const payplayOpenAllBtn = document.getElementById('payplay-open-all-btn');
             const payplayInput = document.getElementById('payplay-input');
             const payplayLinksOutput = document.getElementById('payplay-links-output');
+
+            // Пары кошельков
+            const pairsGenerateBtn = document.getElementById('pairs-generate-btn');
+            const pairsOpenAllBtn = document.getElementById('pairs-open-all-btn');
+            const pairsInput = document.getElementById('pairs-input');
+            const pairsMain = document.getElementById('pairs-main');
+            const pairsService = document.getElementById('pairs-service');
+            const pairsLinksOutput = document.getElementById('pairs-links-output');
 
             const userDataAnalyzeBtn = document.getElementById('user-data-analyze-btn');
             const userDataCopyBtn = document.getElementById('user-data-copy-btn');
@@ -611,7 +689,8 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
                 'crypto-generator': 'Криптокошельки',
                 'btech-generator': 'BTech проверка кошельков',
                 'payplay-generator': 'PayPlay депозиты и выводы',
-                'user-data': 'Анализ данных пользователей',
+                'pairs-generator': 'Пары кошельков → ссылки проверки',
+                'user-data': 'Анализ логов пользователей',
                 'crosscheck-generator': 'Пересечения: BTech / PayPlay'
             };
 
@@ -627,6 +706,7 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
                 else if (pageId === 'crypto-generator') container = cryptoGeneratorPage;
                 else if (pageId === 'btech-generator') container = btechGeneratorPage;
                 else if (pageId === 'payplay-generator') container = payplayGeneratorPage;
+                else if (pageId === 'pairs-generator') container = pairsGeneratorPage;
                 else if (pageId === 'user-data') container = userDataPage;
                 if (container) {
                     const h1 = container.querySelector('h1');
@@ -641,6 +721,7 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
                 cryptoGeneratorPage.classList.add('hidden');
                 btechGeneratorPage.classList.add('hidden');
                 payplayGeneratorPage.classList.add('hidden');
+                pairsGeneratorPage.classList.add('hidden');
                 userDataPage.classList.add('hidden');
                 
                 
@@ -657,6 +738,8 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
                     btechGeneratorPage.classList.remove('hidden');
                 } else if (pageId === 'payplay-generator') {
                     payplayGeneratorPage.classList.remove('hidden');
+                } else if (pageId === 'pairs-generator') {
+                    pairsGeneratorPage.classList.remove('hidden');
                 } else if (pageId === 'user-data') {
                     userDataPage.classList.remove('hidden');
                 }
@@ -666,7 +749,7 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
             // Обработка хеша для открытия нужного раздела при загрузке/смене адреса
             function handleHashChange() {
                 const hash = window.location.hash.replace('#', '');
-                if (hash === 'generator' || hash === 'user-generator' || hash === 'crypto-generator' || hash === 'btech-generator' || hash === 'payplay-generator' || hash === 'user-data' || hash === 'home') {
+                if (hash === 'generator' || hash === 'user-generator' || hash === 'crypto-generator' || hash === 'btech-generator' || hash === 'payplay-generator' || hash === 'pairs-generator' || hash === 'user-data' || hash === 'home') {
                     showPage(hash);
                 } else {
                     showPage('home');
@@ -681,6 +764,7 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
             backFromBtechGeneratorBtn.addEventListener('click', () => { window.location.hash = 'home'; });
             backFromPayplayGeneratorBtn.addEventListener('click', () => { window.location.hash = 'home'; });
             backFromUserDataBtn.addEventListener('click', () => { window.location.hash = 'home'; });
+            backFromPairsGeneratorBtn.addEventListener('click', () => { window.location.hash = 'home'; });
             
             
 
@@ -789,6 +873,74 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
                 links.forEach(link => {
                     window.open(link.href, '_blank');
                 });
+            });
+
+            // Генерация ссылок для раздела "Пары кошельков"
+            pairsGenerateBtn.addEventListener('click', () => {
+                const raw = pairsInput.value.split('\n').map(s => s.trim()).filter(Boolean);
+                const exclude = (pairsMain.value || '').trim();
+                const service = pairsService.value; // 'btech' | 'payplay'
+
+                pairsLinksOutput.innerHTML = '';
+                pairsOpenAllBtn.classList.add('hidden');
+
+                if (raw.length === 0) {
+                    const p = document.createElement('p');
+                    p.className = 'text-center text-slate-500 italic mt-4';
+                    p.textContent = 'Пожалуйста, вставьте пары адресов.';
+                    pairsLinksOutput.appendChild(p);
+                    return;
+                }
+
+                // Собираем уникальные адреса из пар, исключая главный
+                const unique = new Set();
+                raw.forEach(line => {
+                    // разделители: таб, запятая, 2+ пробела или один пробел
+                    const parts = line.split(/[\t, ]+/).map(s => s.trim()).filter(Boolean);
+                    if (parts.length >= 2) {
+                        const a = parts[0];
+                        const b = parts[1];
+                        if (a && (!exclude || a !== exclude)) unique.add(a);
+                        if (b && (!exclude || b !== exclude)) unique.add(b);
+                    }
+                });
+
+                if (unique.size === 0) {
+                    const p = document.createElement('p');
+                    p.className = 'text-center text-slate-500 italic mt-4';
+                    p.textContent = 'Нет адресов для генерации ссылок (возможно, все исключены).';
+                    pairsLinksOutput.appendChild(p);
+                    return;
+                }
+
+                const wallets = Array.from(unique);
+                wallets.forEach(addr => {
+                    if (service === 'btech') {
+                        const url = buildBtechUrl(encodeURIComponent(addr));
+                        const link = createLinkElement(`BTech: ${addr}`, url);
+                        const copyBtn = createCopyButton(link);
+                        pairsLinksOutput.appendChild(createLinkContainer(link, copyBtn));
+                    } else if (service === 'payplay') {
+                        const q = encodeURIComponent(addr);
+                        const depUrl = buildPayplayUrl(payplayBaseDeposits, q);
+                        const wdrUrl = buildPayplayUrl(payplayBaseWithdrawals, q);
+                        const depLink = createLinkElement(`PayPlay Deposits: ${addr}`, depUrl);
+                        const depCopy = createCopyButton(depLink);
+                        pairsLinksOutput.appendChild(createLinkContainer(depLink, depCopy));
+                        const wdrLink = createLinkElement(`PayPlay Withdrawals: ${addr}`, wdrUrl);
+                        const wdrCopy = createCopyButton(wdrLink);
+                        pairsLinksOutput.appendChild(createLinkContainer(wdrLink, wdrCopy));
+                    }
+                });
+
+                if (pairsLinksOutput.querySelectorAll('a').length > 0) {
+                    pairsOpenAllBtn.classList.remove('hidden');
+                }
+            });
+
+            pairsOpenAllBtn.addEventListener('click', () => {
+                const links = pairsLinksOutput.querySelectorAll('a');
+                links.forEach(link => window.open(link.href, '_blank'));
             });
 
             // Функция для создания элемента ссылки
