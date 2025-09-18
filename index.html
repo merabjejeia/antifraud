@@ -65,22 +65,6 @@
                     Обозреватель кошельков
                 </a>
                 <a 
-                    id="go-to-btech-generator-btn"
-                    href="#btech-generator"
-                    target="_blank" rel="noopener noreferrer"
-                    class="w-full text-center bg-teal-500 dark:bg-teal-600 text-white font-medium text-lg py-4 px-8 rounded-lg hover:bg-teal-600 dark:hover:bg-teal-700 transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 focus:ring-offset-2"
-                >
-                    BTech: проверка кошельков
-                </a>
-                <a 
-                    id="go-to-payplay-generator-btn"
-                    href="#payplay-generator"
-                    target="_blank" rel="noopener noreferrer"
-                    class="w-full text-center bg-teal-500 dark:bg-teal-600 text-white font-medium text-lg py-4 px-8 rounded-lg hover:bg-teal-600 dark:hover:bg-teal-700 transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 focus:ring-offset-2"
-                >
-                    PayPlay: депозиты и выводы
-                </a>
-                <a 
                     id="go-to-pairs-generator-btn"
                     href="#pairs-generator"
                     target="_blank" rel="noopener noreferrer"
@@ -240,98 +224,6 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
             </div>
              <button 
                 id="back-from-crypto-generator-btn" 
-                class="mt-6 w-full text-teal-600 dark:text-teal-400 font-medium py-3 px-6 rounded-lg hover:underline transition-all focus:outline-none"
-            >
-                ← Вернуться назад
-            </button>
-        </div>
-
-        <!-- Новый раздел "BTech проверка кошельков" (изначально скрытый) -->
-        <div id="btech-generator-page" class="hidden">
-            <h1 class="text-3xl font-bold text-center text-slate-800 dark:text-slate-100 mb-6 transition-colors duration-500">
-                Инструменты для антифрода
-            </h1>
-            <div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 transition-colors duration-500">
-                <h2 class="text-xl font-semibold text-slate-700 dark:text-slate-200 mb-4 transition-colors duration-500">
-                    BTech: ссылки на проверку кошельков
-                </h2>
-                <p class="text-sm text-slate-500 dark:text-slate-400 mb-4 transition-colors duration-500">
-                    Вставьте один или несколько адресов, каждый с новой строки. Для каждого адреса будут сгенерированы ссылки в кабинете BTech.
-                </p>
-
-                <textarea 
-                    id="btech-input" 
-                    class="w-full h-32 p-3 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 mb-4 transition-colors" 
-                    placeholder="Например:\nUQB9Ez1OQlyOAN4BVROkTmbm0WOyHnFyCux1eZZeXeKMVQN6\n0x71c7656ec7ab88b098defb751b7401b5f6d8976f"
-                ></textarea>
-                
-                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                    <button 
-                        id="btech-generate-btn" 
-                        class="w-full bg-teal-500 dark:bg-teal-600 text-white font-medium py-3 px-6 rounded-lg hover:bg-teal-600 dark:hover:bg-teal-700 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 focus:ring-offset-2"
-                    >
-                        Сгенерировать ссылки
-                    </button>
-                    <button 
-                        id="btech-open-all-btn" 
-                        class="w-full bg-slate-300 dark:bg-slate-700 text-slate-800 dark:text-slate-200 font-medium py-3 px-6 rounded-lg hover:bg-slate-400 dark:hover:bg-slate-600 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-slate-500 focus:ring-offset-2 hidden"
-                    >
-                        Открыть все
-                    </button>
-                </div>
-                
-                <div id="btech-links-output" class="mt-6 flex flex-col space-y-2">
-                    <!-- Сюда будут добавляться сгенерированные ссылки -->
-                </div>
-            </div>
-             <button 
-                id="back-from-btech-generator-btn" 
-                class="mt-6 w-full text-teal-600 dark:text-teal-400 font-medium py-3 px-6 rounded-lg hover:underline transition-all focus:outline-none"
-            >
-                ← Вернуться назад
-            </button>
-        </div>
-
-        <!-- Новый раздел "PayPlay проверки" (изначально скрытый) -->
-        <div id="payplay-generator-page" class="hidden">
-            <h1 class="text-3xl font-bold text-center text-slate-800 dark:text-slate-100 mb-6 transition-colors duration-500">
-                Инструменты для антифрода
-            </h1>
-            <div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 transition-colors duration-500">
-                <h2 class="text-xl font-semibold text-slate-700 dark:text-slate-200 mb-4 transition-colors duration-500">
-                    PayPlay: ссылки по депозитам и выводам
-                </h2>
-                <p class="text-sm text-slate-500 dark:text-slate-400 mb-4 transition-colors duration-500">
-                    Вставьте один или несколько значений (адрес/txid/ID), каждый с новой строки. Для каждого значения создадим две ссылки: депозиты и выводы.
-                </p>
-
-                <textarea 
-                    id="payplay-input" 
-                    class="w-full h-32 p-3 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teал-400 mb-4 transition-colors" 
-                    placeholder="Например:\nUQB9Ez1OQlyOAN4BVROkTmbm0WOyHnFyCux1eZZeXeKMVQN6\n0x71c7656ec7ab88b098defb751b7401b5f6d8976f"
-                ></textarea>
-                
-                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                    <button 
-                        id="payplay-generate-btn" 
-                        class="w-full bg-teal-500 dark:bg-teal-600 text-white font-medium py-3 px-6 rounded-lg hover:bg-teal-600 dark:hover:bg-teal-700 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 focus:ring-offset-2"
-                    >
-                        Сгенерировать ссылки
-                    </button>
-                    <button 
-                        id="payplay-open-all-btn" 
-                        class="w-full bg-slate-300 dark:bg-slate-700 text-slate-800 dark:text-slate-200 font-medium py-3 px-6 rounded-lg hover:bg-slate-400 dark:hover:bg-slate-600 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-slate-500 focus:ring-offset-2 hidden"
-                    >
-                        Открыть все
-                    </button>
-                </div>
-                
-                <div id="payplay-links-output" class="mt-6 flex flex-col space-y-2">
-                    <!-- Сюда будут добавляться сгенерированные ссылки -->
-                </div>
-            </div>
-             <button 
-                id="back-from-payplay-generator-btn" 
                 class="mt-6 w-full text-teal-600 dark:text-teal-400 font-medium py-3 px-6 rounded-lg hover:underline transition-all focus:outline-none"
             >
                 ← Вернуться назад
@@ -686,12 +578,9 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
                 home: 'Инструменты для антифрода',
                 generator: 'Длинный ID вывода',
                 'user-generator': 'Открыть пользователей по ID',
-                'crypto-generator': 'Криптокошельки',
-                'btech-generator': 'BTech проверка кошельков',
-                'payplay-generator': 'PayPlay депозиты и выводы',
+                'crypto-generator': 'Обозреватель кошельков',
                 'pairs-generator': 'Пары кошельков → ссылки проверки',
-                'user-data': 'Анализ логов пользователей',
-                'crosscheck-generator': 'Пересечения: BTech / PayPlay'
+                'user-data': 'Анализ логов пользователей'
             };
 
             function setTitlesFor(pageId) {
@@ -749,7 +638,7 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
             // Обработка хеша для открытия нужного раздела при загрузке/смене адреса
             function handleHashChange() {
                 const hash = window.location.hash.replace('#', '');
-                if (hash === 'generator' || hash === 'user-generator' || hash === 'crypto-generator' || hash === 'btech-generator' || hash === 'payplay-generator' || hash === 'pairs-generator' || hash === 'user-data' || hash === 'home') {
+                if (hash === 'generator' || hash === 'user-generator' || hash === 'crypto-generator' || hash === 'pairs-generator' || hash === 'user-data' || hash === 'home') {
                     showPage(hash);
                 } else {
                     showPage('home');
@@ -761,8 +650,6 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
             backFromGeneratorBtn.addEventListener('click', () => { window.location.hash = 'home'; });
             backFromUserGeneratorBtn.addEventListener('click', () => { window.location.hash = 'home'; });
             backFromCryptoGeneratorBtn.addEventListener('click', () => { window.location.hash = 'home'; });
-            backFromBtechGeneratorBtn.addEventListener('click', () => { window.location.hash = 'home'; });
-            backFromPayplayGeneratorBtn.addEventListener('click', () => { window.location.hash = 'home'; });
             backFromUserDataBtn.addEventListener('click', () => { window.location.hash = 'home'; });
             backFromPairsGeneratorBtn.addEventListener('click', () => { window.location.hash = 'home'; });
             
