@@ -1379,6 +1379,84 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
                     }, 2000);
                 });
             });
+
+            // Копировать таблицу
+            userDataCopyTableBtn.addEventListener('click', () => {
+                const asnArray = Array.from(uniqueResults.asn).sort();
+                const devicesArray = Array.from(uniqueResults.devices).sort();
+                
+                // Формируем строку для копирования в табличном формате
+                let copyText = 'ASN\tУстройство\n';
+                const maxLength = Math.max(asnArray.length, devicesArray.length);
+                for (let i = 0; i < maxLength; i++) {
+                    const asn = asnArray[i] || '';
+                    const device = devicesArray[i] || '';
+                    copyText += `${asn}\t${device}\n`;
+                }
+
+                copyWithFallback(copyText, userDataCopyTableBtn, 'bg-slate-300 dark:bg-slate-700');
+            });
+
+            // Копировать только ASN (столбик)
+            userDataCopyAsnBtn.addEventListener('click', () => {
+                const asnArray = Array.from(uniqueResults.asn).sort();
+                const text = asnArray.join('\n');
+                copyWithFallback(text, userDataCopyAsnBtn, 'bg-slate-200 dark:bg-slate-800');
+            });
+
+            // Копировать только устройства (столбик)
+            userDataCopyDevicesBtn.addEventListener('click', () => {
+                const devicesArray = Array.from(uniqueResults.devices).sort();
+                const text = devicesArray.join('\n');
+                copyWithFallback(text, userDataCopyDevicesBtn, 'bg-slate-200 dark:bg-slate-800');
+            });
+
+            // Копировать как две строки (через запятую)
+            userDataCopyLinesBtn.addEventListener('click', () => {
+                const asnArray = Array.from(uniqueResults.asn).sort();
+                const devicesArray = Array.from(uniqueResults.devices).sort();
+                const text = `ASN: ${asnArray.join(', ')}\nУстройство: ${devicesArray.join(', ')}`;
+                copyWithFallback(text, userDataCopyLinesBtn, 'bg-slate-200 dark:bg-slate-800');
+            });
+
+            function copyWithFallback(text, buttonEl, defaultBgClasses) {
+                const onSuccess = () => {
+                    const originalText = buttonEl.textContent;
+                    buttonEl.textContent = 'Скопировано!';
+                    buttonEl.className = buttonEl.className.replace(defaultBgClasses, 'bg-green-500 dark:bg-green-600');
+                    setTimeout(() => {
+                        buttonEl.textContent = originalText;
+                        buttonEl.className = buttonEl.className.replace('bg-green-500 dark:bg-green-600', defaultBgClasses);
+                    }, 1500);
+                };
+
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(onSuccess).catch(() => {
+                        legacyCopy(text, onSuccess);
+                    });
+                } else {
+                    legacyCopy(text, onSuccess);
+                }
+            }
+
+            function legacyCopy(text, onSuccess) {
+                try {
+                    const temp = document.createElement('textarea');
+                    temp.value = text;
+                    temp.style.position = 'fixed';
+                    temp.style.opacity = '0';
+                    document.body.appendChild(temp);
+                    temp.focus();
+                    temp.select();
+                    const ok = document.execCommand('copy');
+                    document.body.removeChild(temp);
+                    if (ok) onSuccess();
+                    else throw new Error('execCommand failed');
+                } catch (e) {
+                    console.error('Ошибка копирования:', e);
+                    alert('Не удалось скопировать данные. Выделите текст вручную.');
+                }
+            }
         });
     </script>
 </body>
