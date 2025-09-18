@@ -62,7 +62,7 @@
                     target="_blank" rel="noopener noreferrer"
                     class="w-full text-center bg-teal-500 dark:bg-teal-600 text-white font-medium text-lg py-4 px-8 rounded-lg hover:bg-teal-600 dark:hover:bg-teal-700 transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 focus:ring-offset-2"
                 >
-                    Криптокошельки
+                    Обозреватель кошельков
                 </a>
                 <a 
                     id="go-to-btech-generator-btn"
@@ -86,7 +86,7 @@
                     target="_blank" rel="noopener noreferrer"
                     class="w-full text-center bg-teal-500 dark:bg-teal-600 text-white font-medium text-lg py-4 px-8 rounded-lg hover:bg-teal-600 dark:hover:bg-teal-700 transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 focus:ring-offset-2"
                 >
-                    Анализ данных пользователей
+                    Анализ логов пользователей
                 </a>
                 
             </div>
@@ -238,74 +238,6 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
             </button>
         </div>
 
-        <!-- Новый раздел "Пересечения: BTech / PayPlay" (изначально скрытый) -->
-        <!-- Удалено: раздел пересечений -->
-        <!--
-        <div id="crosscheck-generator-page" class="hidden">
-            <h1 class="text-3xl font-bold text-center text-slate-800 dark:text-slate-100 mb-6 transition-colors duration-500">
-                Инструменты для антифрода
-            </h1>
-            <div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 transition-colors duration-500">
-                <h2 class="text-xl font-semibold text-slate-700 dark:text-slate-200 mb-4 transition-colors duration-500">
-                    Пересечения кошельков и проверка в кабинетах
-                </h2>
-                <p class="text-sm text-slate-500 dark:text-slate-400 mb-4 transition-colors duration-500">
-                    Вставьте адрес кошелька, который нужно проверить, и массив связей (по одной паре в строке, через TAB/пробел/запятую). Будут найдены контрагенты из массива и сгенерированы ссылки в выбранном кабинете.
-                </p>
-
-                <label class="block text-sm text-slate-600 dark:text-slate-400 mb-1">Искомый адрес</label>
-                <input id="crosscheck-target" class="w-full p-3 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teал-400 mb-4 transition-colors" placeholder="Например: TRVWSxpRdJtEwp1n2uVC7NovRCDf63MuKa" />
-
-                <label class="block text-sm text-slate-600 dark:text-slate-400 mb-1">Массив данных (пары адресов)</label>
-                <textarea 
-                    id="crosscheck-input" 
-                    class="w-full h-32 p-3 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teал-400 mb-4 transition-colors" 
-                    placeholder="addrA\taddrB\naddrC addrD\naddrE,addrF"
-                ></textarea>
-
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
-                    <div>
-                        <label class="block text-sm text-slate-600 dark:text-slate-400 mb-1">Кабинет</label>
-                        <select id="crosscheck-service" class="w-full p-3 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teал-400">
-                            <option value="btech">BTech</option>
-                            <option value="payplay">PayPlay</option>
-                        </select>
-                    </div>
-                    <div class="sm:col-span-2">
-                        <label class="block text-sm text-slate-600 dark:text-slate-400 mb-1">Режим PayPlay</label>
-                        <select id="crosscheck-payplay-mode" class="w-full p-3 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teал-400">
-                            <option value="both">Депозиты и выводы</option>
-                            <option value="deposits">Только депозиты</option>
-                            <option value="withdrawals">Только выводы</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                    <button 
-                        id="crosscheck-generate-btn" 
-                        class="w-full bg-teal-500 dark:bg-teal-600 text-white font-medium py-3 px-6 rounded-lg hover:bg-teal-600 dark:hover:bg-teal-700 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teал-400 focus:ring-offset-2"
-                    >
-                        Найти пересечения и сгенерировать ссылки
-                    </button>
-                    <button 
-                        id="crosscheck-open-all-btn" 
-                        class="w-full bg-slate-300 dark:bg-slate-700 text-slate-800 dark:text-slate-200 font-medium py-3 px-6 rounded-lg hover:bg-slate-400 dark:hover:bg-slate-600 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-slate-500 focus:ring-offset-2 hidden"
-                    >
-                        Открыть все
-                    </button>
-                </div>
-                
-                <div id="crosscheck-links-output" class="mt-6 flex flex-col space-y-2"></div>
-            </div>
-             <button 
-                id="back-from-crosscheck-generator-btn" 
-                class="mt-6 w-full text-teal-600 dark:text-teal-400 font-medium py-3 px-6 rounded-lg hover:underline transition-all focus:outline-none"
-            >
-                ← Вернуться назад
-            </button>
-        </div>
-        -->
         <!-- Новый раздел "BTech проверка кошельков" (изначально скрытый) -->
         <div id="btech-generator-page" class="hidden">
             <h1 class="text-3xl font-bold text-center text-slate-800 dark:text-slate-100 mb-6 transition-colors duration-500">
@@ -398,7 +330,7 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
             </button>
         </div>
 
-        <!-- Новый раздел "Анализ данных пользователей" (изначально скрытый) -->
+        <!-- Новый раздел "Анализ логов пользователей" (изначально скрытый) -->
         <div id="user-data-page" class="hidden">
             <h1 class="text-3xl font-bold text-center text-slate-800 dark:text-slate-100 mb-6 transition-colors duration-500">
                 Инструменты для антифрода
@@ -427,27 +359,26 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
                     >
                         Извлечь уникальные значения
                     </button>
-                    <button 
-                        id="user-data-copy-table-btn" 
-                        class="w-full bg-slate-300 dark:bg-slate-700 text-slate-800 dark:text-slate-200 font-medium py-3 px-6 rounded-lg hover:bg-slate-400 dark:hover:bg-slate-600 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-slate-500 focus:ring-offset-2 hidden"
-                    >
-                        Копировать таблицу
-                    </button>
                 </div>
-                <div class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div class="mt-4 grid grid-cols-3 gap-3">
                     <button 
                         id="user-data-copy-asn-btn" 
                         class="w-full bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 font-medium py-2 px-4 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-slate-500 hidden"
                     >
-                        Копировать ASN (столбик)
+                        Копировать ASN
                     </button>
                     <button 
                         id="user-data-copy-devices-btn" 
                         class="w-full bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 font-medium py-2 px-4 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-slate-500 hidden"
                     >
-                        Копировать устройства (столбик)
+                        Копировать устройства
                     </button>
-                    <div></div>
+                    <button 
+                        id="user-data-copy-table-btn" 
+                        class="w-full bg-slate-300 dark:bg-slate-700 text-slate-800 dark:text-slate-200 font-medium py-2 px-4 rounded-lg hover:bg-slate-400 dark:hover:bg-slate-600 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-slate-500 hidden"
+                    >
+                        Копировать таблицу
+                    </button>
                 </div>
                 
                 <div id="user-data-output" class="mt-6">
