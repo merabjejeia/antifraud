@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Инструменты для антифрода</title>
-     <!-- Favicon - современный щит безопасности -->
+    
+    <!-- Favicon - современный щит безопасности -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='shieldGrad' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' style='stop-color:%2306b6d4;stop-opacity:1' /><stop offset='100%' style='stop-color:%230e7490;stop-opacity:1' /></linearGradient><linearGradient id='checkGrad' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' style='stop-color:%2310b981;stop-opacity:1' /><stop offset='100%' style='stop-color:%23059669;stop-opacity:1' /></linearGradient></defs><path d='M50 10 L20 25 L20 45 C20 65 35 80 50 90 C65 80 80 65 80 45 L80 25 Z' fill='url(%23shieldGrad)' stroke='%23fff' stroke-width='2'/><path d='M35 45 L45 55 L65 35' stroke='url(%23checkGrad)' stroke-width='4' fill='none' stroke-linecap='round' stroke-linejoin='round'/><circle cx='50' cy='30' r='3' fill='%23fff' opacity='0.8'/></svg>">
     
     <!-- Подключение Tailwind CSS из CDN -->
@@ -423,7 +424,8 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
             const ctx = canvas.getContext('2d');
             let particles = [];
             const particleCount = 200; // Увеличено количество частиц для большей плотности
-            const maxDistance = 180; // Увеличено расстояние для линий
+            const maxDistance = 180; // Увеличено расстояние для линий между частицами
+            const mouseLineDistance = 160; // Радиус соединения частиц с курсором ниточками
             // Объект для отслеживания позиции мыши
             const mouse = {
                 x: undefined,
@@ -445,8 +447,8 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
                     this.baseRadius = radius; // Базовый радиус для анимации
                     this.radius = radius;
                     this.velocity = {
-                        x: (Math.random() - 0.5) * 0.5,
-                        y: (Math.random() - 0.5) * 0.5
+                        x: (Math.random() - 0.5) * 0.9,
+                        y: (Math.random() - 0.5) * 0.9
                     };
                     this.phase = Math.random() * Math.PI * 2; // Фаза для анимации
                 }
@@ -464,32 +466,24 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
                     this.phase += 0.05;
                     this.radius = this.baseRadius + Math.sin(this.phase) * 0.5;
 
+                    // Небольшой случайный дрейф для хаотичности
+                    this.velocity.x += (Math.random() - 0.5) * 0.05;
+                    this.velocity.y += (Math.random() - 0.5) * 0.05;
+
+                    // Ограничение максимальной скорости
+                    const maxSpeed = 0.5;
+                    const speed = Math.hypot(this.velocity.x, this.velocity.y);
+                    if (speed > maxSpeed) {
+                        this.velocity.x = (this.velocity.x / speed) * maxSpeed;
+                        this.velocity.y = (this.velocity.y / speed) * maxSpeed;
+                    }
+
                     // Проверка столкновения с границами канваса
                     if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
                         this.velocity.x = -this.velocity.x;
                     }
                     if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
                         this.velocity.y = -this.velocity.y;
-                    }
-
-                    // Логика плавного притяжения к мыши
-                    if (mouse.x !== undefined && mouse.y !== undefined) {
-                        const dx = mouse.x - this.x;
-                        const dy = mouse.y - this.y;
-                        const distance = Math.sqrt(dx * dx + dy * dy);
-
-                        if (distance < mouse.radius) {
-                            const attractionFactor = 0.001; // Коэффициент силы притяжения (уменьшен)
-                            const dampingFactor = 0.65; // Коэффициент затухания
-
-                            // Вычисляем ускорение к курсору
-                            this.velocity.x += dx * attractionFactor;
-                            this.velocity.y += dy * attractionFactor;
-
-                            // Применяем затухание для плавности
-                            this.velocity.x *= dampingFactor;
-                            this.velocity.y *= dampingFactor;
-                        }
                     }
 
                     // Применение скорости
@@ -514,7 +508,7 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
                 requestAnimationFrame(animate);
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 const isDark = document.documentElement.classList.contains('dark');
-                const particleColor = isDark ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.2)';
+                const particleColor = isDark ? 'rgba(255, 255, 255, 0.22)' : 'rgba(0, 0, 0, 0.22)';
                 const lineColorBase = isDark ? 'rgba(255, 255, 255, ' : 'rgba(0, 0, 0, ';
 
                 for (let i = 0; i < particles.length; i++) {
@@ -532,6 +526,25 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
                             ctx.lineTo(particles[j].x, particles[j].y);
                             ctx.strokeStyle = lineColorBase + opacity + ')';
                             ctx.lineWidth = 0.5;
+                            ctx.stroke();
+                            ctx.closePath();
+                        }
+                    }
+                }
+
+                // Соединяем близкие к курсору частицы нитями
+                if (mouse.x !== undefined && mouse.y !== undefined) {
+                    for (let i = 0; i < particles.length; i++) {
+                        const dx = particles[i].x - mouse.x;
+                        const dy = particles[i].y - mouse.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < mouseLineDistance) {
+                            const opacity = 0.45 - (dist / mouseLineDistance) * 0.45;
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(mouse.x, mouse.y);
+                            ctx.strokeStyle = lineColorBase + opacity + ')';
+                            ctx.lineWidth = 0.6;
                             ctx.stroke();
                             ctx.closePath();
                         }
