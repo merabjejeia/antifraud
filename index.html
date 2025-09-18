@@ -1181,13 +1181,13 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
                     if (columns.length >= 6) {
                         // ASN - 3-я колонка (индекс 2)
                         const asn = columns[2]?.trim();
-                        if (asn && asn !== 'ASN') {
+                        if (asn && asn !== 'ASN' && !isNaN(asn)) {
                             uniqueResults.asn.add(asn);
                         }
 
                         // User agent - 6-я колонка (индекс 5)
                         const userAgent = columns[5]?.trim();
-                        if (userAgent && userAgent !== 'User agent') {
+                        if (userAgent && userAgent !== 'User agent' && userAgent.startsWith('Mozilla/')) {
                             // Извлекаем информацию об устройстве из User Agent
                             const deviceInfo = extractDeviceInfo(userAgent);
                             if (deviceInfo) {
@@ -1199,6 +1199,9 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
 
                 // Отображаем результаты
                 displayResults();
+                
+                // Добавляем отладочную информацию
+                displayDebugInfo(lines);
             });
 
             function extractDeviceInfo(userAgent) {
@@ -1299,6 +1302,39 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
                 }
 
                 userDataOutput.appendChild(resultsContainer);
+            }
+
+            function displayDebugInfo(lines) {
+                // Создаем отладочную секцию
+                const debugSection = document.createElement('div');
+                debugSection.className = "bg-yellow-50 dark:bg-yellow-900/20 p-4 rounded-lg border border-yellow-200 dark:border-yellow-800 mt-4";
+                
+                const debugTitle = document.createElement('h3');
+                debugTitle.className = "text-lg font-semibold text-yellow-700 dark:text-yellow-300 mb-2";
+                debugTitle.textContent = "Отладочная информация:";
+                
+                const debugContent = document.createElement('div');
+                debugContent.className = "text-sm text-yellow-600 dark:text-yellow-400 space-y-2";
+                
+                // Показываем первые несколько строк для отладки
+                const sampleLines = lines.slice(0, 3);
+                sampleLines.forEach((line, index) => {
+                    const lineDiv = document.createElement('div');
+                    lineDiv.className = "font-mono text-xs";
+                    lineDiv.innerHTML = `<strong>Строка ${index + 1}:</strong> ${line.replace(/\t/g, ' | ')}`;
+                    debugContent.appendChild(lineDiv);
+                    
+                    // Показываем разделенные колонки
+                    const columns = line.split(/\t|\s{2,}/).filter(col => col.trim());
+                    const columnsDiv = document.createElement('div');
+                    columnsDiv.className = "ml-4 text-xs text-yellow-500";
+                    columnsDiv.innerHTML = `<strong>Колонки (${columns.length}):</strong> ${columns.map((col, i) => `[${i}]: "${col.trim()}"`).join(', ')}`;
+                    debugContent.appendChild(columnsDiv);
+                });
+                
+                debugSection.appendChild(debugTitle);
+                debugSection.appendChild(debugContent);
+                userDataOutput.appendChild(debugSection);
             }
 
             userDataCopyBtn.addEventListener('click', () => {
