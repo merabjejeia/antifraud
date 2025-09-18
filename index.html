@@ -1188,11 +1188,8 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
                         // User agent - 6-я колонка (индекс 5)
                         const userAgent = columns[5]?.trim();
                         if (userAgent && userAgent !== 'User agent' && userAgent.startsWith('Mozilla/')) {
-                            // Извлекаем информацию об устройстве из User Agent
-                            const deviceInfo = extractDeviceInfo(userAgent);
-                            if (deviceInfo) {
-                                uniqueResults.devices.add(deviceInfo);
-                            }
+                            // Сохраняем полный User Agent
+                            uniqueResults.devices.add(userAgent);
                         }
                     }
                 }
@@ -1204,53 +1201,6 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
                 displayDebugInfo(lines);
             });
 
-            function extractDeviceInfo(userAgent) {
-                // Извлекаем основную информацию об устройстве из User Agent
-                let device = '';
-                let os = '';
-                let browser = '';
-
-                // Определяем операционную систему
-                if (userAgent.includes('Windows NT 10.0')) {
-                    os = 'Windows 10';
-                } else if (userAgent.includes('Windows NT 6.3')) {
-                    os = 'Windows 8.1';
-                } else if (userAgent.includes('Windows NT 6.1')) {
-                    os = 'Windows 7';
-                } else if (userAgent.includes('Mac OS X')) {
-                    os = 'macOS';
-                } else if (userAgent.includes('Linux')) {
-                    os = 'Linux';
-                } else if (userAgent.includes('Android')) {
-                    os = 'Android';
-                } else if (userAgent.includes('iPhone') || userAgent.includes('iPad')) {
-                    os = 'iOS';
-                }
-
-                // Определяем браузер
-                if (userAgent.includes('Chrome/')) {
-                    browser = 'Chrome';
-                } else if (userAgent.includes('Firefox/')) {
-                    browser = 'Firefox';
-                } else if (userAgent.includes('Safari/') && !userAgent.includes('Chrome')) {
-                    browser = 'Safari';
-                } else if (userAgent.includes('Edge/')) {
-                    browser = 'Edge';
-                }
-
-                // Определяем тип устройства
-                if (userAgent.includes('Mobile')) {
-                    device = 'Mobile';
-                } else if (userAgent.includes('Tablet')) {
-                    device = 'Tablet';
-                } else {
-                    device = 'Desktop';
-                }
-
-                // Формируем строку устройства
-                const parts = [device, os, browser].filter(part => part);
-                return parts.join(' - ');
-            }
 
             function displayResults() {
                 const asnArray = Array.from(uniqueResults.asn).sort();
@@ -1258,43 +1208,63 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
 
                 // Создаем контейнер для результатов
                 const resultsContainer = document.createElement('div');
-                resultsContainer.className = "space-y-4";
+                resultsContainer.className = "bg-slate-50 dark:bg-slate-800 p-4 rounded-lg border border-slate-200 dark:border-slate-700";
 
-                // ASN результаты
-                if (asnArray.length > 0) {
-                    const asnSection = document.createElement('div');
-                    asnSection.className = "bg-slate-50 dark:bg-slate-800 p-4 rounded-lg border border-slate-200 dark:border-slate-700";
-                    
-                    const asnTitle = document.createElement('h3');
-                    asnTitle.className = "text-lg font-semibold text-slate-700 dark:text-slate-200 mb-2";
-                    asnTitle.textContent = `Уникальные ASN (${asnArray.length}):`;
-                    
-                    const asnList = document.createElement('div');
-                    asnList.className = "text-sm text-slate-600 dark:text-slate-300 font-mono";
-                    asnList.textContent = asnArray.join('\n');
-                    
-                    asnSection.appendChild(asnTitle);
-                    asnSection.appendChild(asnList);
-                    resultsContainer.appendChild(asnSection);
-                }
+                // Заголовок
+                const title = document.createElement('h3');
+                title.className = "text-lg font-semibold text-slate-700 dark:text-slate-200 mb-4 text-center";
+                title.textContent = `Уникальные значения (ASN: ${asnArray.length}, Устройства: ${devicesArray.length})`;
+                resultsContainer.appendChild(title);
 
-                // Устройства результаты
-                if (devicesArray.length > 0) {
-                    const devicesSection = document.createElement('div');
-                    devicesSection.className = "bg-slate-50 dark:bg-slate-800 p-4 rounded-lg border border-slate-200 dark:border-slate-700";
+                // Создаем таблицу
+                const table = document.createElement('table');
+                table.className = "w-full border-collapse";
+                
+                // Заголовки таблицы
+                const thead = document.createElement('thead');
+                const headerRow = document.createElement('tr');
+                headerRow.className = "border-b border-slate-300 dark:border-slate-600";
+                
+                const asnHeader = document.createElement('th');
+                asnHeader.className = "text-left py-3 px-4 font-semibold text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-700";
+                asnHeader.textContent = "ASN";
+                
+                const deviceHeader = document.createElement('th');
+                deviceHeader.className = "text-left py-3 px-4 font-semibold text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-700";
+                deviceHeader.textContent = "Устройство";
+                
+                headerRow.appendChild(asnHeader);
+                headerRow.appendChild(deviceHeader);
+                thead.appendChild(headerRow);
+                table.appendChild(thead);
+
+                // Тело таблицы
+                const tbody = document.createElement('tbody');
+                
+                // Определяем максимальную длину для выравнивания строк
+                const maxLength = Math.max(asnArray.length, devicesArray.length);
+                
+                for (let i = 0; i < maxLength; i++) {
+                    const row = document.createElement('tr');
+                    row.className = "border-b border-slate-200 dark:border-slate-600 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors";
                     
-                    const devicesTitle = document.createElement('h3');
-                    devicesTitle.className = "text-lg font-semibold text-slate-700 dark:text-slate-200 mb-2";
-                    devicesTitle.textContent = `Уникальные устройства (${devicesArray.length}):`;
+                    // ASN колонка
+                    const asnCell = document.createElement('td');
+                    asnCell.className = "py-3 px-4 text-slate-600 dark:text-slate-300 font-mono text-sm";
+                    asnCell.textContent = asnArray[i] || '';
                     
-                    const devicesList = document.createElement('div');
-                    devicesList.className = "text-sm text-slate-600 dark:text-slate-300";
-                    devicesList.textContent = devicesArray.join('\n');
+                    // Устройство колонка
+                    const deviceCell = document.createElement('td');
+                    deviceCell.className = "py-3 px-4 text-slate-600 dark:text-slate-300 text-sm";
+                    deviceCell.textContent = devicesArray[i] || '';
                     
-                    devicesSection.appendChild(devicesTitle);
-                    devicesSection.appendChild(devicesList);
-                    resultsContainer.appendChild(devicesSection);
+                    row.appendChild(asnCell);
+                    row.appendChild(deviceCell);
+                    tbody.appendChild(row);
                 }
+                
+                table.appendChild(tbody);
+                resultsContainer.appendChild(table);
 
                 // Показываем кнопку копирования если есть результаты
                 if (asnArray.length > 0 || devicesArray.length > 0) {
@@ -1341,16 +1311,16 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
                 const asnArray = Array.from(uniqueResults.asn).sort();
                 const devicesArray = Array.from(uniqueResults.devices).sort();
                 
-                // Формируем строку для копирования в формате Google Sheets
-                let copyText = '';
+                // Формируем строку для копирования в табличном формате
+                let copyText = 'ASN\tУстройство\n';
                 
-                if (asnArray.length > 0) {
-                    copyText += 'ASN:\n' + asnArray.join('\n');
-                }
+                // Определяем максимальную длину для выравнивания строк
+                const maxLength = Math.max(asnArray.length, devicesArray.length);
                 
-                if (devicesArray.length > 0) {
-                    if (copyText) copyText += '\n\n';
-                    copyText += 'Устройства:\n' + devicesArray.join('\n');
+                for (let i = 0; i < maxLength; i++) {
+                    const asn = asnArray[i] || '';
+                    const device = devicesArray[i] || '';
+                    copyText += `${asn}\t${device}\n`;
                 }
 
                 // Копируем в буфер обмена
