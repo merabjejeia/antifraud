@@ -447,16 +447,16 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
                     >
                         Копировать устройства (столбик)
                     </button>
-                    <button 
-                        id="user-data-copy-lines-btn" 
-                        class="w-full bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 font-medium py-2 px-4 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-slate-500 hidden"
-                    >
-                        Копировать как строки
-                    </button>
+                    <div></div>
                 </div>
                 
                 <div id="user-data-output" class="mt-6">
                     <!-- Сюда будут добавляться результаты анализа -->
+                </div>
+                <div id="copy-toast" class="pointer-events-none fixed left-1/2 -translate-x-1/2 bottom-8 z-50 opacity-0 transform translate-y-4 transition-all duration-300">
+                    <div class="bg-slate-900 text-white text-sm py-2 px-4 rounded-full shadow-lg dark:bg-slate-800">
+                        Скопировано
+                    </div>
                 </div>
             </div>
              <button 
@@ -528,7 +528,7 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
             const userDataCopyTableBtn = document.getElementById('user-data-copy-table-btn');
             const userDataCopyAsnBtn = document.getElementById('user-data-copy-asn-btn');
             const userDataCopyDevicesBtn = document.getElementById('user-data-copy-devices-btn');
-            const userDataCopyLinesBtn = document.getElementById('user-data-copy-lines-btn');
+            const copyToast = document.getElementById('copy-toast');
 
             
             
@@ -1174,7 +1174,6 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
                 userDataCopyTableBtn.classList.add('hidden');
                 userDataCopyAsnBtn.classList.add('hidden');
                 userDataCopyDevicesBtn.classList.add('hidden');
-                userDataCopyLinesBtn.classList.add('hidden');
 
                 if (!inputData) {
                     const noData = document.createElement('p');
@@ -1295,7 +1294,6 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
                     userDataCopyTableBtn.classList.remove('hidden');
                     userDataCopyAsnBtn.classList.remove('hidden');
                     userDataCopyDevicesBtn.classList.remove('hidden');
-                    userDataCopyLinesBtn.classList.remove('hidden');
                 }
 
                 userDataOutput.appendChild(resultsContainer);
@@ -1364,71 +1362,19 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
                 });
             });
 
-            // Копировать как две строки (через запятую)
-            userDataCopyLinesBtn.addEventListener('click', () => {
-                const asnArray = Array.from(uniqueResults.asn).sort();
-                const devicesArray = Array.from(uniqueResults.devices).sort();
-                const text = `ASN: ${asnArray.join(', ')}\nУстройство: ${devicesArray.join(', ')}`;
-                navigator.clipboard.writeText(text).then(() => {
-                    const originalText = userDataCopyLinesBtn.textContent;
-                    userDataCopyLinesBtn.textContent = 'Скопировано!';
-                    userDataCopyLinesBtn.className = userDataCopyLinesBtn.className.replace('bg-slate-200 dark:bg-slate-800', 'bg-green-500 dark:bg-green-600');
-                    setTimeout(() => {
-                        userDataCopyLinesBtn.textContent = originalText;
-                        userDataCopyLinesBtn.className = userDataCopyLinesBtn.className.replace('bg-green-500 dark:bg-green-600', 'bg-slate-200 dark:bg-slate-800');
-                    }, 2000);
-                });
-            });
-
-            // Копировать таблицу
-            userDataCopyTableBtn.addEventListener('click', () => {
-                const asnArray = Array.from(uniqueResults.asn).sort();
-                const devicesArray = Array.from(uniqueResults.devices).sort();
-                
-                // Формируем строку для копирования в табличном формате
-                let copyText = 'ASN\tУстройство\n';
-                const maxLength = Math.max(asnArray.length, devicesArray.length);
-                for (let i = 0; i < maxLength; i++) {
-                    const asn = asnArray[i] || '';
-                    const device = devicesArray[i] || '';
-                    copyText += `${asn}\t${device}\n`;
-                }
-
-                copyWithFallback(copyText, userDataCopyTableBtn, 'bg-slate-300 dark:bg-slate-700');
-            });
-
-            // Копировать только ASN (столбик)
-            userDataCopyAsnBtn.addEventListener('click', () => {
-                const asnArray = Array.from(uniqueResults.asn).sort();
-                const text = asnArray.join('\n');
-                copyWithFallback(text, userDataCopyAsnBtn, 'bg-slate-200 dark:bg-slate-800');
-            });
-
-            // Копировать только устройства (столбик)
-            userDataCopyDevicesBtn.addEventListener('click', () => {
-                const devicesArray = Array.from(uniqueResults.devices).sort();
-                const text = devicesArray.join('\n');
-                copyWithFallback(text, userDataCopyDevicesBtn, 'bg-slate-200 dark:bg-slate-800');
-            });
-
-            // Копировать как две строки (через запятую)
-            userDataCopyLinesBtn.addEventListener('click', () => {
-                const asnArray = Array.from(uniqueResults.asn).sort();
-                const devicesArray = Array.from(uniqueResults.devices).sort();
-                const text = `ASN: ${asnArray.join(', ')}\nУстройство: ${devicesArray.join(', ')}`;
-                copyWithFallback(text, userDataCopyLinesBtn, 'bg-slate-200 dark:bg-slate-800');
-            });
-
             function copyWithFallback(text, buttonEl, defaultBgClasses) {
                 const onSuccess = () => {
+                    // Анимация на кнопке
                     const originalText = buttonEl.textContent;
                     buttonEl.textContent = 'Скопировано!';
                     buttonEl.className = buttonEl.className.replace(defaultBgClasses, 'bg-green-500 dark:bg-green-600');
                     setTimeout(() => {
                         buttonEl.textContent = originalText;
                         buttonEl.className = buttonEl.className.replace('bg-green-500 dark:bg-green-600', defaultBgClasses);
-                    }, 1500);
-                };
+                    }, 1200);
+                    // Тост
+                    showToast();
+                 };
 
                 if (navigator.clipboard && navigator.clipboard.writeText) {
                     navigator.clipboard.writeText(text).then(onSuccess).catch(() => {
@@ -1456,6 +1402,16 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
                     console.error('Ошибка копирования:', e);
                     alert('Не удалось скопировать данные. Выделите текст вручную.');
                 }
+            }
+
+            function showToast() {
+                if (!copyToast) return;
+                copyToast.classList.remove('opacity-0', 'translate-y-4');
+                copyToast.classList.add('opacity-100', 'translate-y-0');
+                setTimeout(() => {
+                    copyToast.classList.remove('opacity-100', 'translate-y-0');
+                    copyToast.classList.add('opacity-0', 'translate-y-4');
+                }, 1200);
             }
         });
     </script>
