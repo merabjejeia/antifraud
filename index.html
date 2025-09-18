@@ -32,73 +32,140 @@
     <canvas id="background-canvas"></canvas>
 
     <!-- Основной контейнер-карточка -->
-    <div class="bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-xl dark:shadow-2xl dark:shadow-black/50 w-full max-w-2xl relative z-10 transition-colors duration-500">
+    <div class="bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl p-10 rounded-3xl shadow-2xl dark:shadow-2xl dark:shadow-black/60 border border-white/20 dark:border-slate-700/50 w-full max-w-4xl relative z-10 transition-all duration-500">
         
         <!-- Главная страница (по умолчанию видимая) -->
-        <div id="home-page" class="space-y-6">
-            <h1 class="text-3xl font-bold text-center text-slate-800 dark:text-slate-100 mb-6 transition-colors duration-500">
-                Инструменты для антифрода
-            </h1>
-            <p class="text-lg text-slate-600 dark:text-slate-400 text-center mb-8 transition-colors duration-500">
-                Добро пожаловать. Выберите необходимый инструмент ниже.
-            </p>
-            <div class="flex flex-col space-y-4">
-                <a 
-                    id="go-to-generator-btn" 
-                    href="#generator"
-                    target="_blank" rel="noopener noreferrer"
-                    class="w-full text-center bg-teal-500 dark:bg-teal-600 text-white font-medium text-lg py-4 px-8 rounded-lg hover:bg-teal-600 dark:hover:bg-teal-700 transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 focus:ring-offset-2 flex items-center justify-center gap-3"
-                >
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        <div id="home-page" class="space-y-8">
+            <!-- Заголовок в стиле Apple -->
+            <div class="text-center space-y-4">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-slate-600 dark:text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                     </svg>
-                    Длинный ID вывода
-                </a>
-                <a 
-                    id="go-to-user-generator-btn" 
-                    href="#user-generator"
-                    target="_blank" rel="noopener noreferrer"
-                    class="w-full text-center bg-teal-500 dark:bg-teal-600 text-white font-medium text-lg py-4 px-8 rounded-lg hover:bg-teal-600 dark:hover:bg-teal-700 transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 focus:ring-offset-2 flex items-center justify-center gap-3"
-                >
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                    </svg>
-                    ID пользователя
-                </a>
-                <a 
-                    id="go-to-crypto-generator-btn" 
-                    href="#crypto-generator"
-                    target="_blank" rel="noopener noreferrer"
-                    class="w-full text-center bg-teal-500 dark:bg-teal-600 text-white font-medium text-lg py-4 px-8 rounded-lg hover:bg-teal-600 dark:hover:bg-teal-700 transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 focus:ring-offset-2 flex items-center justify-center gap-3"
-                >
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    Обозреватель кошельков
-                </a>
-                <a 
-                    id="go-to-pairs-generator-btn"
-                    href="#pairs-generator"
-                    target="_blank" rel="noopener noreferrer"
-                    class="w-full text-center bg-teal-500 dark:bg-teal-600 text-white font-medium text-lg py-4 px-8 rounded-lg hover:bg-teal-600 dark:hover:bg-teal-700 transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 focus:ring-offset-2 flex items-center justify-center gap-3"
-                >
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                    </svg>
-                    Пары кошельков → ссылки проверки
-                </a>
-                <a 
-                    id="go-to-user-data-btn"
-                    href="#user-data"
-                    target="_blank" rel="noopener noreferrer"
-                    class="w-full text-center bg-teal-500 dark:bg-teal-600 text-white font-medium text-lg py-4 px-8 rounded-lg hover:bg-teal-600 dark:hover:bg-teal-700 transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 focus:ring-offset-2 flex items-center justify-center gap-3"
-                >
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                    </svg>
-                    Анализ логов пользователей
-                </a>
-                
+                </div>
+                <h1 class="text-4xl font-semibold text-slate-900 dark:text-slate-100 transition-colors duration-500">
+                    Инструменты для антифрода
+                </h1>
+                <p class="text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed transition-colors duration-500">
+                    Профессиональные инструменты для анализа данных, проверки пользователей и мониторинга криптовалютных транзакций
+                </p>
+            </div>
+            <!-- Двухколоночная структура -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Левая колонка: Пользователи и данные -->
+                <div class="space-y-6">
+                    <div class="text-center space-y-2">
+                        <div class="inline-flex items-center justify-center w-12 h-12 bg-slate-50 dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 mb-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-600 dark:text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
+                            </svg>
+                        </div>
+                        <h2 class="text-xl font-medium text-slate-800 dark:text-slate-200">
+                            Пользователи и данные
+                        </h2>
+                        <p class="text-sm text-slate-500 dark:text-slate-400">Анализ пользовательской активности</p>
+                    </div>
+                    
+                    <a 
+                        id="go-to-generator-btn" 
+                        href="#generator"
+                        target="_blank" rel="noopener noreferrer"
+                        class="group w-full bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-900 dark:text-slate-100 font-medium py-5 px-6 rounded-2xl shadow-sm hover:shadow-md border border-slate-200 dark:border-slate-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-slate-500/20 focus:ring-offset-2 dark:focus:ring-offset-slate-900 flex items-center gap-4 transform hover:-translate-y-0.5"
+                    >
+                        <div class="flex items-center justify-center w-12 h-12 bg-slate-100 dark:bg-slate-700 rounded-xl group-hover:bg-slate-200 dark:group-hover:bg-slate-600 transition-colors duration-300 flex-shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-700 dark:text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="font-medium text-slate-900 dark:text-slate-100">Длинный ID вывода</div>
+                            <div class="text-sm text-slate-500 dark:text-slate-400 mt-0.5">Поиск по инвойсам</div>
+                        </div>
+                    </a>
+                    
+                    <a 
+                        id="go-to-user-generator-btn" 
+                        href="#user-generator"
+                        target="_blank" rel="noopener noreferrer"
+                        class="group w-full bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-900 dark:text-slate-100 font-medium py-5 px-6 rounded-2xl shadow-sm hover:shadow-md border border-slate-200 dark:border-slate-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-slate-500/20 focus:ring-offset-2 dark:focus:ring-offset-slate-900 flex items-center gap-4 transform hover:-translate-y-0.5"
+                    >
+                        <div class="flex items-center justify-center w-12 h-12 bg-slate-100 dark:bg-slate-700 rounded-xl group-hover:bg-slate-200 dark:group-hover:bg-slate-600 transition-colors duration-300 flex-shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-700 dark:text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="font-medium text-slate-900 dark:text-slate-100">ID пользователя</div>
+                            <div class="text-sm text-slate-500 dark:text-slate-400 mt-0.5">Поиск пользователей</div>
+                        </div>
+                    </a>
+                    
+                    <a 
+                        id="go-to-user-data-btn"
+                        href="#user-data"
+                        target="_blank" rel="noopener noreferrer"
+                        class="group w-full bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-900 dark:text-slate-100 font-medium py-5 px-6 rounded-2xl shadow-sm hover:shadow-md border border-slate-200 dark:border-slate-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-slate-500/20 focus:ring-offset-2 dark:focus:ring-offset-slate-900 flex items-center gap-4 transform hover:-translate-y-0.5"
+                    >
+                        <div class="flex items-center justify-center w-12 h-12 bg-slate-100 dark:bg-slate-700 rounded-xl group-hover:bg-slate-200 dark:group-hover:bg-slate-600 transition-colors duration-300 flex-shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-700 dark:text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                            </svg>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="font-medium text-slate-900 dark:text-slate-100">Анализ логов</div>
+                            <div class="text-sm text-slate-500 dark:text-slate-400 mt-0.5">Извлечение данных</div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Правая колонка: Криптовалюты и кошельки -->
+                <div class="space-y-6">
+                    <div class="text-center space-y-2">
+                        <div class="inline-flex items-center justify-center w-12 h-12 bg-slate-50 dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 mb-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-600 dark:text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <h2 class="text-xl font-medium text-slate-800 dark:text-slate-200">
+                            Криптовалюты и кошельки
+                        </h2>
+                        <p class="text-sm text-slate-500 dark:text-slate-400">Анализ блокчейн транзакций</p>
+                    </div>
+                    
+                    <a 
+                        id="go-to-crypto-generator-btn" 
+                        href="#crypto-generator"
+                        target="_blank" rel="noopener noreferrer"
+                        class="group w-full bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-900 dark:text-slate-100 font-medium py-5 px-6 rounded-2xl shadow-sm hover:shadow-md border border-slate-200 dark:border-slate-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-slate-500/20 focus:ring-offset-2 dark:focus:ring-offset-slate-900 flex items-center gap-4 transform hover:-translate-y-0.5"
+                    >
+                        <div class="flex items-center justify-center w-12 h-12 bg-slate-100 dark:bg-slate-700 rounded-xl group-hover:bg-slate-200 dark:group-hover:bg-slate-600 transition-colors duration-300 flex-shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-700 dark:text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="font-medium text-slate-900 dark:text-slate-100">Обозреватель кошельков</div>
+                            <div class="text-sm text-slate-500 dark:text-slate-400 mt-0.5">Просмотр адресов</div>
+                        </div>
+                    </a>
+                    
+                    <a 
+                        id="go-to-pairs-generator-btn"
+                        href="#pairs-generator"
+                        target="_blank" rel="noopener noreferrer"
+                        class="group w-full bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-900 dark:text-slate-100 font-medium py-5 px-6 rounded-2xl shadow-sm hover:shadow-md border border-slate-200 dark:border-slate-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-slate-500/20 focus:ring-offset-2 dark:focus:ring-offset-slate-900 flex items-center gap-4 transform hover:-translate-y-0.5"
+                    >
+                        <div class="flex items-center justify-center w-12 h-12 bg-slate-100 dark:bg-slate-700 rounded-xl group-hover:bg-slate-200 dark:group-hover:bg-slate-600 transition-colors duration-300 flex-shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-700 dark:text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                            </svg>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="font-medium text-slate-900 dark:text-slate-100">Пары кошельков</div>
+                            <div class="text-sm text-slate-500 dark:text-slate-400 mt-0.5">Проверка связей</div>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
 
