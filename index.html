@@ -62,7 +62,7 @@
                     target="_blank" rel="noopener noreferrer"
                     class="w-full text-center bg-teal-500 dark:bg-teal-600 text-white font-medium text-lg py-4 px-8 rounded-lg hover:bg-teal-600 dark:hover:bg-teal-700 transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 focus:ring-offset-2"
                 >
-                    Обозреватель
+                    Криптокошельки
                 </a>
                 <a 
                     id="go-to-btech-generator-btn"
@@ -80,6 +80,15 @@
                 >
                     PayPlay: депозиты и выводы
                 </a>
+                <a 
+                    id="go-to-user-data-btn"
+                    href="#user-data"
+                    target="_blank" rel="noopener noreferrer"
+                    class="w-full text-center bg-teal-500 dark:bg-teal-600 text-white font-medium text-lg py-4 px-8 rounded-lg hover:bg-teal-600 dark:hover:bg-teal-700 transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 focus:ring-offset-2"
+                >
+                    Анализ данных пользователей
+                </a>
+                
             </div>
         </div>
 
@@ -229,6 +238,74 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
             </button>
         </div>
 
+        <!-- Новый раздел "Пересечения: BTech / PayPlay" (изначально скрытый) -->
+        <!-- Удалено: раздел пересечений -->
+        <!--
+        <div id="crosscheck-generator-page" class="hidden">
+            <h1 class="text-3xl font-bold text-center text-slate-800 dark:text-slate-100 mb-6 transition-colors duration-500">
+                Инструменты для антифрода
+            </h1>
+            <div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 transition-colors duration-500">
+                <h2 class="text-xl font-semibold text-slate-700 dark:text-slate-200 mb-4 transition-colors duration-500">
+                    Пересечения кошельков и проверка в кабинетах
+                </h2>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mb-4 transition-colors duration-500">
+                    Вставьте адрес кошелька, который нужно проверить, и массив связей (по одной паре в строке, через TAB/пробел/запятую). Будут найдены контрагенты из массива и сгенерированы ссылки в выбранном кабинете.
+                </p>
+
+                <label class="block text-sm text-slate-600 dark:text-slate-400 mb-1">Искомый адрес</label>
+                <input id="crosscheck-target" class="w-full p-3 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teал-400 mb-4 transition-colors" placeholder="Например: TRVWSxpRdJtEwp1n2uVC7NovRCDf63MuKa" />
+
+                <label class="block text-sm text-slate-600 dark:text-slate-400 mb-1">Массив данных (пары адресов)</label>
+                <textarea 
+                    id="crosscheck-input" 
+                    class="w-full h-32 p-3 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teал-400 mb-4 transition-colors" 
+                    placeholder="addrA\taddrB\naddrC addrD\naddrE,addrF"
+                ></textarea>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+                    <div>
+                        <label class="block text-sm text-slate-600 dark:text-slate-400 mb-1">Кабинет</label>
+                        <select id="crosscheck-service" class="w-full p-3 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teал-400">
+                            <option value="btech">BTech</option>
+                            <option value="payplay">PayPlay</option>
+                        </select>
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label class="block text-sm text-slate-600 dark:text-slate-400 mb-1">Режим PayPlay</label>
+                        <select id="crosscheck-payplay-mode" class="w-full p-3 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teал-400">
+                            <option value="both">Депозиты и выводы</option>
+                            <option value="deposits">Только депозиты</option>
+                            <option value="withdrawals">Только выводы</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                    <button 
+                        id="crosscheck-generate-btn" 
+                        class="w-full bg-teal-500 dark:bg-teal-600 text-white font-medium py-3 px-6 rounded-lg hover:bg-teal-600 dark:hover:bg-teal-700 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teал-400 focus:ring-offset-2"
+                    >
+                        Найти пересечения и сгенерировать ссылки
+                    </button>
+                    <button 
+                        id="crosscheck-open-all-btn" 
+                        class="w-full bg-slate-300 dark:bg-slate-700 text-slate-800 dark:text-slate-200 font-medium py-3 px-6 rounded-lg hover:bg-slate-400 dark:hover:bg-slate-600 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-slate-500 focus:ring-offset-2 hidden"
+                    >
+                        Открыть все
+                    </button>
+                </div>
+                
+                <div id="crosscheck-links-output" class="mt-6 flex flex-col space-y-2"></div>
+            </div>
+             <button 
+                id="back-from-crosscheck-generator-btn" 
+                class="mt-6 w-full text-teal-600 dark:text-teal-400 font-medium py-3 px-6 rounded-lg hover:underline transition-all focus:outline-none"
+            >
+                ← Вернуться назад
+            </button>
+        </div>
+        -->
         <!-- Новый раздел "BTech проверка кошельков" (изначально скрытый) -->
         <div id="btech-generator-page" class="hidden">
             <h1 class="text-3xl font-bold text-center text-slate-800 dark:text-slate-100 mb-6 transition-colors duration-500">
@@ -320,6 +397,55 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
                 ← Вернуться назад
             </button>
         </div>
+
+        <!-- Новый раздел "Анализ данных пользователей" (изначально скрытый) -->
+        <div id="user-data-page" class="hidden">
+            <h1 class="text-3xl font-bold text-center text-slate-800 dark:text-slate-100 mb-6 transition-colors duration-500">
+                Инструменты для антифрода
+            </h1>
+            <div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 transition-colors duration-500">
+                <h2 class="text-xl font-semibold text-slate-700 dark:text-slate-200 mb-4 transition-colors duration-500">
+                    Анализ данных пользователей
+                </h2>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mb-4 transition-colors duration-500">
+                    Вставьте данные пользователей в табличном формате. Будут извлечены уникальные значения ASN и устройств для копирования в Google Sheets.
+                </p>
+
+                <textarea 
+                    id="user-data-input" 
+                    class="w-full h-64 p-3 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 mb-4 transition-colors" 
+                    placeholder="Вставьте данные в формате:
+Пользователь	IP адрес	ASN	Страна	Город	User agent	Регион	Создан	Действия
+Godzillaaa (reports.garnish-3o@icloud.com)	31.44.245.197	50187	RU	Irkutsk	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36	ru	September 18, 2025 03:03	
+Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36	ru	September 16, 2025 20:14	"
+                ></textarea>
+                
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                    <button 
+                        id="user-data-analyze-btn" 
+                        class="w-full bg-teal-500 dark:bg-teal-600 text-white font-medium py-3 px-6 rounded-lg hover:bg-teal-600 dark:hover:bg-teal-700 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 focus:ring-offset-2"
+                    >
+                        Извлечь уникальные значения
+                    </button>
+                    <button 
+                        id="user-data-copy-btn" 
+                        class="w-full bg-slate-300 dark:bg-slate-700 text-slate-800 dark:text-slate-200 font-medium py-3 px-6 rounded-lg hover:bg-slate-400 dark:hover:bg-slate-600 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-slate-500 focus:ring-offset-2 hidden"
+                    >
+                        Копировать результат
+                    </button>
+                </div>
+                
+                <div id="user-data-output" class="mt-6">
+                    <!-- Сюда будут добавляться результаты анализа -->
+                </div>
+            </div>
+             <button 
+                id="back-from-user-data-btn" 
+                class="mt-6 w-full text-teal-600 dark:text-teal-400 font-medium py-3 px-6 rounded-lg hover:underline transition-all focus:outline-none"
+            >
+                ← Вернуться назад
+            </button>
+        </div>
     </div>
 
     <script>
@@ -330,6 +456,7 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
             const cryptoGeneratorPage = document.getElementById('crypto-generator-page');
             const btechGeneratorPage = document.getElementById('btech-generator-page');
             const payplayGeneratorPage = document.getElementById('payplay-generator-page');
+            const userDataPage = document.getElementById('user-data-page');
             
 
             const goToGeneratorBtn = document.getElementById('go-to-generator-btn');
@@ -337,6 +464,7 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
             const goToCryptoGeneratorBtn = document.getElementById('go-to-crypto-generator-btn');
             const goToBtechGeneratorBtn = document.getElementById('go-to-btech-generator-btn');
             const goToPayplayGeneratorBtn = document.getElementById('go-to-payplay-generator-btn');
+            const goToUserDataBtn = document.getElementById('go-to-user-data-btn');
             
 
             const backFromGeneratorBtn = document.getElementById('back-from-generator-btn');
@@ -344,6 +472,7 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
             const backFromCryptoGeneratorBtn = document.getElementById('back-from-crypto-generator-btn');
             const backFromBtechGeneratorBtn = document.getElementById('back-from-btech-generator-btn');
             const backFromPayplayGeneratorBtn = document.getElementById('back-from-payplay-generator-btn');
+            const backFromUserDataBtn = document.getElementById('back-from-user-data-btn');
             
 
 
@@ -371,6 +500,11 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
             const payplayOpenAllBtn = document.getElementById('payplay-open-all-btn');
             const payplayInput = document.getElementById('payplay-input');
             const payplayLinksOutput = document.getElementById('payplay-links-output');
+
+            const userDataAnalyzeBtn = document.getElementById('user-data-analyze-btn');
+            const userDataCopyBtn = document.getElementById('user-data-copy-btn');
+            const userDataInput = document.getElementById('user-data-input');
+            const userDataOutput = document.getElementById('user-data-output');
 
             
             
@@ -515,6 +649,36 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
 
 
             // Логика переключения страниц
+            const pageNames = {
+                home: 'Инструменты для антифрода',
+                generator: 'Длинный ID вывода',
+                'user-generator': 'Открыть пользователей по ID',
+                'crypto-generator': 'Криптокошельки',
+                'btech-generator': 'BTech проверка кошельков',
+                'payplay-generator': 'PayPlay депозиты и выводы',
+                'user-data': 'Анализ данных пользователей',
+                'crosscheck-generator': 'Пересечения: BTech / PayPlay'
+            };
+
+            function setTitlesFor(pageId) {
+                const base = 'Инструменты для антифрода';
+                const name = pageNames[pageId] || base;
+                document.title = pageId === 'home' ? base : `${name} — ${base}`;
+
+                let container = null;
+                if (pageId === 'home') container = homePage;
+                else if (pageId === 'generator') container = generatorPage;
+                else if (pageId === 'user-generator') container = userGeneratorPage;
+                else if (pageId === 'crypto-generator') container = cryptoGeneratorPage;
+                else if (pageId === 'btech-generator') container = btechGeneratorPage;
+                else if (pageId === 'payplay-generator') container = payplayGeneratorPage;
+                else if (pageId === 'user-data') container = userDataPage;
+                if (container) {
+                    const h1 = container.querySelector('h1');
+                    if (h1) h1.textContent = name;
+                }
+            }
+
             function showPage(pageId) {
                 homePage.classList.add('hidden');
                 generatorPage.classList.add('hidden');
@@ -522,6 +686,8 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
                 cryptoGeneratorPage.classList.add('hidden');
                 btechGeneratorPage.classList.add('hidden');
                 payplayGeneratorPage.classList.add('hidden');
+                userDataPage.classList.add('hidden');
+                
                 
                 
                 if (pageId === 'home') {
@@ -536,13 +702,16 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
                     btechGeneratorPage.classList.remove('hidden');
                 } else if (pageId === 'payplay-generator') {
                     payplayGeneratorPage.classList.remove('hidden');
+                } else if (pageId === 'user-data') {
+                    userDataPage.classList.remove('hidden');
                 }
+                setTitlesFor(pageId);
             }
 
             // Обработка хеша для открытия нужного раздела при загрузке/смене адреса
             function handleHashChange() {
                 const hash = window.location.hash.replace('#', '');
-                if (hash === 'generator' || hash === 'user-generator' || hash === 'crypto-generator' || hash === 'btech-generator' || hash === 'payplay-generator' || hash === 'home') {
+                if (hash === 'generator' || hash === 'user-generator' || hash === 'crypto-generator' || hash === 'btech-generator' || hash === 'payplay-generator' || hash === 'user-data' || hash === 'home') {
                     showPage(hash);
                 } else {
                     showPage('home');
@@ -556,6 +725,8 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
             backFromCryptoGeneratorBtn.addEventListener('click', () => { window.location.hash = 'home'; });
             backFromBtechGeneratorBtn.addEventListener('click', () => { window.location.hash = 'home'; });
             backFromPayplayGeneratorBtn.addEventListener('click', () => { window.location.hash = 'home'; });
+            backFromUserDataBtn.addEventListener('click', () => { window.location.hash = 'home'; });
+            
             
 
             // Инициализация отображения по текущему хешу и подписка на изменения
@@ -967,6 +1138,199 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
                 const links = cryptoLinksOutput.querySelectorAll('a');
                 links.forEach(link => {
                     window.open(link.href, '_blank');
+                });
+            });
+
+            // Логика анализа данных пользователей
+            let uniqueResults = { asn: new Set(), devices: new Set() };
+
+            userDataAnalyzeBtn.addEventListener('click', () => {
+                const inputData = userDataInput.value.trim();
+                userDataOutput.innerHTML = '';
+                userDataCopyBtn.classList.add('hidden');
+
+                if (!inputData) {
+                    const noData = document.createElement('p');
+                    noData.className = "text-center text-slate-500 italic mt-4 transition-colors duration-500";
+                    noData.textContent = "Пожалуйста, вставьте данные пользователей.";
+                    userDataOutput.appendChild(noData);
+                    return;
+                }
+
+                // Парсим данные
+                const lines = inputData.split('\n').filter(line => line.trim());
+                if (lines.length < 2) {
+                    const invalidData = document.createElement('p');
+                    invalidData.className = "text-center text-red-500 italic mt-4 transition-colors duration-500";
+                    invalidData.textContent = "Недостаточно данных для анализа.";
+                    userDataOutput.appendChild(invalidData);
+                    return;
+                }
+
+                // Сбрасываем результаты
+                uniqueResults = { asn: new Set(), devices: new Set() };
+
+                // Пропускаем заголовок (первую строку)
+                for (let i = 1; i < lines.length; i++) {
+                    const line = lines[i].trim();
+                    if (!line) continue;
+
+                    // Разделяем по табу или множественным пробелам
+                    const columns = line.split(/\t|\s{2,}/).filter(col => col.trim());
+                    
+                    if (columns.length >= 6) {
+                        // ASN - 3-я колонка (индекс 2)
+                        const asn = columns[2]?.trim();
+                        if (asn && asn !== 'ASN') {
+                            uniqueResults.asn.add(asn);
+                        }
+
+                        // User agent - 6-я колонка (индекс 5)
+                        const userAgent = columns[5]?.trim();
+                        if (userAgent && userAgent !== 'User agent') {
+                            // Извлекаем информацию об устройстве из User Agent
+                            const deviceInfo = extractDeviceInfo(userAgent);
+                            if (deviceInfo) {
+                                uniqueResults.devices.add(deviceInfo);
+                            }
+                        }
+                    }
+                }
+
+                // Отображаем результаты
+                displayResults();
+            });
+
+            function extractDeviceInfo(userAgent) {
+                // Извлекаем основную информацию об устройстве из User Agent
+                let device = '';
+                let os = '';
+                let browser = '';
+
+                // Определяем операционную систему
+                if (userAgent.includes('Windows NT 10.0')) {
+                    os = 'Windows 10';
+                } else if (userAgent.includes('Windows NT 6.3')) {
+                    os = 'Windows 8.1';
+                } else if (userAgent.includes('Windows NT 6.1')) {
+                    os = 'Windows 7';
+                } else if (userAgent.includes('Mac OS X')) {
+                    os = 'macOS';
+                } else if (userAgent.includes('Linux')) {
+                    os = 'Linux';
+                } else if (userAgent.includes('Android')) {
+                    os = 'Android';
+                } else if (userAgent.includes('iPhone') || userAgent.includes('iPad')) {
+                    os = 'iOS';
+                }
+
+                // Определяем браузер
+                if (userAgent.includes('Chrome/')) {
+                    browser = 'Chrome';
+                } else if (userAgent.includes('Firefox/')) {
+                    browser = 'Firefox';
+                } else if (userAgent.includes('Safari/') && !userAgent.includes('Chrome')) {
+                    browser = 'Safari';
+                } else if (userAgent.includes('Edge/')) {
+                    browser = 'Edge';
+                }
+
+                // Определяем тип устройства
+                if (userAgent.includes('Mobile')) {
+                    device = 'Mobile';
+                } else if (userAgent.includes('Tablet')) {
+                    device = 'Tablet';
+                } else {
+                    device = 'Desktop';
+                }
+
+                // Формируем строку устройства
+                const parts = [device, os, browser].filter(part => part);
+                return parts.join(' - ');
+            }
+
+            function displayResults() {
+                const asnArray = Array.from(uniqueResults.asn).sort();
+                const devicesArray = Array.from(uniqueResults.devices).sort();
+
+                // Создаем контейнер для результатов
+                const resultsContainer = document.createElement('div');
+                resultsContainer.className = "space-y-4";
+
+                // ASN результаты
+                if (asnArray.length > 0) {
+                    const asnSection = document.createElement('div');
+                    asnSection.className = "bg-slate-50 dark:bg-slate-800 p-4 rounded-lg border border-slate-200 dark:border-slate-700";
+                    
+                    const asnTitle = document.createElement('h3');
+                    asnTitle.className = "text-lg font-semibold text-slate-700 dark:text-slate-200 mb-2";
+                    asnTitle.textContent = `Уникальные ASN (${asnArray.length}):`;
+                    
+                    const asnList = document.createElement('div');
+                    asnList.className = "text-sm text-slate-600 dark:text-slate-300 font-mono";
+                    asnList.textContent = asnArray.join('\n');
+                    
+                    asnSection.appendChild(asnTitle);
+                    asnSection.appendChild(asnList);
+                    resultsContainer.appendChild(asnSection);
+                }
+
+                // Устройства результаты
+                if (devicesArray.length > 0) {
+                    const devicesSection = document.createElement('div');
+                    devicesSection.className = "bg-slate-50 dark:bg-slate-800 p-4 rounded-lg border border-slate-200 dark:border-slate-700";
+                    
+                    const devicesTitle = document.createElement('h3');
+                    devicesTitle.className = "text-lg font-semibold text-slate-700 dark:text-slate-200 mb-2";
+                    devicesTitle.textContent = `Уникальные устройства (${devicesArray.length}):`;
+                    
+                    const devicesList = document.createElement('div');
+                    devicesList.className = "text-sm text-slate-600 dark:text-slate-300";
+                    devicesList.textContent = devicesArray.join('\n');
+                    
+                    devicesSection.appendChild(devicesTitle);
+                    devicesSection.appendChild(devicesList);
+                    resultsContainer.appendChild(devicesSection);
+                }
+
+                // Показываем кнопку копирования если есть результаты
+                if (asnArray.length > 0 || devicesArray.length > 0) {
+                    userDataCopyBtn.classList.remove('hidden');
+                }
+
+                userDataOutput.appendChild(resultsContainer);
+            }
+
+            userDataCopyBtn.addEventListener('click', () => {
+                const asnArray = Array.from(uniqueResults.asn).sort();
+                const devicesArray = Array.from(uniqueResults.devices).sort();
+                
+                // Формируем строку для копирования в формате Google Sheets
+                let copyText = '';
+                
+                if (asnArray.length > 0) {
+                    copyText += 'ASN:\n' + asnArray.join('\n');
+                }
+                
+                if (devicesArray.length > 0) {
+                    if (copyText) copyText += '\n\n';
+                    copyText += 'Устройства:\n' + devicesArray.join('\n');
+                }
+
+                // Копируем в буфер обмена
+                navigator.clipboard.writeText(copyText).then(() => {
+                    // Показываем уведомление об успешном копировании
+                    const originalText = userDataCopyBtn.textContent;
+                    userDataCopyBtn.textContent = 'Скопировано!';
+                    userDataCopyBtn.className = userDataCopyBtn.className.replace('bg-slate-300 dark:bg-slate-700', 'bg-green-500 dark:bg-green-600');
+                    
+                    setTimeout(() => {
+                        userDataCopyBtn.textContent = originalText;
+                        userDataCopyBtn.className = userDataCopyBtn.className.replace('bg-green-500 dark:bg-green-600', 'bg-slate-300 dark:bg-slate-700');
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Ошибка копирования:', err);
+                    alert('Не удалось скопировать данные. Попробуйте выделить и скопировать вручную.');
                 });
             });
         });
