@@ -1299,68 +1299,51 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
                 userDataOutput.appendChild(resultsContainer);
             }
 
-            userDataCopyBtn.addEventListener('click', () => {
-                const asnArray = Array.from(uniqueResults.asn).sort();
-                const devicesArray = Array.from(uniqueResults.devices).sort();
+            // Копировать таблицу
+            userDataCopyTableBtn.addEventListener('click', () => {
+                const { asnArray, devicesArray } = getResultsFromTable();
                 
                 // Формируем строку для копирования в табличном формате
                 let copyText = 'ASN\tУстройство\n';
-                
-                // Определяем максимальную длину для выравнивания строк
                 const maxLength = Math.max(asnArray.length, devicesArray.length);
-                
                 for (let i = 0; i < maxLength; i++) {
                     const asn = asnArray[i] || '';
                     const device = devicesArray[i] || '';
                     copyText += `${asn}\t${device}\n`;
                 }
 
-                // Копируем в буфер обмена
-                navigator.clipboard.writeText(copyText).then(() => {
-                    // Показываем уведомление об успешном копировании
-                    const originalText = userDataCopyBtn.textContent;
-                    userDataCopyBtn.textContent = 'Скопировано!';
-                    userDataCopyBtn.className = userDataCopyBtn.className.replace('bg-slate-300 dark:bg-slate-700', 'bg-green-500 dark:bg-green-600');
-                    
-                    setTimeout(() => {
-                        userDataCopyBtn.textContent = originalText;
-                        userDataCopyBtn.className = userDataCopyBtn.className.replace('bg-green-500 dark:bg-green-600', 'bg-slate-300 dark:bg-slate-700');
-                    }, 2000);
-                }).catch(err => {
-                    console.error('Ошибка копирования:', err);
-                    alert('Не удалось скопировать данные. Попробуйте выделить и скопировать вручную.');
-                });
+                copyWithFallback(copyText, userDataCopyTableBtn, 'bg-slate-300 dark:bg-slate-700');
             });
 
             // Копировать только ASN (столбик)
             userDataCopyAsnBtn.addEventListener('click', () => {
-                const asnArray = Array.from(uniqueResults.asn).sort();
+                const { asnArray } = getResultsFromTable();
                 const text = asnArray.join('\n');
-                navigator.clipboard.writeText(text).then(() => {
-                    const originalText = userDataCopyAsnBtn.textContent;
-                    userDataCopyAsnBtn.textContent = 'Скопировано!';
-                    userDataCopyAsnBtn.className = userDataCopyAsnBtn.className.replace('bg-slate-200 dark:bg-slate-800', 'bg-green-500 dark:bg-green-600');
-                    setTimeout(() => {
-                        userDataCopyAsnBtn.textContent = originalText;
-                        userDataCopyAsnBtn.className = userDataCopyAsnBtn.className.replace('bg-green-500 dark:bg-green-600', 'bg-slate-200 dark:bg-slate-800');
-                    }, 2000);
-                });
+                copyWithFallback(text, userDataCopyAsnBtn, 'bg-slate-200 dark:bg-slate-800');
             });
 
             // Копировать только устройства (столбик)
             userDataCopyDevicesBtn.addEventListener('click', () => {
-                const devicesArray = Array.from(uniqueResults.devices).sort();
+                const { devicesArray } = getResultsFromTable();
                 const text = devicesArray.join('\n');
-                navigator.clipboard.writeText(text).then(() => {
-                    const originalText = userDataCopyDevicesBtn.textContent;
-                    userDataCopyDevicesBtn.textContent = 'Скопировано!';
-                    userDataCopyDevicesBtn.className = userDataCopyDevicesBtn.className.replace('bg-slate-200 dark:bg-slate-800', 'bg-green-500 dark:bg-green-600');
-                    setTimeout(() => {
-                        userDataCopyDevicesBtn.textContent = originalText;
-                        userDataCopyDevicesBtn.className = userDataCopyDevicesBtn.className.replace('bg-green-500 dark:bg-green-600', 'bg-slate-200 dark:bg-slate-800');
-                    }, 2000);
-                });
+                copyWithFallback(text, userDataCopyDevicesBtn, 'bg-slate-200 dark:bg-slate-800');
             });
+
+            function getResultsFromTable() {
+                const asnArray = [];
+                const devicesArray = [];
+                const table = userDataOutput.querySelector('table');
+                if (!table) return { asnArray, devicesArray };
+                const rows = table.querySelectorAll('tbody tr');
+                rows.forEach(row => {
+                    const cells = row.querySelectorAll('td');
+                    const asn = (cells[0]?.textContent || '').trim();
+                    const device = (cells[1]?.textContent || '').trim();
+                    if (asn) asnArray.push(asn);
+                    if (device) devicesArray.push(device);
+                });
+                return { asnArray, devicesArray };
+            }
 
             function copyWithFallback(text, buttonEl, defaultBgClasses) {
                 const onSuccess = () => {
