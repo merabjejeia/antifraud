@@ -27,12 +27,12 @@
         }
     </style>
 </head>
-<body class="bg-slate-50 dark:bg-slate-950 flex items-center justify-center min-h-screen p-4 transition-colors duration-500">
+<body class="bg-slate-50 dark:bg-black flex items-center justify-center min-h-screen p-4 transition-colors duration-500">
     <!-- Анимированный фон Canvas -->
     <canvas id="background-canvas"></canvas>
 
     <!-- Основной контейнер-карточка -->
-    <div class="bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl p-10 rounded-3xl shadow-2xl dark:shadow-2xl dark:shadow-black/60 border border-white/20 dark:border-slate-700/50 w-full max-w-4xl relative z-10 transition-all duration-500">
+    <div class="bg-white/95 dark:bg-[#1f1f1f]/95 backdrop-blur-xl p-10 rounded-3xl shadow-2xl dark:shadow-2xl dark:shadow-black/80 border border-white/20 dark:border-[#2a2a2a]/60 w-full max-w-4xl relative z-10 transition-all duration-500">
         
         <!-- Главная страница (по умолчанию видимая) -->
         <div id="home-page" class="space-y-8">
@@ -47,7 +47,7 @@
                     Инструменты для антифрода
                 </h1>
                 <p class="text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed transition-colors duration-500">
-                    Инструменты для помощи проверки пользователей и мониторинга криптовалютных транзакций
+                    Профессиональные инструменты для анализа данных, проверки пользователей и мониторинга криптовалютных транзакций
                 </p>
             </div>
             <!-- Двухколоночная структура -->
@@ -70,7 +70,7 @@
                         id="go-to-generator-btn" 
                         href="#generator"
                         target="_blank" rel="noopener noreferrer"
-                        class="group w-full bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-900 dark:text-slate-100 font-medium py-5 px-6 rounded-2xl shadow-sm hover:shadow-md border border-slate-200 dark:border-slate-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-slate-500/20 focus:ring-offset-2 dark:focus:ring-offset-slate-900 flex items-center gap-4 transform hover:-translate-y-0.5"
+                        class="group w-full bg-white dark:bg-[#1e1e1e] hover:bg-slate-50 dark:hover:bg-[#2a2a2a] text-slate-900 dark:text-slate-100 font-medium py-5 px-6 rounded-2xl shadow-sm hover:shadow-md border border-slate-200 dark:border-[#303030] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-slate-500/20 focus:ring-offset-2 dark:focus:ring-offset-slate-900 flex items-center gap-4 transform hover:-translate-y-0.5"
                     >
                         <div class="flex items-center justify-center w-12 h-12 bg-slate-100 dark:bg-slate-700 rounded-xl group-hover:bg-slate-200 dark:group-hover:bg-slate-600 transition-colors duration-300 flex-shrink-0">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-700 dark:text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -87,7 +87,7 @@
                         id="go-to-user-generator-btn" 
                         href="#user-generator"
                         target="_blank" rel="noopener noreferrer"
-                        class="group w-full bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-900 dark:text-slate-100 font-medium py-5 px-6 rounded-2xl shadow-sm hover:shadow-md border border-slate-200 dark:border-slate-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-slate-500/20 focus:ring-offset-2 dark:focus:ring-offset-slate-900 flex items-center gap-4 transform hover:-translate-y-0.5"
+                        class="group w-full bg-white dark:bg-[#1e1e1e] hover:bg-slate-50 dark:hover:bg-[#2a2a2a] text-slate-900 dark:text-slate-100 font-medium py-5 px-6 rounded-2xl shadow-sm hover:shadow-md border border-slate-200 dark:border-[#303030] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-slate-500/20 focus:ring-offset-2 dark:focus:ring-offset-slate-900 flex items-center gap-4 transform hover:-translate-y-0.5"
                     >
                         <div class="flex items-center justify-center w-12 h-12 bg-slate-100 dark:bg-slate-700 rounded-xl group-hover:bg-slate-200 dark:group-hover:bg-slate-600 transition-colors duration-300 flex-shrink-0">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-700 dark:text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -104,7 +104,7 @@
                         id="go-to-user-data-btn"
                         href="#user-data"
                         target="_blank" rel="noopener noreferrer"
-                        class="group w-full bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-900 dark:text-slate-100 font-medium py-5 px-6 rounded-2xl shadow-sm hover:shadow-md border border-slate-200 dark:border-slate-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-slate-500/20 focus:ring-offset-2 dark:focus:ring-offset-slate-900 flex items-center gap-4 transform hover:-translate-y-0.5"
+                        class="group w-full bg-white dark:bg-[#1e1e1e] hover:bg-slate-50 dark:hover:bg-[#2a2a2a] text-slate-900 dark:text-slate-100 font-medium py-5 px-6 rounded-2xl shadow-sm hover:shadow-md border border-slate-200 dark:border-[#303030] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-slate-500/20 focus:ring-offset-2 dark:focus:ring-offset-slate-900 flex items-center gap-4 transform hover:-translate-y-0.5"
                     >
                         <div class="flex items-center justify-center w-12 h-12 bg-slate-100 dark:bg-slate-700 rounded-xl group-hover:bg-slate-200 dark:group-hover:bg-slate-600 transition-colors duration-300 flex-shrink-0">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-700 dark:text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -136,7 +136,7 @@
                         id="go-to-crypto-generator-btn" 
                         href="#crypto-generator"
                         target="_blank" rel="noopener noreferrer"
-                        class="group w-full bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-900 dark:text-slate-100 font-medium py-5 px-6 rounded-2xl shadow-sm hover:shadow-md border border-slate-200 dark:border-slate-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-slate-500/20 focus:ring-offset-2 dark:focus:ring-offset-slate-900 flex items-center gap-4 transform hover:-translate-y-0.5"
+                        class="group w-full bg-white dark:bg-[#1e1e1e] hover:bg-slate-50 dark:hover:bg-[#2a2a2a] text-slate-900 dark:text-slate-100 font-medium py-5 px-6 rounded-2xl shadow-sm hover:shadow-md border border-slate-200 dark:border-[#303030] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-slate-500/20 focus:ring-offset-2 dark:focus:ring-offset-slate-900 flex items-center gap-4 transform hover:-translate-y-0.5"
                     >
                         <div class="flex items-center justify-center w-12 h-12 bg-slate-100 dark:bg-slate-700 rounded-xl group-hover:bg-slate-200 dark:group-hover:bg-slate-600 transition-colors duration-300 flex-shrink-0">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-700 dark:text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -153,7 +153,7 @@
                         id="go-to-pairs-generator-btn"
                         href="#pairs-generator"
                         target="_blank" rel="noopener noreferrer"
-                        class="group w-full bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-900 dark:text-slate-100 font-medium py-5 px-6 rounded-2xl shadow-sm hover:shadow-md border border-slate-200 dark:border-slate-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-slate-500/20 focus:ring-offset-2 dark:focus:ring-offset-slate-900 flex items-center gap-4 transform hover:-translate-y-0.5"
+                        class="group w-full bg-white dark:bg-[#1e1e1e] hover:bg-slate-50 dark:hover:bg-[#2a2a2a] text-slate-900 dark:text-slate-100 font-medium py-5 px-6 rounded-2xl shadow-sm hover:shadow-md border border-slate-200 dark:border-[#303030] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-slate-500/20 focus:ring-offset-2 dark:focus:ring-offset-slate-900 flex items-center gap-4 transform hover:-translate-y-0.5"
                     >
                         <div class="flex items-center justify-center w-12 h-12 bg-slate-100 dark:bg-slate-700 rounded-xl group-hover:bg-slate-200 dark:group-hover:bg-slate-600 transition-colors duration-300 flex-shrink-0">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-700 dark:text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -174,7 +174,7 @@
             <h1 class="text-3xl font-bold text-center text-slate-800 dark:text-slate-100 mb-6 transition-colors duration-500">
                 Инструменты для антифрода
             </h1>
-            <div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 transition-colors duration-500">
+            <div class="bg-white dark:bg-[#202124] p-6 rounded-xl border border-slate-200 dark:border-[#2a2a2a] transition-colors duration-500">
                 <h2 class="text-xl font-semibold text-slate-700 dark:text-slate-200 mb-4 transition-colors duration-500">
                     Длинный ID вывода
                 </h2>
@@ -184,7 +184,7 @@
 
                 <textarea 
                     id="invoice-input" 
-                    class="w-full h-32 p-3 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 mb-4 transition-colors" 
+                    class="w-full h-32 p-3 text-sm rounded-lg border border-slate-300 dark:border-[#3a3a3a] bg-white dark:bg-[#171717] text-slate-700 dark:text-slate-200 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 mb-4 transition-colors" 
                     placeholder="Например:
 1757862788425449503
 1757862788425449504
@@ -222,7 +222,7 @@
             <h1 class="text-3xl font-bold text-center text-slate-800 dark:text-slate-100 mb-6 transition-colors duration-500">
                 Инструменты для антифрода
             </h1>
-            <div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 transition-colors duration-500">
+            <div class="bg-white dark:bg-[#202124] p-6 rounded-xl border border-slate-200 dark:border-[#2a2a2a] transition-colors duration-500">
                 <h2 class="text-xl font-semibold text-slate-700 dark:text-slate-200 mb-4 transition-colors duration-500">
                     Открыть пользователей по ID
                 </h2>
@@ -232,7 +232,7 @@
 
                 <textarea 
                     id="user-input" 
-                    class="w-full h-32 p-3 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 mb-4 transition-colors" 
+                    class="w-full h-32 p-3 text-sm rounded-lg border border-slate-300 dark:border-[#3a3a3a] bg-white dark:bg-[#171717] text-slate-700 dark:text-slate-200 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 mb-4 transition-colors" 
                     placeholder="Например:
 23440844
 23440845
@@ -271,7 +271,7 @@
             <h1 class="text-3xl font-bold text-center text-slate-800 dark:text-slate-100 mb-6 transition-colors duration-500">
                 Инструменты для антифрода
             </h1>
-            <div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 transition-colors duration-500">
+            <div class="bg-white dark:bg-[#202124] p-6 rounded-xl border border-slate-200 dark:border-[#2a2a2a] transition-colors duration-500">
                 <h2 class="text-xl font-semibold text-slate-700 dark:text-slate-200 mb-4 transition-colors duration-500">
                     Криптокошельки
                 </h2>
@@ -281,7 +281,7 @@
 
                 <textarea 
                     id="crypto-input" 
-                    class="w-full h-32 p-3 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 mb-4 transition-colors" 
+                    class="w-full h-32 p-3 text-sm rounded-lg border border-slate-300 dark:border-[#3a3a3a] bg-white dark:bg-[#171717] text-slate-700 dark:text-slate-200 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 mb-4 transition-colors" 
                     placeholder="Например:
 0x71c7656ec7ab88b098defb751b7401b5f6d8976f
 TJRv2961d1QeJz7w1d6D38yP7R2b9c3x8C
@@ -320,7 +320,7 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
             <h1 class="text-3xl font-bold text-center text-slate-800 dark:text-slate-100 mb-6 transition-colors duration-500">
                 Инструменты для антифрода
             </h1>
-            <div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 transition-colors duration-500">
+            <div class="bg-white dark:bg-[#202124] p-6 rounded-xl border border-slate-200 dark:border-[#2a2a2a] transition-colors duration-500">
                 <h2 class="text-xl font-semibold text-slate-700 dark:text-slate-200 mb-4 transition-colors duration-500">
                     Пары кошельков → ссылки проверки
                 </h2>
@@ -338,11 +338,11 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
                     <div class="sm:col-span-2">
                         <label class="block text-sm text-slate-600 dark:text-slate-400 mb-1">Адрес, который исключить из проверки</label>
-                        <input id="pairs-main" class="w-full p-3 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 transition-colors" placeholder="Например: TZC3fi5Qt9jwVt8nMSFYuGANTXwJgzezKG" />
+                        <input id="pairs-main" class="w-full p-3 text-sm rounded-lg border border-slate-300 dark:border-[#3a3a3a] bg-white dark:bg-[#171717] text-slate-700 dark:text-slate-200 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 transition-colors" placeholder="Например: TZC3fi5Qt9jwVt8nMSFYuGANTXwJgzezKG" />
                     </div>
                     <div>
                         <label class="block text-sm text-slate-600 dark:text-slate-400 mb-1">Сервис проверки</label>
-                        <select id="pairs-service" class="w-full p-3 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400">
+                        <select id="pairs-service" class="w-full p-3 text-sm rounded-lg border border-slate-300 dark:border-[#3a3a3a] bg-white dark:bg-[#171717] text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400">
                             <option value="btech">BTech</option>
                             <option value="payplay">PayPlay</option>
                         </select>
@@ -379,17 +379,17 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
             <h1 class="text-3xl font-bold text-center text-slate-800 dark:text-slate-100 mb-6 transition-colors duration-500">
                 Инструменты для антифрода
             </h1>
-            <div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 transition-colors duration-500">
+            <div class="bg-white dark:bg-[#202124] p-6 rounded-xl border border-slate-200 dark:border-[#2a2a2a] transition-colors duration-500">
                 <h2 class="text-xl font-semibold text-slate-700 dark:text-slate-200 mb-4 transition-colors duration-500">
                     Анализ данных пользователей
                 </h2>
                 <p class="text-sm text-slate-500 dark:text-slate-400 mb-4 transition-colors duration-500">
-                    Вставьте данные пользователей в табличном формате. Будут извлечены уникальные значения ASN и устройств.
+                    Вставьте данные пользователей в табличном формате. Будут извлечены уникальные значения ASN и устройств для копирования в Google Sheets.
                 </p>
 
                 <textarea 
                     id="user-data-input" 
-                    class="w-full h-64 p-3 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 mb-4 transition-colors" 
+                    class="w-full h-64 p-3 text-sm rounded-lg border border-slate-300 dark:border-[#3a3a3a] bg-white dark:bg-[#171717] text-slate-700 dark:text-slate-200 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 mb-4 transition-colors" 
                     placeholder="Вставьте данные в формате:
 Пользователь	IP адрес	ASN	Страна	Город	User agent	Регион	Создан	Действия
 Godzillaaa (reports.garnish-3o@icloud.com)	31.44.245.197	50187	RU	Irkutsk	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36	ru	September 18, 2025 03:03	
@@ -590,7 +590,7 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
                 requestAnimationFrame(animate);
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 const isDark = document.documentElement.classList.contains('dark');
-                const particleColor = isDark ? 'rgba(255, 255, 255, 0.35)' : 'rgba(0, 0, 0, 0.22)';
+                const particleColor = isDark ? 'rgba(255, 255, 255, 0.5)' : 'rgba(0, 0, 0, 0.22)';
                 const lineColorBase = isDark ? 'rgba(255, 255, 255, ' : 'rgba(0, 0, 0, ';
 
                 for (let i = 0; i < particles.length; i++) {
@@ -602,7 +602,7 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
                         const distance = Math.sqrt(dx * dx + dy * dy);
 
                         if (distance < maxDistance) {
-                            const opacity = isDark ? (0.7 - (distance / maxDistance) * 0.7) : (0.5 - (distance / maxDistance) * 0.5);
+                            const opacity = isDark ? (0.65 - (distance / maxDistance) * 0.65) : (0.5 - (distance / maxDistance) * 0.5);
                             ctx.beginPath();
                             ctx.moveTo(particles[i].x, particles[i].y);
                             ctx.lineTo(particles[j].x, particles[j].y);
