@@ -920,32 +920,95 @@ Ivanov (ivan@icloud.com)	193.406.0.56	59616	RU	Irkutsk	Mozilla/5.0 (Windows NT 1
                 }
 
                 const wallets = Array.from(unique);
-                wallets.forEach(addr => {
-                    if (service === 'btech') {
-                        const url = buildBtechUrl(encodeURIComponent(addr));
-                        const link = createLinkElement(`BTech: ${addr}`, url, 'pairs');
-                        const copyBtn = createCopyButton(link);
-                        pairsLinksOutput.appendChild(createLinkContainer(link, copyBtn));
-                    } else if (service === 'payplay') {
-                        const q = encodeURIComponent(addr);
-                        const depUrl = buildPayplayUrl(payplayBaseDeposits, q);
-                        const wdrUrl = buildPayplayUrl(payplayBaseWithdrawals, q);
-                        const depLink = createLinkElement(`PayPlay Deposits: ${addr}`, depUrl, 'pairs');
-                        const depCopy = createCopyButton(depLink);
-                        pairsLinksOutput.appendChild(createLinkContainer(depLink, depCopy));
-                        const wdrLink = createLinkElement(`PayPlay Withdrawals: ${addr}`, wdrUrl, 'pairs');
-                        const wdrCopy = createCopyButton(wdrLink);
-                        pairsLinksOutput.appendChild(createLinkContainer(wdrLink, wdrCopy));
-                    }
-                });
+                
+                // Optimize rendering for large numbers of wallets
+                if (wallets.length > 20) {
+                    const progressInfo = document.createElement('div');
+                    progressInfo.className = 'text-center text-slate-500 dark:text-slate-400 text-sm mb-4';
+                    progressInfo.textContent = `Генерируем ссылки для ${wallets.length} кошельков...`;
+                    pairsLinksOutput.appendChild(progressInfo);
+                    
+                    let processed = 0;
+                    const processWallet = (index) => {
+                        if (index >= wallets.length) {
+                            progressInfo.remove();
+                            return;
+                        }
+                        
+                        const addr = wallets[index];
+                        if (service === 'btech') {
+                            const url = buildBtechUrl(encodeURIComponent(addr));
+                            const link = createLinkElement(`BTech: ${addr}`, url, 'pairs');
+                            const copyBtn = createCopyButton(link);
+                            pairsLinksOutput.appendChild(createLinkContainer(link, copyBtn));
+                        } else if (service === 'payplay') {
+                            const q = encodeURIComponent(addr);
+                            const depUrl = buildPayplayUrl(payplayBaseDeposits, q);
+                            const wdrUrl = buildPayplayUrl(payplayBaseWithdrawals, q);
+                            const depLink = createLinkElement(`PayPlay Deposits: ${addr}`, depUrl, 'pairs');
+                            const depCopy = createCopyButton(depLink);
+                            pairsLinksOutput.appendChild(createLinkContainer(depLink, depCopy));
+                            const wdrLink = createLinkElement(`PayPlay Withdrawals: ${addr}`, wdrUrl, 'pairs');
+                            const wdrCopy = createCopyButton(wdrLink);
+                            pairsLinksOutput.appendChild(createLinkContainer(wdrLink, wdrCopy));
+                        }
+                        
+                        processed++;
+                        progressInfo.textContent = `Генерируем ссылки для ${wallets.length} кошельков... (${processed}/${wallets.length})`;
+                        
+                        // Use setTimeout to prevent blocking
+                        setTimeout(() => processWallet(index + 1), 10);
+                    };
+                    
+                    processWallet(0);
+                } else {
+                    // For small numbers, process immediately
+                    wallets.forEach(addr => {
+                        if (service === 'btech') {
+                            const url = buildBtechUrl(encodeURIComponent(addr));
+                            const link = createLinkElement(`BTech: ${addr}`, url, 'pairs');
+                            const copyBtn = createCopyButton(link);
+                            pairsLinksOutput.appendChild(createLinkContainer(link, copyBtn));
+                        } else if (service === 'payplay') {
+                            const q = encodeURIComponent(addr);
+                            const depUrl = buildPayplayUrl(payplayBaseDeposits, q);
+                            const wdrUrl = buildPayplayUrl(payplayBaseWithdrawals, q);
+                            const depLink = createLinkElement(`PayPlay Deposits: ${addr}`, depUrl, 'pairs');
+                            const depCopy = createCopyButton(depLink);
+                            pairsLinksOutput.appendChild(createLinkContainer(depLink, depCopy));
+                            const wdrLink = createLinkElement(`PayPlay Withdrawals: ${addr}`, wdrUrl, 'pairs');
+                            const wdrCopy = createCopyButton(wdrLink);
+                            pairsLinksOutput.appendChild(createLinkContainer(wdrLink, wdrCopy));
+                        }
+                    });
+                }
 
-                if (pairsLinksOutput.querySelectorAll('a').length > 0) {
-                    pairsOpenAllBtn.classList.remove('hidden');
-                    const count = pairsLinksOutput.querySelectorAll('a').length;
-                    if (pairsCount) {
-                        pairsCount.textContent = `Ссылок: ${count}`;
-                        pairsCount.classList.remove('hidden');
+                // Update UI after processing
+                const updateUI = () => {
+                    const links = pairsLinksOutput.querySelectorAll('a');
+                    if (links.length > 0) {
+                        pairsOpenAllBtn.classList.remove('hidden');
+                        if (pairsCount) {
+                            pairsCount.textContent = `Ссылок: ${links.length}`;
+                            pairsCount.classList.remove('hidden');
+                        }
                     }
+                };
+
+                if (wallets.length <= 20) {
+                    // For small numbers, update immediately
+                    updateUI();
+                } else {
+                    // For large numbers, update after processing
+                    const checkCompletion = () => {
+                        const links = pairsLinksOutput.querySelectorAll('a');
+                        if (links.length === wallets.length * (service === 'payplay' ? 2 : 1)) {
+                            updateUI();
+                        } else {
+                            setTimeout(checkCompletion, 100);
+                        }
+                    };
+                    checkCompletion();
                 }
             });
 
@@ -1870,13 +1933,12 @@ Ivanov (ivan@icloud.com)	193.406.0.56	59616	RU	Irkutsk	Mozilla/5.0 (Windows NT 1
                 renderPage(1);
             }
 
-            // Apply virtualization to all link outputs
+            // Apply virtualization to specific link outputs (exclude pairs due to grouping)
             function applyVirtualizationToOutputs() {
                 const outputs = [
                     { container: linksOutput, selector: 'a' },
-                    { container: userLinksOutput, selector: 'a' },
-                    { container: cryptoLinksOutput, selector: 'a' },
-                    { container: pairsLinksOutput, selector: 'a' }
+                    { container: userLinksOutput, selector: 'a' }
+                    // Exclude cryptoLinksOutput and pairsLinksOutput due to grouping/filtering
                 ];
                 
                 outputs.forEach(({ container, selector }) => {
