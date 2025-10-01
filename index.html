@@ -184,7 +184,10 @@
 1757862788425449503
 1757862788425449504
 1757862788425449505"
+                    aria-label="Введите номера инвойсов"
+                    aria-describedby="invoice-error"
                 ></textarea>
+                <div id="invoice-error" class="text-red-500 dark:text-red-400 text-sm hidden mb-2" role="alert"></div>
                 
                 <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                     <button 
@@ -201,6 +204,8 @@
                     </button>
                 </div>
                 
+                <div id="invoice-count" class="mt-3 text-sm text-slate-600 dark:text-slate-400 hidden">Ссылок: 0</div>
+
                 <div id="links-output" class="mt-6 flex flex-col space-y-2">
                     <!-- Сюда будут добавляться сгенерированные ссылки -->
                 </div>
@@ -264,6 +269,8 @@
                     </button>
                 </div>
                 
+                <div id="user-count" class="mt-3 text-sm text-slate-600 dark:text-slate-400 hidden">Ссылок: 0</div>
+
                 <div id="user-links-output" class="mt-6 flex flex-col space-y-2">
                     <!-- Сюда будут добавляться сгенерированные ссылки -->
                 </div>
@@ -328,6 +335,16 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
                     </button>
                 </div>
                 
+                <div id="crypto-count" class="mt-3 text-sm text-slate-600 dark:text-slate-400 hidden">Ссылок: 0</div>
+                <div id="crypto-filters" class="mt-3 hidden">
+                    <div class="flex flex-wrap gap-2 mb-3">
+                        <button id="crypto-filter-all" class="px-3 py-1 text-xs bg-teal-500 text-white rounded-full">Все</button>
+                        <button id="crypto-filter-utxo" class="px-3 py-1 text-xs bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-full">UTXO</button>
+                        <button id="crypto-filter-evm" class="px-3 py-1 text-xs bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-full">EVM</button>
+                        <button id="crypto-filter-account" class="px-3 py-1 text-xs bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-full">Account-based</button>
+                    </div>
+                </div>
+
                 <div id="crypto-links-output" class="mt-6 flex flex-col space-y-2">
                     <!-- Сюда будут добавляться сгенерированные ссылки -->
                 </div>
@@ -577,6 +594,18 @@ Ivanov (ivan@icloud.com)	193.406.0.56	59616	RU	Irkutsk	Mozilla/5.0 (Windows NT 1
             const cryptoManualProgress = document.getElementById('crypto-manual-progress');
             const cryptoManualCount = document.getElementById('crypto-manual-count');
             const cryptoManualProgressBar = document.getElementById('crypto-manual-progress-bar');
+
+            // Link counters
+            const invoiceCount = document.getElementById('invoice-count');
+            const userCount = document.getElementById('user-count');
+            const cryptoCount = document.getElementById('crypto-count');
+
+            // Crypto filters
+            const cryptoFilters = document.getElementById('crypto-filters');
+            const cryptoFilterAll = document.getElementById('crypto-filter-all');
+            const cryptoFilterUtxo = document.getElementById('crypto-filter-utxo');
+            const cryptoFilterEvm = document.getElementById('crypto-filter-evm');
+            const cryptoFilterAccount = document.getElementById('crypto-filter-account');
 
             const userDataAnalyzeBtn = document.getElementById('user-data-analyze-btn');
             const userDataInput = document.getElementById('user-data-input');
@@ -1048,7 +1077,17 @@ Ivanov (ivan@icloud.com)	193.406.0.56	59616	RU	Irkutsk	Mozilla/5.0 (Windows NT 1
             const invoiceBaseUrl = "https://lixog.com/ru/admin/app/asyncpayment/list?filter%5B_page%5D=1&filter%5B_per_page%5D=250&filter%5B_sort_by%5D=createdAt&filter%5B_sort_order%5D=DESC&filter%5Buuid%5D%5Btype%5D=3&filter%5Buuid%5D%5Bvalue%5D=";
 
             generateBtn.addEventListener('click', () => {
-                const invoices = invoiceInput.value
+                const input = invoiceInput.value;
+                const validation = validateInvoiceInput(input);
+                
+                hideError('invoice-error');
+                
+                if (!validation.isValid) {
+                    showError('invoice-error', validation.errors);
+                    return;
+                }
+
+                const invoices = input
                     .split('\n')
                     .map(invoice => invoice.trim())
                     .filter(invoice => invoice.length > 0);
@@ -1065,13 +1104,9 @@ Ivanov (ivan@icloud.com)	193.406.0.56	59616	RU	Irkutsk	Mozilla/5.0 (Windows NT 1
                     invoiceManualCount.textContent = '0 из 0';
                     invoiceManualProgressBar.style.width = '0%';
                 }
-
-                if (invoices.length === 0) {
-                    const noLinks = document.createElement('p');
-                    noLinks.className = "text-center text-slate-500 italic mt-4 transition-colors duration-500";
-                    noLinks.textContent = "Пожалуйста, введите номера инвойсов.";
-                    linksOutput.appendChild(noLinks);
-                    return;
+                if (invoiceCount) {
+                    invoiceCount.textContent = 'Ссылок: 0';
+                    invoiceCount.classList.add('hidden');
                 }
 
                 invoices.forEach(invoice => {
@@ -1083,6 +1118,10 @@ Ivanov (ivan@icloud.com)	193.406.0.56	59616	RU	Irkutsk	Mozilla/5.0 (Windows NT 1
 
                 if (invoices.length > 0) {
                     openAllBtn.classList.remove('hidden');
+                    if (invoiceCount) {
+                        invoiceCount.textContent = `Ссылок: ${invoices.length}`;
+                        invoiceCount.classList.remove('hidden');
+                    }
                 }
             });
 
@@ -1116,6 +1155,10 @@ Ivanov (ivan@icloud.com)	193.406.0.56	59616	RU	Irkutsk	Mozilla/5.0 (Windows NT 1
                     userManualCount.textContent = '0 из 0';
                     userManualProgressBar.style.width = '0%';
                 }
+                if (userCount) {
+                    userCount.textContent = 'Ссылок: 0';
+                    userCount.classList.add('hidden');
+                }
 
                 if (userIds.length === 0) {
                     const noLinks = document.createElement('p');
@@ -1134,6 +1177,10 @@ Ivanov (ivan@icloud.com)	193.406.0.56	59616	RU	Irkutsk	Mozilla/5.0 (Windows NT 1
 
                 if (userIds.length > 0) {
                     userOpenAllBtn.classList.remove('hidden');
+                    if (userCount) {
+                        userCount.textContent = `Ссылок: ${userIds.length}`;
+                        userCount.classList.remove('hidden');
+                    }
                 }
             });
 
@@ -1289,6 +1336,13 @@ Ivanov (ivan@icloud.com)	193.406.0.56	59616	RU	Irkutsk	Mozilla/5.0 (Windows NT 1
                     cryptoManualCount.textContent = '0 из 0';
                     cryptoManualProgressBar.style.width = '0%';
                 }
+                if (cryptoCount) {
+                    cryptoCount.textContent = 'Ссылок: 0';
+                    cryptoCount.classList.add('hidden');
+                }
+                if (cryptoFilters) {
+                    cryptoFilters.classList.add('hidden');
+                }
 
                 if (addresses.length === 0) {
                     const noLinks = document.createElement('p');
@@ -1297,6 +1351,16 @@ Ivanov (ivan@icloud.com)	193.406.0.56	59616	RU	Irkutsk	Mozilla/5.0 (Windows NT 1
                     cryptoLinksOutput.appendChild(noLinks);
                     return;
                 }
+
+                // Group networks by type
+                const networkGroups = {
+                    utxo: ['btc', 'ltc', 'doge', 'dash', 'bch'],
+                    evm: ['eth', 'bsc', 'polygon', 'arbitrum', 'optimism', 'avalanche', 'fantom', 'base', 'zksync'],
+                    account: ['tron', 'ton', 'xrp', 'xlm', 'ada', 'sol', 'near', 'algo', 'tez', 'bnbb']
+                };
+
+                let totalLinks = 0;
+                const groupedLinks = { utxo: [], evm: [], account: [] };
 
                 addresses.forEach(address => {
                     const networks = getWalletNetwork(address);
@@ -1307,7 +1371,16 @@ Ivanov (ivan@icloud.com)	193.406.0.56	59616	RU	Irkutsk	Mozilla/5.0 (Windows NT 1
                             const fullUrl = `${explorer.url}${encodeURIComponent(address)}`;
                             const link = createLinkElement(`${explorer.name}: ${address}`, fullUrl, 'crypto');
                             const copyBtn = createCopyButton(link);
-                            cryptoLinksOutput.appendChild(createLinkContainer(link, copyBtn));
+                            const container = createLinkContainer(link, copyBtn);
+                            
+                            // Determine network type
+                            let networkType = 'account';
+                            if (networkGroups.utxo.includes(network)) networkType = 'utxo';
+                            else if (networkGroups.evm.includes(network)) networkType = 'evm';
+                            
+                            container.dataset.networkType = networkType;
+                            groupedLinks[networkType].push(container);
+                            totalLinks++;
                         });
                     } else {
                         const unknownLink = document.createElement('p');
@@ -1317,8 +1390,51 @@ Ivanov (ivan@icloud.com)	193.406.0.56	59616	RU	Irkutsk	Mozilla/5.0 (Windows NT 1
                     }
                 });
 
+                // Create grouped sections
+                Object.entries(groupedLinks).forEach(([type, links]) => {
+                    if (links.length > 0) {
+                        const section = document.createElement('div');
+                        section.className = 'mb-4';
+                        section.dataset.networkType = type;
+                        
+                        const header = document.createElement('div');
+                        header.className = 'flex items-center justify-between mb-2 p-2 bg-slate-100 dark:bg-slate-800 rounded-lg cursor-pointer';
+                        header.innerHTML = `
+                            <h3 class="font-medium text-slate-700 dark:text-slate-300">${type.toUpperCase()} (${links.length})</h3>
+                            <svg class="w-4 h-4 text-slate-500 transform transition-transform" data-arrow>
+                                <path fill="currentColor" d="M7 10l5 5 5-5z"/>
+                            </svg>
+                        `;
+                        
+                        const content = document.createElement('div');
+                        content.className = 'space-y-2';
+                        content.style.display = 'block';
+                        
+                        links.forEach(link => content.appendChild(link));
+                        
+                        section.appendChild(header);
+                        section.appendChild(content);
+                        cryptoLinksOutput.appendChild(section);
+                        
+                        // Add collapse functionality
+                        header.addEventListener('click', () => {
+                            const isCollapsed = content.style.display === 'none';
+                            content.style.display = isCollapsed ? 'block' : 'none';
+                            const arrow = header.querySelector('[data-arrow]');
+                            arrow.style.transform = isCollapsed ? 'rotate(0deg)' : 'rotate(180deg)';
+                        });
+                    }
+                });
+
                 if (cryptoLinksOutput.querySelectorAll('a').length > 0) {
                     cryptoOpenAllBtn.classList.remove('hidden');
+                    if (cryptoCount) {
+                        cryptoCount.textContent = `Ссылок: ${totalLinks}`;
+                        cryptoCount.classList.remove('hidden');
+                    }
+                    if (cryptoFilters) {
+                        cryptoFilters.classList.remove('hidden');
+                    }
                 }
             });
 
@@ -1330,6 +1446,103 @@ Ivanov (ivan@icloud.com)	193.406.0.56	59616	RU	Irkutsk	Mozilla/5.0 (Windows NT 1
                     text: cryptoProgressText
                 });
             });
+
+            // Crypto filter functionality
+            function setCryptoFilter(activeFilter) {
+                const sections = cryptoLinksOutput.querySelectorAll('[data-network-type]');
+                const buttons = [cryptoFilterAll, cryptoFilterUtxo, cryptoFilterEvm, cryptoFilterAccount];
+                
+                // Update button styles
+                buttons.forEach(btn => {
+                    btn.classList.remove('bg-teal-500', 'text-white');
+                    btn.classList.add('bg-slate-200', 'dark:bg-slate-700', 'text-slate-700', 'dark:text-slate-300');
+                });
+                
+                const activeButton = activeFilter === 'all' ? cryptoFilterAll :
+                                   activeFilter === 'utxo' ? cryptoFilterUtxo :
+                                   activeFilter === 'evm' ? cryptoFilterEvm : cryptoFilterAccount;
+                
+                activeButton.classList.remove('bg-slate-200', 'dark:bg-slate-700', 'text-slate-700', 'dark:text-slate-300');
+                activeButton.classList.add('bg-teal-500', 'text-white');
+                
+                // Show/hide sections
+                sections.forEach(section => {
+                    if (activeFilter === 'all' || section.dataset.networkType === activeFilter) {
+                        section.style.display = 'block';
+                    } else {
+                        section.style.display = 'none';
+                    }
+                });
+            }
+
+            cryptoFilterAll.addEventListener('click', () => setCryptoFilter('all'));
+            cryptoFilterUtxo.addEventListener('click', () => setCryptoFilter('utxo'));
+            cryptoFilterEvm.addEventListener('click', () => setCryptoFilter('evm'));
+            cryptoFilterAccount.addEventListener('click', () => setCryptoFilter('account'));
+
+            // Validation functions
+            function validateInvoiceInput(input) {
+                const lines = input.split('\n').map(line => line.trim()).filter(Boolean);
+                const errors = [];
+                
+                if (lines.length === 0) {
+                    errors.push('Введите хотя бы один номер инвойса');
+                }
+                
+                lines.forEach((line, index) => {
+                    if (!/^\d+$/.test(line)) {
+                        errors.push(`Строка ${index + 1}: номер инвойса должен содержать только цифры`);
+                    }
+                    if (line.length < 10) {
+                        errors.push(`Строка ${index + 1}: номер инвойса слишком короткий`);
+                    }
+                });
+                
+                return { isValid: errors.length === 0, errors };
+            }
+
+            function validateUserInput(input) {
+                const lines = input.split('\n').map(line => line.trim()).filter(Boolean);
+                const errors = [];
+                
+                if (lines.length === 0) {
+                    errors.push('Введите хотя бы один ID пользователя');
+                }
+                
+                lines.forEach((line, index) => {
+                    if (!/^\d+$/.test(line)) {
+                        errors.push(`Строка ${index + 1}: ID пользователя должен содержать только цифры`);
+                    }
+                });
+                
+                return { isValid: errors.length === 0, errors };
+            }
+
+            function validateCryptoInput(input) {
+                const lines = input.split('\n').map(line => line.trim()).filter(Boolean);
+                const errors = [];
+                
+                if (lines.length === 0) {
+                    errors.push('Введите хотя бы один адрес кошелька');
+                }
+                
+                return { isValid: errors.length === 0, errors };
+            }
+
+            function showError(elementId, errors) {
+                const errorElement = document.getElementById(elementId);
+                if (errorElement) {
+                    errorElement.textContent = errors.join(', ');
+                    errorElement.classList.remove('hidden');
+                }
+            }
+
+            function hideError(elementId) {
+                const errorElement = document.getElementById(elementId);
+                if (errorElement) {
+                    errorElement.classList.add('hidden');
+                }
+            }
 
             // Универсальная функция троттлинга открытия ссылок с прогрессом
             function openLinksThrottled(linksNodeList, perSecond, ui) {
@@ -1601,6 +1814,86 @@ Ivanov (ivan@icloud.com)	193.406.0.56	59616	RU	Irkutsk	Mozilla/5.0 (Windows NT 1
                     copyToast.classList.add('opacity-0', 'translate-y-4');
                 }, 1200);
             }
+
+            // List virtualization for 20+ links
+            function implementVirtualization(container, items, itemsPerPage = 20) {
+                if (items.length <= itemsPerPage) return;
+                
+                const totalPages = Math.ceil(items.length / itemsPerPage);
+                let currentPage = 1;
+                
+                const pagination = document.createElement('div');
+                pagination.className = 'flex items-center justify-center gap-2 mt-4';
+                pagination.innerHTML = `
+                    <button class="px-3 py-1 text-sm bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded hover:bg-slate-300 dark:hover:bg-slate-600" data-action="prev">←</button>
+                    <span class="text-sm text-slate-600 dark:text-slate-400" data-page-info>1 из ${totalPages}</span>
+                    <button class="px-3 py-1 text-sm bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded hover:bg-slate-300 dark:hover:bg-slate-600" data-action="next">→</button>
+                `;
+                
+                const itemsContainer = document.createElement('div');
+                itemsContainer.className = 'space-y-2';
+                container.appendChild(itemsContainer);
+                container.appendChild(pagination);
+                
+                function renderPage(page) {
+                    const start = (page - 1) * itemsPerPage;
+                    const end = start + itemsPerPage;
+                    const pageItems = items.slice(start, end);
+                    
+                    itemsContainer.innerHTML = '';
+                    pageItems.forEach(item => itemsContainer.appendChild(item));
+                    
+                    const pageInfo = pagination.querySelector('[data-page-info]');
+                    pageInfo.textContent = `${page} из ${totalPages}`;
+                    
+                    const prevBtn = pagination.querySelector('[data-action="prev"]');
+                    const nextBtn = pagination.querySelector('[data-action="next"]');
+                    
+                    prevBtn.disabled = page === 1;
+                    nextBtn.disabled = page === totalPages;
+                    
+                    prevBtn.classList.toggle('opacity-50', page === 1);
+                    nextBtn.classList.toggle('opacity-50', page === totalPages);
+                }
+                
+                pagination.addEventListener('click', (e) => {
+                    const action = e.target.dataset.action;
+                    if (action === 'prev' && currentPage > 1) {
+                        currentPage--;
+                        renderPage(currentPage);
+                    } else if (action === 'next' && currentPage < totalPages) {
+                        currentPage++;
+                        renderPage(currentPage);
+                    }
+                });
+                
+                renderPage(1);
+            }
+
+            // Apply virtualization to all link outputs
+            function applyVirtualizationToOutputs() {
+                const outputs = [
+                    { container: linksOutput, selector: 'a' },
+                    { container: userLinksOutput, selector: 'a' },
+                    { container: cryptoLinksOutput, selector: 'a' },
+                    { container: pairsLinksOutput, selector: 'a' }
+                ];
+                
+                outputs.forEach(({ container, selector }) => {
+                    const observer = new MutationObserver(() => {
+                        const links = container.querySelectorAll(selector);
+                        if (links.length > 20) {
+                            const items = Array.from(links).map(link => link.parentElement);
+                            implementVirtualization(container, items);
+                        }
+                    });
+                    
+                    observer.observe(container, { childList: true, subtree: true });
+                });
+            }
+
+            // Initialize virtualization
+            applyVirtualizationToOutputs();
         });
     </script>
 </body>
