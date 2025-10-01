@@ -364,6 +364,8 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
                     </button>
                 </div>
 
+                <div id="pairs-count" class="mt-3 text-sm text-slate-600 dark:text-slate-400 hidden">Ссылок: 0</div>
+
                 <div id="pairs-links-output" class="mt-6 flex flex-col space-y-2"></div>
             </div>
              <button 
@@ -491,6 +493,7 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
             const pairsMain = document.getElementById('pairs-main');
             const pairsService = document.getElementById('pairs-service');
             const pairsLinksOutput = document.getElementById('pairs-links-output');
+            const pairsCount = document.getElementById('pairs-count');
 
             const userDataAnalyzeBtn = document.getElementById('user-data-analyze-btn');
             const userDataInput = document.getElementById('user-data-input');
@@ -760,6 +763,10 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
 
                 pairsLinksOutput.innerHTML = '';
                 pairsOpenAllBtn.classList.add('hidden');
+                if (pairsCount) {
+                    pairsCount.textContent = 'Ссылок: 0';
+                    pairsCount.classList.add('hidden');
+                }
 
                 if (raw.length === 0) {
                     const p = document.createElement('p');
@@ -812,6 +819,11 @@ Godzillaaa (reports.garnish-3o@icloud.com)	193.106.0.56	59616	RU	Irkutsk	Mozilla
 
                 if (pairsLinksOutput.querySelectorAll('a').length > 0) {
                     pairsOpenAllBtn.classList.remove('hidden');
+                    const count = pairsLinksOutput.querySelectorAll('a').length;
+                    if (pairsCount) {
+                        pairsCount.textContent = `Ссылок: ${count}`;
+                        pairsCount.classList.remove('hidden');
+                    }
                 }
             });
 
