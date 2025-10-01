@@ -204,6 +204,12 @@
                 <div id="links-output" class="mt-6 flex flex-col space-y-2">
                     <!-- Сюда будут добавляться сгенерированные ссылки -->
                 </div>
+                <div id="invoice-progress" class="mt-4 hidden">
+                    <div class="h-2 bg-slate-200 dark:bg-slate-800 rounded overflow-hidden">
+                        <div id="invoice-progress-bar" class="h-2 bg-teal-500 dark:bg-teal-600" style="width: 0%"></div>
+                    </div>
+                    <div id="invoice-progress-text" class="mt-2 text-xs text-slate-500 dark:text-slate-400">Открыто 0 из 0</div>
+                </div>
             </div>
              <button 
                 id="back-from-generator-btn" 
@@ -251,6 +257,12 @@
                 
                 <div id="user-links-output" class="mt-6 flex flex-col space-y-2">
                     <!-- Сюда будут добавляться сгенерированные ссылки -->
+                </div>
+                <div id="user-progress" class="mt-4 hidden">
+                    <div class="h-2 bg-slate-200 dark:bg-slate-800 rounded overflow-hidden">
+                        <div id="user-progress-bar" class="h-2 bg-teal-500 dark:bg-teal-600" style="width: 0%"></div>
+                    </div>
+                    <div id="user-progress-text" class="mt-2 text-xs text-slate-500 dark:text-slate-400">Открыто 0 из 0</div>
                 </div>
             </div>
              <button 
@@ -300,6 +312,12 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
                 
                 <div id="crypto-links-output" class="mt-6 flex flex-col space-y-2">
                     <!-- Сюда будут добавляться сгенерированные ссылки -->
+                </div>
+                <div id="crypto-progress" class="mt-4 hidden">
+                    <div class="h-2 bg-slate-200 dark:bg-slate-800 rounded overflow-hidden">
+                        <div id="crypto-progress-bar" class="h-2 bg-teal-500 dark:bg-teal-600" style="width: 0%"></div>
+                    </div>
+                    <div id="crypto-progress-text" class="mt-2 text-xs text-slate-500 dark:text-slate-400">Открыто 0 из 0</div>
                 </div>
             </div>
              <button 
@@ -362,6 +380,12 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
                 <div id="pairs-count" class="mt-3 text-sm text-slate-600 dark:text-slate-400 hidden">Ссылок: 0</div>
 
                 <div id="pairs-links-output" class="mt-6 flex flex-col space-y-2"></div>
+                <div id="pairs-progress" class="mt-4 hidden">
+                    <div class="h-2 bg-slate-200 dark:bg-slate-800 rounded overflow-hidden">
+                        <div id="pairs-progress-bar" class="h-2 bg-teal-500 dark:bg-teal-600" style="width: 0%"></div>
+                    </div>
+                    <div id="pairs-progress-text" class="mt-2 text-xs text-slate-500 dark:text-slate-400">Открыто 0 из 0</div>
+                </div>
             </div>
              <button 
                 id="back-from-pairs-generator-btn" 
@@ -480,6 +504,17 @@ Ivanov (ivan@icloud.com)	193.406.0.56	59616	RU	Irkutsk	Mozilla/5.0 (Windows NT 1
             const cryptoInput = document.getElementById('crypto-input');
             const cryptoLinksOutput = document.getElementById('crypto-links-output');
 
+            // Прогресс-элементы
+            const invoiceProgress = document.getElementById('invoice-progress');
+            const invoiceProgressBar = document.getElementById('invoice-progress-bar');
+            const invoiceProgressText = document.getElementById('invoice-progress-text');
+            const userProgress = document.getElementById('user-progress');
+            const userProgressBar = document.getElementById('user-progress-bar');
+            const userProgressText = document.getElementById('user-progress-text');
+            const cryptoProgress = document.getElementById('crypto-progress');
+            const cryptoProgressBar = document.getElementById('crypto-progress-bar');
+            const cryptoProgressText = document.getElementById('crypto-progress-text');
+
 
             // Пары кошельков
             const pairsGenerateBtn = document.getElementById('pairs-generate-btn');
@@ -489,6 +524,9 @@ Ivanov (ivan@icloud.com)	193.406.0.56	59616	RU	Irkutsk	Mozilla/5.0 (Windows NT 1
             const pairsService = document.getElementById('pairs-service');
             const pairsLinksOutput = document.getElementById('pairs-links-output');
             const pairsCount = document.getElementById('pairs-count');
+            const pairsProgress = document.getElementById('pairs-progress');
+            const pairsProgressBar = document.getElementById('pairs-progress-bar');
+            const pairsProgressText = document.getElementById('pairs-progress-text');
 
             const userDataAnalyzeBtn = document.getElementById('user-data-analyze-btn');
             const userDataInput = document.getElementById('user-data-input');
@@ -762,6 +800,11 @@ Ivanov (ivan@icloud.com)	193.406.0.56	59616	RU	Irkutsk	Mozilla/5.0 (Windows NT 1
                     pairsCount.textContent = 'Ссылок: 0';
                     pairsCount.classList.add('hidden');
                 }
+                if (pairsProgress && pairsProgressBar && pairsProgressText) {
+                    pairsProgress.classList.add('hidden');
+                    pairsProgressBar.style.width = '0%';
+                    pairsProgressText.textContent = 'Открыто 0 из 0';
+                }
 
                 if (raw.length === 0) {
                     const p = document.createElement('p');
@@ -824,7 +867,11 @@ Ivanov (ivan@icloud.com)	193.406.0.56	59616	RU	Irkutsk	Mozilla/5.0 (Windows NT 1
 
             pairsOpenAllBtn.addEventListener('click', () => {
                 const links = pairsLinksOutput.querySelectorAll('a');
-                links.forEach(link => window.open(link.href, '_blank'));
+                openLinksThrottled(links, 8, {
+                    container: pairsProgress,
+                    bar: pairsProgressBar,
+                    text: pairsProgressText
+                });
             });
 
             // Функция для создания элемента ссылки
@@ -892,6 +939,11 @@ Ivanov (ivan@icloud.com)	193.406.0.56	59616	RU	Irkutsk	Mozilla/5.0 (Windows NT 1
 
                 linksOutput.innerHTML = '';
                 openAllBtn.classList.add('hidden'); 
+                if (invoiceProgress && invoiceProgressBar && invoiceProgressText) {
+                    invoiceProgress.classList.add('hidden');
+                    invoiceProgressBar.style.width = '0%';
+                    invoiceProgressText.textContent = 'Открыто 0 из 0';
+                }
 
                 if (invoices.length === 0) {
                     const noLinks = document.createElement('p');
@@ -915,8 +967,10 @@ Ivanov (ivan@icloud.com)	193.406.0.56	59616	RU	Irkutsk	Mozilla/5.0 (Windows NT 1
 
             openAllBtn.addEventListener('click', () => {
                 const links = linksOutput.querySelectorAll('a');
-                links.forEach(link => {
-                    window.open(link.href, '_blank');
+                openLinksThrottled(links, 8, {
+                    container: invoiceProgress,
+                    bar: invoiceProgressBar,
+                    text: invoiceProgressText
                 });
             });
 
@@ -931,6 +985,11 @@ Ivanov (ivan@icloud.com)	193.406.0.56	59616	RU	Irkutsk	Mozilla/5.0 (Windows NT 1
 
                 userLinksOutput.innerHTML = '';
                 userOpenAllBtn.classList.add('hidden'); 
+                if (userProgress && userProgressBar && userProgressText) {
+                    userProgress.classList.add('hidden');
+                    userProgressBar.style.width = '0%';
+                    userProgressText.textContent = 'Открыто 0 из 0';
+                }
 
                 if (userIds.length === 0) {
                     const noLinks = document.createElement('p');
@@ -954,8 +1013,10 @@ Ivanov (ivan@icloud.com)	193.406.0.56	59616	RU	Irkutsk	Mozilla/5.0 (Windows NT 1
 
             userOpenAllBtn.addEventListener('click', () => {
                 const links = userLinksOutput.querySelectorAll('a');
-                links.forEach(link => {
-                    window.open(link.href, '_blank');
+                openLinksThrottled(links, 8, {
+                    container: userProgress,
+                    bar: userProgressBar,
+                    text: userProgressText
                 });
             });
 
@@ -1092,6 +1153,11 @@ Ivanov (ivan@icloud.com)	193.406.0.56	59616	RU	Irkutsk	Mozilla/5.0 (Windows NT 1
 
                 cryptoLinksOutput.innerHTML = '';
                 cryptoOpenAllBtn.classList.add('hidden'); 
+                if (cryptoProgress && cryptoProgressBar && cryptoProgressText) {
+                    cryptoProgress.classList.add('hidden');
+                    cryptoProgressBar.style.width = '0%';
+                    cryptoProgressText.textContent = 'Открыто 0 из 0';
+                }
 
                 if (addresses.length === 0) {
                     const noLinks = document.createElement('p');
@@ -1127,10 +1193,51 @@ Ivanov (ivan@icloud.com)	193.406.0.56	59616	RU	Irkutsk	Mozilla/5.0 (Windows NT 1
 
             cryptoOpenAllBtn.addEventListener('click', () => {
                 const links = cryptoLinksOutput.querySelectorAll('a');
-                links.forEach(link => {
-                    window.open(link.href, '_blank');
+                openLinksThrottled(links, 8, {
+                    container: cryptoProgress,
+                    bar: cryptoProgressBar,
+                    text: cryptoProgressText
                 });
             });
+
+            // Универсальная функция троттлинга открытия ссылок с прогрессом
+            function openLinksThrottled(linksNodeList, perSecond, ui) {
+                const links = Array.from(linksNodeList);
+                const total = links.length;
+                if (total === 0) return;
+
+                const { container, bar, text } = ui || {};
+                if (container && bar && text) {
+                    container.classList.remove('hidden');
+                    bar.style.width = '0%';
+                    text.textContent = `Открыто 0 из ${total}`;
+                }
+
+                let opened = 0;
+                const batchSize = Math.max(1, perSecond | 0);
+
+                const interval = setInterval(() => {
+                    for (let i = 0; i < batchSize && opened < total; i++) {
+                        const a = links[opened];
+                        try {
+                            window.open(a.href, '_blank');
+                        } catch (e) {
+                            // игнорируем ошибки открытия окна
+                        }
+                        opened++;
+                    }
+
+                    const progress = Math.min(100, Math.round((opened / total) * 100));
+                    if (container && bar && text) {
+                        bar.style.width = progress + '%';
+                        text.textContent = `Открыто ${opened} из ${total}`;
+                    }
+
+                    if (opened >= total) {
+                        clearInterval(interval);
+                    }
+                }, 1000);
+            }
 
             // Логика анализа данных пользователей
             let uniqueResults = { asn: new Set(), devices: new Set() };
