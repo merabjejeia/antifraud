@@ -99,6 +99,22 @@
                     </a>
                     
                     <a 
+                        id="go-to-deposit-btn"
+                        href="#deposit"
+                        class="group w-full bg-white dark:bg-[#1e1e1e] hover:bg-slate-50 dark:hover:bg-[#2a2a2a] text-slate-900 dark:text-slate-100 font-medium py-5 px-6 rounded-2xl shadow-sm hover:shadow-md border border-slate-200 dark:border-[#303030] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-slate-500/20 focus:ring-offset-2 dark:focus:ring-offset-slate-900 flex items-center gap-4 transform hover:-translate-y-0.5"
+                    >
+                        <div class="flex items-center justify-center w-12 h-12 bg-slate-100 dark:bg-slate-700 rounded-xl group-hover:bg-slate-200 dark:group-hover:bg-slate-600 transition-colors duration-300 flex-shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-700 dark:text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="font-medium text-slate-900 dark:text-slate-100">ID депозитов</div>
+                            <div class="text-sm text-slate-500 dark:text-slate-400 mt-0.5">Поиск депозитов</div>
+                        </div>
+                    </a>
+                    
+                    <a 
                         id="go-to-user-data-btn"
                         href="#user-data"
                         class="group w-full bg-white dark:bg-[#1e1e1e] hover:bg-slate-50 dark:hover:bg-[#2a2a2a] text-slate-900 dark:text-slate-100 font-medium py-5 px-6 rounded-2xl shadow-sm hover:shadow-md border border-slate-200 dark:border-[#303030] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-slate-500/20 focus:ring-offset-2 dark:focus:ring-offset-slate-900 flex items-center gap-4 transform hover:-translate-y-0.5"
@@ -448,6 +464,75 @@ EQC_5aQ9P8q9_GvQ9-0wD5vF7jE7q6vG7pQ9j2p"
             </button>
         </div>
 
+        <!-- Новый раздел "ID депозитов" (изначально скрытый) -->
+        <div id="deposit-page" class="hidden">
+            <h1 class="text-3xl font-bold text-center text-slate-800 dark:text-slate-100 mb-6 transition-colors duration-500">
+                Инструменты для антифрода
+            </h1>
+            <div class="bg-white dark:bg-[#202124] p-6 rounded-xl border border-slate-200 dark:border-[#2a2a2a] transition-colors duration-500">
+                <h2 class="text-xl font-semibold text-slate-700 dark:text-slate-200 mb-4 transition-colors duration-500">
+                    ID депозитов
+                </h2>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mb-4 transition-colors duration-500">
+                    Вставьте один или несколько ID депозитов, каждый с новой строки.
+                </p>
+
+                <textarea 
+                    id="deposit-input" 
+                    class="w-full h-32 p-3 text-sm rounded-lg border border-slate-300 dark:border-[#3a3a3a] bg-white dark:bg-[#171717] text-slate-700 dark:text-slate-200 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 mb-4 transition-colors" 
+                    placeholder="Например:
+495975233
+495975234
+495975235"
+                    aria-label="Введите ID депозитов"
+                    aria-describedby="deposit-error"
+                ></textarea>
+                <div id="deposit-error" class="text-red-500 dark:text-red-400 text-sm hidden mb-2" role="alert"></div>
+                
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                    <button 
+                        id="deposit-generate-btn" 
+                        class="w-full bg-teal-500 dark:bg-teal-600 text-white font-medium py-3 px-6 rounded-lg hover:bg-teal-600 dark:hover:bg-teal-700 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400 focus:ring-offset-2"
+                    >
+                        Сгенерировать ссылки
+                    </button>
+                    <button 
+                        id="deposit-open-all-btn" 
+                        class="w-full bg-slate-300 dark:bg-slate-700 text-slate-800 dark:text-slate-200 font-medium py-3 px-6 rounded-lg hover:bg-slate-400 dark:hover:bg-slate-600 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-slate-500 focus:ring-offset-2 hidden"
+                    >
+                        Открыть все
+                    </button>
+                </div>
+                
+                <div id="deposit-count" class="mt-3 text-sm text-slate-600 dark:text-slate-400 hidden">Ссылок: 0</div>
+
+                <div id="deposit-links-output" class="mt-6 flex flex-col space-y-2">
+                    <!-- Сюда будут добавляться сгенерированные ссылки -->
+                </div>
+                <div id="deposit-manual-progress" class="mt-3 hidden">
+                    <div class="flex items-center justify-between text-sm text-slate-600 dark:text-slate-400 mb-2">
+                        <span>Открыто вручную:</span>
+                        <span id="deposit-manual-count">0 из 0</span>
+                    </div>
+                    <div class="h-2 bg-slate-200 dark:bg-slate-800 rounded overflow-hidden">
+                        <div id="deposit-manual-progress-bar" class="h-2 bg-blue-500 dark:bg-blue-400 transition-all duration-300" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div id="deposit-progress" class="mt-4 hidden">
+                    <div class="h-2 bg-slate-200 dark:bg-slate-800 rounded overflow-hidden">
+                        <div id="deposit-progress-bar" class="h-2 bg-teal-500 dark:bg-teal-600" style="width: 0%"></div>
+                    </div>
+                    <div id="deposit-progress-text" class="mt-2 text-xs text-slate-500 dark:text-slate-400">Открыто 0 из 0</div>
+                </div>
+            </div>
+             <button 
+                id="back-from-deposit-btn" 
+                class="mt-6 w-full text-teal-600 dark:text-teal-400 font-medium py-3 px-6 rounded-lg hover:underline transition-all focus:outline-none"
+            >
+                ← Вернуться назад
+            </button>
+        </div>
+
         <!-- Новый раздел "Анализ логов пользователей" (изначально скрытый) -->
         <div id="user-data-page" class="hidden">
             <h1 class="text-3xl font-bold text-center text-slate-800 dark:text-slate-100 mb-6 transition-colors duration-500">
@@ -525,6 +610,7 @@ Ivanov (ivan@icloud.com)	193.406.0.56	59616	RU	Irkutsk	Mozilla/5.0 (Windows NT 1
             const cryptoGeneratorPage = document.getElementById('crypto-generator-page');
             const userDataPage = document.getElementById('user-data-page');
             const pairsGeneratorPage = document.getElementById('pairs-generator-page');
+            const depositPage = document.getElementById('deposit-page');
             
 
             const goToGeneratorBtn = document.getElementById('go-to-generator-btn');
@@ -532,6 +618,7 @@ Ivanov (ivan@icloud.com)	193.406.0.56	59616	RU	Irkutsk	Mozilla/5.0 (Windows NT 1
             const goToCryptoGeneratorBtn = document.getElementById('go-to-crypto-generator-btn');
             const goToUserDataBtn = document.getElementById('go-to-user-data-btn');
             const goToPairsGeneratorBtn = document.getElementById('go-to-pairs-generator-btn');
+            const goToDepositBtn = document.getElementById('go-to-deposit-btn');
             
 
             const backFromGeneratorBtn = document.getElementById('back-from-generator-btn');
@@ -539,6 +626,7 @@ Ivanov (ivan@icloud.com)	193.406.0.56	59616	RU	Irkutsk	Mozilla/5.0 (Windows NT 1
             const backFromCryptoGeneratorBtn = document.getElementById('back-from-crypto-generator-btn');
             const backFromUserDataBtn = document.getElementById('back-from-user-data-btn');
             const backFromPairsGeneratorBtn = document.getElementById('back-from-pairs-generator-btn');
+            const backFromDepositBtn = document.getElementById('back-from-deposit-btn');
             
 
 
@@ -594,6 +682,19 @@ Ivanov (ivan@icloud.com)	193.406.0.56	59616	RU	Irkutsk	Mozilla/5.0 (Windows NT 1
             const cryptoManualProgress = document.getElementById('crypto-manual-progress');
             const cryptoManualCount = document.getElementById('crypto-manual-count');
             const cryptoManualProgressBar = document.getElementById('crypto-manual-progress-bar');
+
+            // Deposit elements
+            const depositGenerateBtn = document.getElementById('deposit-generate-btn');
+            const depositOpenAllBtn = document.getElementById('deposit-open-all-btn');
+            const depositInput = document.getElementById('deposit-input');
+            const depositLinksOutput = document.getElementById('deposit-links-output');
+            const depositCount = document.getElementById('deposit-count');
+            const depositProgress = document.getElementById('deposit-progress');
+            const depositProgressBar = document.getElementById('deposit-progress-bar');
+            const depositProgressText = document.getElementById('deposit-progress-text');
+            const depositManualProgress = document.getElementById('deposit-manual-progress');
+            const depositManualCount = document.getElementById('deposit-manual-count');
+            const depositManualProgressBar = document.getElementById('deposit-manual-progress-bar');
 
             // Link counters
             const invoiceCount = document.getElementById('invoice-count');
@@ -776,7 +877,8 @@ Ivanov (ivan@icloud.com)	193.406.0.56	59616	RU	Irkutsk	Mozilla/5.0 (Windows NT 1
                 'user-generator': 'Открыть пользователей по ID',
                 'crypto-generator': 'Обозреватель кошельков',
                 'pairs-generator': 'Пары кошельков → ссылки проверки',
-                'user-data': 'Анализ логов пользователей'
+                'user-data': 'Анализ логов пользователей',
+                'deposit': 'ID депозитов'
             };
 
             function setTitlesFor(pageId) {
@@ -791,6 +893,7 @@ Ivanov (ivan@icloud.com)	193.406.0.56	59616	RU	Irkutsk	Mozilla/5.0 (Windows NT 1
                 else if (pageId === 'crypto-generator') container = cryptoGeneratorPage;
                 else if (pageId === 'pairs-generator') container = pairsGeneratorPage;
                 else if (pageId === 'user-data') container = userDataPage;
+                else if (pageId === 'deposit') container = depositPage;
                 if (container) {
                     const h1 = container.querySelector('h1');
                     if (h1) h1.textContent = name;
@@ -804,6 +907,7 @@ Ivanov (ivan@icloud.com)	193.406.0.56	59616	RU	Irkutsk	Mozilla/5.0 (Windows NT 1
                 cryptoGeneratorPage.classList.add('hidden');
                 pairsGeneratorPage.classList.add('hidden');
                 userDataPage.classList.add('hidden');
+                depositPage.classList.add('hidden');
                 
                 
                 
@@ -819,6 +923,8 @@ Ivanov (ivan@icloud.com)	193.406.0.56	59616	RU	Irkutsk	Mozilla/5.0 (Windows NT 1
                     pairsGeneratorPage.classList.remove('hidden');
                 } else if (pageId === 'user-data') {
                     userDataPage.classList.remove('hidden');
+                } else if (pageId === 'deposit') {
+                    depositPage.classList.remove('hidden');
                 }
                 setTitlesFor(pageId);
             }
@@ -826,7 +932,7 @@ Ivanov (ivan@icloud.com)	193.406.0.56	59616	RU	Irkutsk	Mozilla/5.0 (Windows NT 1
             // Обработка хеша для открытия нужного раздела при загрузке/смене адреса
             function handleHashChange() {
                 const hash = window.location.hash.replace('#', '');
-                if (hash === 'generator' || hash === 'user-generator' || hash === 'crypto-generator' || hash === 'pairs-generator' || hash === 'user-data' || hash === 'home') {
+                if (hash === 'generator' || hash === 'user-generator' || hash === 'crypto-generator' || hash === 'pairs-generator' || hash === 'user-data' || hash === 'deposit' || hash === 'home') {
                     showPage(hash);
                 } else {
                     showPage('home');
@@ -840,6 +946,7 @@ Ivanov (ivan@icloud.com)	193.406.0.56	59616	RU	Irkutsk	Mozilla/5.0 (Windows NT 1
             backFromCryptoGeneratorBtn.addEventListener('click', () => { window.location.hash = 'home'; });
             backFromUserDataBtn.addEventListener('click', () => { window.location.hash = 'home'; });
             backFromPairsGeneratorBtn.addEventListener('click', () => { window.location.hash = 'home'; });
+            backFromDepositBtn.addEventListener('click', () => { window.location.hash = 'home'; });
             
             
 
@@ -1114,13 +1221,18 @@ Ivanov (ivan@icloud.com)	193.406.0.56	59616	RU	Irkutsk	Mozilla/5.0 (Windows NT 1
                         countElement = pairsManualCount;
                         barElement = pairsManualProgressBar;
                         break;
+                    case 'deposit':
+                        progressContainer = depositManualProgress;
+                        countElement = depositManualCount;
+                        barElement = depositManualProgressBar;
+                        break;
                     default:
                         return;
                 }
                 
                 if (!progressContainer || !countElement || !barElement) return;
                 
-                const linksOutput = document.querySelector(`#${sectionId === 'invoice' ? 'links' : sectionId === 'user' ? 'user-links' : sectionId === 'crypto' ? 'crypto-links' : 'pairs-links'}-output`);
+                const linksOutput = document.querySelector(`#${sectionId === 'invoice' ? 'links' : sectionId === 'user' ? 'user-links' : sectionId === 'crypto' ? 'crypto-links' : sectionId === 'pairs' ? 'pairs-links' : 'deposit-links'}-output`);
                 const allLinks = linksOutput.querySelectorAll('a');
                 const openedLinks = linksOutput.querySelectorAll('a[data-opened="true"]');
                 
@@ -1543,6 +1655,67 @@ Ivanov (ivan@icloud.com)	193.406.0.56	59616	RU	Irkutsk	Mozilla/5.0 (Windows NT 1
             cryptoFilterEvm.addEventListener('click', () => setCryptoFilter('evm'));
             cryptoFilterAccount.addEventListener('click', () => setCryptoFilter('account'));
 
+            // Логика генератора депозитов
+            const depositBaseUrl = "https://lixog.com/ru/admin/app/invoice-depositinvoice/list?filter%5Bid%5D%5Bvalue%5D=";
+
+            depositGenerateBtn.addEventListener('click', () => {
+                const input = depositInput.value;
+                const validation = validateDepositInput(input);
+                
+                hideError('deposit-error');
+                
+                if (!validation.isValid) {
+                    showError('deposit-error', validation.errors);
+                    return;
+                }
+
+                const depositIds = input
+                    .split('\n')
+                    .map(id => id.trim())
+                    .filter(id => id.length > 0);
+
+                depositLinksOutput.innerHTML = '';
+                depositOpenAllBtn.classList.add('hidden'); 
+                if (depositProgress && depositProgressBar && depositProgressText) {
+                    depositProgress.classList.add('hidden');
+                    depositProgressBar.style.width = '0%';
+                    depositProgressText.textContent = 'Открыто 0 из 0';
+                }
+                if (depositManualProgress && depositManualCount && depositManualProgressBar) {
+                    depositManualProgress.classList.add('hidden');
+                    depositManualCount.textContent = '0 из 0';
+                    depositManualProgressBar.style.width = '0%';
+                }
+                if (depositCount) {
+                    depositCount.textContent = 'Ссылок: 0';
+                    depositCount.classList.add('hidden');
+                }
+
+                depositIds.forEach(depositId => {
+                    const fullUrl = `${depositBaseUrl}${encodeURIComponent(depositId)}`;
+                    const link = createLinkElement(`Депозит: ${depositId}`, fullUrl, 'deposit');
+                    const copyBtn = createCopyButton(link);
+                    depositLinksOutput.appendChild(createLinkContainer(link, copyBtn));
+                });
+
+                if (depositIds.length > 0) {
+                    depositOpenAllBtn.classList.remove('hidden');
+                    if (depositCount) {
+                        depositCount.textContent = `Ссылок: ${depositIds.length}`;
+                        depositCount.classList.remove('hidden');
+                    }
+                }
+            });
+
+            depositOpenAllBtn.addEventListener('click', () => {
+                const links = depositLinksOutput.querySelectorAll('a');
+                openLinksThrottled(links, 8, {
+                    container: depositProgress,
+                    bar: depositProgressBar,
+                    text: depositProgressText
+                });
+            });
+
             // Validation functions
             function validateInvoiceInput(input) {
                 const lines = input.split('\n').map(line => line.trim()).filter(Boolean);
@@ -1588,6 +1761,23 @@ Ivanov (ivan@icloud.com)	193.406.0.56	59616	RU	Irkutsk	Mozilla/5.0 (Windows NT 1
                 if (lines.length === 0) {
                     errors.push('Введите хотя бы один адрес кошелька');
                 }
+                
+                return { isValid: errors.length === 0, errors };
+            }
+
+            function validateDepositInput(input) {
+                const lines = input.split('\n').map(line => line.trim()).filter(Boolean);
+                const errors = [];
+                
+                if (lines.length === 0) {
+                    errors.push('Введите хотя бы один ID депозита');
+                }
+                
+                lines.forEach((line, index) => {
+                    if (!/^\d+$/.test(line)) {
+                        errors.push(`Строка ${index + 1}: ID депозита должен содержать только цифры`);
+                    }
+                });
                 
                 return { isValid: errors.length === 0, errors };
             }
@@ -1937,7 +2127,8 @@ Ivanov (ivan@icloud.com)	193.406.0.56	59616	RU	Irkutsk	Mozilla/5.0 (Windows NT 1
             function applyVirtualizationToOutputs() {
                 const outputs = [
                     { container: linksOutput, selector: 'a' },
-                    { container: userLinksOutput, selector: 'a' }
+                    { container: userLinksOutput, selector: 'a' },
+                    { container: depositLinksOutput, selector: 'a' }
                     // Exclude cryptoLinksOutput and pairsLinksOutput due to grouping/filtering
                 ];
                 
